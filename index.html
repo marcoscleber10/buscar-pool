@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrazilDeFi Explorer - Pools de Stablecoins BR</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-primary: #0a0a0f;
+            --bg-secondary: #12121a;
+            --bg-card: #1a1a25;
+            --border-color: #2a2a3a;
+            --text-primary: #ffffff;
+            --text-secondary: #a0a0b0;
+            --accent-blue: #00d4ff;
+            --accent-purple: #7b2cbf;
+            --success: #00ff88;
+            --warning: #ffa500;
+            --danger: #ff4757;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
+            border-bottom: 1px solid var(--border-color);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo i {
+            font-size: 32px;
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .stats-bar {
+            display: flex;
+            gap: 30px;
+            font-size: 14px;
+        }
+
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .stat-label {
+            color: var(--text-secondary);
+            font-size: 12px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: var(--accent-blue);
+        }
+
+        /* Search Section */
+        .search-section {
+            padding: 40px 0;
+            background: var(--bg-secondary);
+        }
+
+        .search-container {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .search-box {
+            position: relative;
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+
+        .search-box:focus-within {
+            border-color: var(--accent-blue);
+            box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 24px;
+            color: var(--accent-blue);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 15px 20px 15px 60px;
+            background: transparent;
+            border: none;
+            color: var(--text-primary);
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .search-input:focus {
+            outline: none;
+        }
+
+        .search-input::placeholder {
+            color: var(--text-secondary);
+        }
+
+        .search-tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-blue);
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 1px solid rgba(0, 212, 255, 0.3);
+        }
+
+        .tag:hover {
+            background: rgba(0, 212, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Filters */
+        .filters-section {
+            padding: 30px 0;
+            background: var(--bg-primary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .filters-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .filter-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+        }
+
+        .filter-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .filter-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+
+        .filter-option {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+
+        .filter-option:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .filter-option input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent-blue);
+            cursor: pointer;
+        }
+
+        .filter-option label {
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .network-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+        .tvl-input {
+            width: 100%;
+            padding: 10px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-size: 14px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 40px 0;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .results-count {
+            color: var(--text-secondary);
+            font-size: 14px;
+        }
+
+        /* Table */
+        .pools-table-container {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            overflow-x: auto;
+        }
+
+        .pools-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .pools-table thead {
+            background: var(--bg-secondary);
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .pools-table th {
+            padding: 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        .pools-table th:hover {
+            color: var(--text-primary);
+        }
+
+        .pools-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 14px;
+        }
+
+        .pools-table tbody tr {
+            transition: background 0.2s;
+        }
+
+        .pools-table tbody tr:hover {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .pool-name {
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .token-pair {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .token-badge {
+            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 12px;
+        }
+
+        .network-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .protocol-badge {
+            padding: 4px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 500;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-blue);
+        }
+
+        /* Risk Semaphore */
+        .risk-indicator {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        .risk-low {
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--success);
+            border: 1px solid rgba(0, 255, 136, 0.3);
+        }
+
+        .risk-medium {
+            background: rgba(255, 165, 0, 0.15);
+            color: var(--warning);
+            border: 1px solid rgba(255, 165, 0, 0.3);
+        }
+
+        .risk-high {
+            background: rgba(255, 71, 87, 0.15);
+            color: var(--danger);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+        }
+
+        .semaphore-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .risk-low .semaphore-dot { background: var(--success); }
+        .risk-medium .semaphore-dot { background: var(--warning); }
+        .risk-high .semaphore-dot { background: var(--danger); }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        .value-positive {
+            color: var(--success);
+            font-weight: 600;
+        }
+
+        .value-neutral {
+            color: var(--text-primary);
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--bg-secondary);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-color);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .stats-bar {
+                justify-content: center;
+            }
+
+            .filters-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .pools-table {
+                font-size: 12px;
+            }
+
+            .pools-table th,
+            .pools-table td {
+                padding: 12px 8px;
+            }
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .no-results {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text-secondary);
+        }
+
+        .no-results i {
+            font-size: 48px;
+            margin-bottom: 15px;
+            opacity: 0.5;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-search-dollar"></i>
+                    BrazilDeFi Explorer
+                </div>
+                <div class="stats-bar">
+                    <div class="stat-item">
+                        <span class="stat-label">Total TVL</span>
+                        <span class="stat-value">$2.4B</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Pools Ativas</span>
+                        <span class="stat-value">156</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Melhor APR</span>
+                        <span class="stat-value">45.2%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Search Section -->
+    <section class="search-section">
+        <div class="container">
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input 
+                        type="text" 
+                        class="search-input" 
+                        id="searchInput"
+                        placeholder="Buscar pares (ex: BRZ/USDC, BRL1/DAI, CREAL/ETH...)"
+                    >
+                </div>
+                <div class="search-tags">
+                    <span class="tag" onclick="searchTag('BRZ')">BRZ</span>
+                    <span class="tag" onclick="searchTag('BRL1')">BRL1</span>
+                    <span class="tag" onclick="searchTag('BRLA')">BRLA</span>
+                    <span class="tag" onclick="searchTag('Depix')">Depix</span>
+                    <span class="tag" onclick="searchTag('CREAL')">CREAL</span>
+                    <span class="tag" onclick="searchTag('USDC')">USDC</span>
+                    <span class="tag" onclick="searchTag('USDT')">USDT</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filters Section -->
+    <section class="filters-section">
+        <div class="container">
+            <div class="filters-grid">
+                <!-- Network Filter -->
+                <div class="filter-card">
+                    <div class="filter-title">
+                        <i class="fas fa-network-wired"></i>
+                        Redes
+                    </div>
+                    <div class="filter-options" id="networkFilters">
+                        <div class="filter-option">
+                            <input type="checkbox" id="eth" value="ethereum" checked>
+                            <label for="eth"><span class="network-icon" style="background: #627eea;">E</span> Ethereum</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="bsc" value="bsc" checked>
+                            <label for="bsc"><span class="network-icon" style="background: #f0b90b; color: #000;">B</span> BSC</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="polygon" value="polygon" checked>
+                            <label for="polygon"><span class="network-icon" style="background: #8247e5;">P</span> Polygon</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="arbitrum" value="arbitrum">
+                            <label for="arbitrum"><span class="network-icon" style="background: #2d374b;">A</span> Arbitrum</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="solana" value="solana">
+                            <label for="solana"><span class="network-icon" style="background: #00ffa3; color: #000;">S</span> Solana</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="base" value="base">
+                            <label for="base"><span class="network-icon" style="background: #0052ff;">B</span> Base</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Protocol Filter -->
+                <div class="filter-card">
+                    <div class="filter-title">
+                        <i class="fas fa-exchange-alt"></i>
+                        Protocolos
+                    </div>
+                    <div class="filter-options" id="protocolFilters">
+                        <div class="filter-option">
+                            <input type="checkbox" id="uniswap" value="uniswap" checked>
+                            <label for="uniswap">Uniswap V3</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="pancake" value="pancakeswap" checked>
+                            <label for="pancake">PancakeSwap</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="curve" value="curve">
+                            <label for="curve">Curve Finance</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="balancer" value="balancer">
+                            <label for="balancer">Balancer</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="sushiswap" value="sushiswap">
+                            <label for="sushiswap">SushiSwap</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="raydium" value="raydium">
+                            <label for="raydium">Raydium</label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- TVL Filter -->
+                <div class="filter-card">
+                    <div class="filter-title">
+                        <i class="fas fa-coins"></i>
+                        TVL Mínimo
+                    </div>
+                    <input 
+                        type="number" 
+                        class="tvl-input" 
+                        id="tvlFilter"
+                        placeholder="Valor mínimo em USD"
+                        min="0"
+                        step="1000"
+                    >
+                    <div style="margin-top: 10px; font-size: 12px; color: var(--text-secondary);">
+                        Ex: 100000 = $100k
+                    </div>
+                </div>
+
+                <!-- Risk Filter -->
+                <div class="filter-card">
+                    <div class="filter-title">
+                        <i class="fas fa-shield-alt"></i>
+                        Nível de Risco
+                    </div>
+                    <div class="filter-options">
+                        <div class="filter-option">
+                            <input type="checkbox" id="riskLow"
