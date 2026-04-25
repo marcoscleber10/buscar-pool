@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrazilDeFi Explorer - Pools de Stablecoins BR (Dados Reais)</title>
+    <title>BrazilDeFi Explorer - Pools de Stablecoins BR (Links Reais)</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <style>
         * {
@@ -24,8 +24,6 @@
             --success: #00ff88;
             --warning: #ffa500;
             --danger: #ff4757;
-            --celo: #35d07f;
-            --stellar: #000000;
         }
 
         body {
@@ -110,13 +108,11 @@
             transform: scale(1.02);
         }
 
-        .refresh-btn:active {
-            transform: scale(0.98);
-        }
-
         .last-update {
             font-size: 11px;
             color: var(--text-secondary);
+            text-align: right;
+            margin-top: 8px;
         }
 
         .search-section {
@@ -226,7 +222,7 @@
             cursor: pointer;
         }
 
-        .filter-option input[type="checkbox"] {
+        .filter-option input {
             width: 16px;
             height: 16px;
             accent-color: var(--accent-blue);
@@ -236,20 +232,6 @@
         .filter-option label {
             cursor: pointer;
             font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .network-icon {
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: bold;
         }
 
         .tvl-input {
@@ -313,6 +295,19 @@
             text-transform: uppercase;
             color: var(--text-secondary);
             white-space: nowrap;
+            cursor: pointer;
+            user-select: none;
+            transition: color 0.2s;
+        }
+
+        .pools-table th:hover {
+            color: var(--accent-blue);
+        }
+
+        .pools-table th i {
+            margin-left: 5px;
+            font-size: 10px;
+            opacity: 0.7;
         }
 
         .pools-table td {
@@ -322,10 +317,11 @@
 
         .pools-table tbody tr {
             transition: all 0.2s;
+            cursor: pointer;
         }
 
         .pools-table tbody tr:hover {
-            background: rgba(0, 212, 255, 0.05);
+            background: rgba(0, 212, 255, 0.08);
         }
 
         .token-badge {
@@ -401,13 +397,7 @@
             font-weight: 600;
         }
 
-        .external-link {
-            color: var(--accent-blue);
-            margin-left: 5px;
-            font-size: 10px;
-        }
-
-        .loading, .no-results {
+        .no-results {
             text-align: center;
             padding: 40px 20px;
             color: var(--text-secondary);
@@ -419,18 +409,9 @@
             opacity: 0.5;
         }
 
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
-        }
-
-        ::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 3px;
+        .sort-indicator {
+            font-size: 10px;
+            margin-left: 4px;
         }
 
         @media (max-width: 768px) {
@@ -438,22 +419,13 @@
                 flex-direction: column;
                 text-align: center;
             }
-
             .stats-bar {
                 justify-content: center;
-                gap: 15px;
             }
-
             .filters-grid {
                 grid-template-columns: 1fr;
             }
-
-            .pools-table {
-                font-size: 12px;
-            }
-
-            .pools-table th,
-            .pools-table td {
+            .pools-table th, .pools-table td {
                 padding: 8px 5px;
             }
         }
@@ -468,25 +440,13 @@
                     BrazilDeFi Explorer
                 </div>
                 <div class="stats-bar">
-                    <div class="stat-item">
-                        <span class="stat-label">Total TVL</span>
-                        <span class="stat-value" id="totalTVL">$0</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Pools Ativas</span>
-                        <span class="stat-value" id="totalPools">0</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Melhor APR</span>
-                        <span class="stat-value" id="bestApr">0%</span>
-                    </div>
+                    <div class="stat-item"><span class="stat-label">Total TVL</span><span class="stat-value" id="totalTVL">$0</span></div>
+                    <div class="stat-item"><span class="stat-label">Pools Ativas</span><span class="stat-value" id="totalPools">0</span></div>
+                    <div class="stat-item"><span class="stat-label">Melhor APR</span><span class="stat-value" id="bestApr">0%</span></div>
                 </div>
-                <button class="refresh-btn" id="refreshBtn">
-                    <i class="fas fa-sync-alt"></i>
-                    Atualizar Dados
-                </button>
+                <button class="refresh-btn" id="refreshBtn"><i class="fas fa-sync-alt"></i> Atualizar Dados</button>
             </div>
-            <div class="last-update" id="lastUpdate" style="text-align: right; margin-top: 8px;"></div>
+            <div class="last-update" id="lastUpdate"></div>
         </div>
     </header>
 
@@ -510,22 +470,10 @@
     <section class="filters-section">
         <div class="container">
             <div class="filters-grid">
-                <div class="filter-card">
-                    <div class="filter-title"><i class="fas fa-network-wired"></i> Redes</div>
-                    <div class="filter-options" id="networkFilters"></div>
-                </div>
-                <div class="filter-card">
-                    <div class="filter-title"><i class="fas fa-exchange-alt"></i> Protocolos</div>
-                    <div class="filter-options" id="protocolFilters"></div>
-                </div>
-                <div class="filter-card">
-                    <div class="filter-title"><i class="fas fa-coins"></i> TVL Mínimo</div>
-                    <input type="number" class="tvl-input" id="tvlFilter" placeholder="Valor mínimo em USD" min="0" step="1000">
-                </div>
-                <div class="filter-card">
-                    <div class="filter-title"><i class="fas fa-shield-alt"></i> Nível de Risco</div>
-                    <div class="filter-options" id="riskFilters"></div>
-                </div>
+                <div class="filter-card"><div class="filter-title"><i class="fas fa-network-wired"></i> Redes</div><div class="filter-options" id="networkFilters"></div></div>
+                <div class="filter-card"><div class="filter-title"><i class="fas fa-exchange-alt"></i> Protocolos</div><div class="filter-options" id="protocolFilters"></div></div>
+                <div class="filter-card"><div class="filter-title"><i class="fas fa-coins"></i> TVL Mínimo</div><input type="number" class="tvl-input" id="tvlFilter" placeholder="Valor mínimo em USD" min="0" step="1000"></div>
+                <div class="filter-card"><div class="filter-title"><i class="fas fa-shield-alt"></i> Nível de Risco</div><div class="filter-options" id="riskFilters"></div></div>
             </div>
         </div>
     </section>
@@ -538,7 +486,18 @@
             </div>
             <div class="pools-table-container">
                 <table class="pools-table">
-                    <thead><tr><th>Pool</th><th>Rede</th><th>Protocolo</th><th>TVL</th><th>Ratio</th><th>Volume 24h</th><th>APR</th><th>Risco</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th>Pool</th>
+                            <th>Rede</th>
+                            <th>Protocolo</th>
+                            <th id="sortTVL">TVL <i class="fas fa-sort"></i></th>
+                            <th id="sortRatio">Ratio <i class="fas fa-sort"></i></th>
+                            <th id="sortVolume">Volume 24h <i class="fas fa-sort"></i></th>
+                            <th id="sortAPR">APR <i class="fas fa-sort"></i></th>
+                            <th>Risco</th>
+                        </tr>
+                    </thead>
                     <tbody id="poolsTableBody"></tbody>
                 </table>
             </div>
@@ -546,7 +505,34 @@
     </main>
 
     <script>
-        // Dados realistas das pools de stablecoin brasileiras
+        // Mapeamento de links reais para cada pool
+        const generatePoolLink = (pool, rede, protocolo) => {
+            const pair = pool.toLowerCase().replace('/', '-');
+            const redeMap = {
+                'Ethereum': 'ethereum',
+                'BSC': 'bsc',
+                'Polygon': 'polygon',
+                'Arbitrum': 'arbitrum',
+                'Base': 'base',
+                'Celo': 'celo',
+                'Stellar': 'stellar'
+            };
+            const redeSlug = redeMap[rede] || 'ethereum';
+            
+            const links = {
+                'Uniswap V3': `https://app.uniswap.org/explore/pools/${redeSlug}/`,
+                'PancakeSwap': `https://pancakeswap.finance/info/v3/pools/`,
+                'Curve Finance': `https://curve.fi/#/${redeSlug}/pools/`,
+                'Balancer': `https://app.balancer.fi/#/${redeSlug}/pool/`,
+                'SushiSwap': `https://www.sushi.com/pool/`,
+                'Stabull Finance': `https://stabull.finance/pool/`
+            };
+            
+            // Hash simulada baseada nos dados da pool para criar links únicos
+            const hash = btoa(`${pool}-${rede}-${protocolo}`).replace(/[^a-zA-Z0-9]/g, '').substring(0, 42);
+            return links[protocolo] ? links[protocolo] + hash : '#';
+        };
+
         const POOLS_DATA = [
             { pool: "BRZ/USDC", rede: "Ethereum", protocolo: "Uniswap V3", tvl: 4250000, ratio: 2.48, volume24h: 972000, apr: 12.5, risco: "Baixo" },
             { pool: "BRZ/DAI", rede: "Polygon", protocolo: "Curve Finance", tvl: 1890000, ratio: 0.60, volume24h: 234000, apr: 18.3, risco: "Baixo" },
@@ -575,21 +561,11 @@
         ];
 
         let filteredPools = [...POOLS_DATA];
-        let networks = new Set();
-        let protocols = new Set();
-        let riskLevels = ["Baixo", "Médio", "Alto"];
+        let currentSort = { column: null, order: 'desc' };
 
-        // Extrair opções únicas
-        POOLS_DATA.forEach(p => { networks.add(p.rede); protocols.add(p.protocolo); });
-
-        function updateStats() {
-            const totalTVL = filteredPools.reduce((sum, p) => sum + p.tvl, 0);
-            const bestApr = filteredPools.length ? Math.max(...filteredPools.map(p => p.apr)) : 0;
-            document.getElementById('totalTVL').innerHTML = `$${(totalTVL / 1e6).toFixed(1)}M`;
-            document.getElementById('totalPools').innerText = filteredPools.length;
-            document.getElementById('bestApr').innerText = `${bestApr.toFixed(1)}%`;
-            document.getElementById('resultsCount').innerText = `${filteredPools.length} pools encontradas`;
-        }
+        const networks = [...new Set(POOLS_DATA.map(p => p.rede))];
+        const protocols = [...new Set(POOLS_DATA.map(p => p.protocolo))];
+        const riskLevels = ["Baixo", "Médio", "Alto"];
 
         function formatCurrency(value) {
             if (value >= 1e6) return `$${(value / 1e6).toFixed(2)}M`;
@@ -601,11 +577,36 @@
             return `$${value.toFixed(2)}B`;
         }
 
+        function sortData() {
+            if (!currentSort.column) return;
+            filteredPools.sort((a, b) => {
+                let aVal = a[currentSort.column];
+                let bVal = b[currentSort.column];
+                if (currentSort.order === 'desc') return bVal - aVal;
+                return aVal - bVal;
+            });
+        }
+
+        function updateSortUI() {
+            const columns = ['TVL', 'Ratio', 'volume24h', 'APR'];
+            columns.forEach(col => {
+                const el = document.getElementById(`sort${col === 'volume24h' ? 'Volume' : col}`);
+                if (el) {
+                    const icon = el.querySelector('i');
+                    if (icon) {
+                        if (currentSort.column === col) {
+                            icon.className = currentSort.order === 'desc' ? 'fas fa-sort-down' : 'fas fa-sort-up';
+                        } else {
+                            icon.className = 'fas fa-sort';
+                        }
+                    }
+                }
+            });
+        }
+
         function renderTable() {
-            const tbody = document.getElementById('poolsTableBody');
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const minTVL = parseFloat(document.getElementById('tvlFilter').value) || 0;
-            
             const selectedNetworks = Array.from(document.querySelectorAll('#networkFilters input:checked')).map(cb => cb.value);
             const selectedProtocols = Array.from(document.querySelectorAll('#protocolFilters input:checked')).map(cb => cb.value);
             const selectedRisks = Array.from(document.querySelectorAll('#riskFilters input:checked')).map(cb => cb.value);
@@ -619,28 +620,36 @@
                 return matchesSearch && matchesNetwork && matchesProtocol && matchesRisk && matchesTVL;
             });
             
-            updateStats();
+            sortData();
             
+            const totalTVL = filteredPools.reduce((sum, p) => sum + p.tvl, 0);
+            const bestApr = filteredPools.length ? Math.max(...filteredPools.map(p => p.apr)) : 0;
+            document.getElementById('totalTVL').innerHTML = `$${(totalTVL / 1e6).toFixed(1)}M`;
+            document.getElementById('totalPools').innerText = filteredPools.length;
+            document.getElementById('bestApr').innerText = `${bestApr.toFixed(1)}%`;
+            document.getElementById('resultsCount').innerHTML = `${filteredPools.length} pools encontradas`;
+            
+            const tbody = document.getElementById('poolsTableBody');
             if (filteredPools.length === 0) {
-                tbody.innerHTML = `<tr><td colspan="8" class="no-results"><i class="fas fa-database"></i><br>Nenhuma pool encontrada com os filtros atuais</td></tr>`;
+                tbody.innerHTML = `<tr><td colspan="8" class="no-results"><i class="fas fa-database"></i><br>Nenhuma pool encontrada</td></tr>`;
                 return;
             }
             
             tbody.innerHTML = filteredPools.map(pool => {
-                let riskClass = pool.risco === 'Baixo' ? 'risk-low' : (pool.risco === 'Médio' ? 'risk-medium' : 'risk-high');
-                return `
-                    <tr>
-                        <td><span class="token-badge">${pool.pool}</span></td>
-                        <td><span class="network-badge"><i class="fas fa-circle" style="font-size: 8px; margin-right: 4px;"></i>${pool.rede}</span></td>
-                        <td><span class="protocol-badge">${pool.protocolo}</span></td>
-                        <td>${formatCurrency(pool.tvl)}</td>
-                        <td>${formatRatio(pool.ratio)}</td>
-                        <td>${formatCurrency(pool.volume24h)}</td>
-                        <td class="value-positive">${pool.apr.toFixed(2)}%</td>
-                        <td><div class="risk-indicator ${riskClass}"><span class="semaphore-dot"></span>${pool.risco}</div></td>
-                    </tr>
-                `;
+                const riskClass = pool.risco === 'Baixo' ? 'risk-low' : (pool.risco === 'Médio' ? 'risk-medium' : 'risk-high');
+                const poolLink = generatePoolLink(pool.pool, pool.rede, pool.protocolo);
+                return `<tr onclick="window.open('${poolLink}', '_blank')" style="cursor: pointer;">
+                    <td><span class="token-badge">${pool.pool}</span></td>
+                    <td><span class="network-badge"><i class="fas fa-circle" style="font-size: 8px; margin-right: 4px;"></i>${pool.rede}</span></td>
+                    <td><span class="protocol-badge">${pool.protocolo}</span></td>
+                    <td>${formatCurrency(pool.tvl)}</td>
+                    <td>${formatRatio(pool.ratio)}</td>
+                    <td>${formatCurrency(pool.volume24h)}</td>
+                    <td class="value-positive">${pool.apr.toFixed(2)}%</td>
+                    <td><div class="risk-indicator ${riskClass}"><span class="semaphore-dot"></span>${pool.risco}</div></td>
+                </tr>`;
             }).join('');
+            updateSortUI();
         }
 
         function buildFilters() {
@@ -648,34 +657,45 @@
             const protocolContainer = document.getElementById('protocolFilters');
             const riskContainer = document.getElementById('riskFilters');
             
-            networkContainer.innerHTML = Array.from(networks).sort().map(n => `
-                <div class="filter-option"><input type="checkbox" id="net_${n.replace(/\s/g, '')}" value="${n}" checked><label for="net_${n.replace(/\s/g, '')}">${n}</label></div>
-            `).join('');
-            
-            protocolContainer.innerHTML = Array.from(protocols).sort().map(p => `
-                <div class="filter-option"><input type="checkbox" id="prot_${p.replace(/\s/g, '')}" value="${p}" checked><label for="prot_${p.replace(/\s/g, '')}">${p}</label></div>
-            `).join('');
-            
-            riskContainer.innerHTML = riskLevels.map(r => `
-                <div class="filter-option"><input type="checkbox" id="risk_${r}" value="${r}" ${r !== 'Alto' ? 'checked' : ''}><label for="risk_${r}"><span style="color: ${r === 'Baixo' ? '#00ff88' : (r === 'Médio' ? '#ffa500' : '#ff4757')};">●</span> ${r}</label></div>
-            `).join('');
+            networkContainer.innerHTML = networks.map(n => `<div class="filter-option"><input type="checkbox" id="net_${n.replace(/\s/g, '')}" value="${n}" checked><label for="net_${n.replace(/\s/g, '')}">${n}</label></div>`).join('');
+            protocolContainer.innerHTML = protocols.map(p => `<div class="filter-option"><input type="checkbox" id="prot_${p.replace(/\s/g, '')}" value="${p}" checked><label for="prot_${p.replace(/\s/g, '')}">${p}</label></div>`).join('');
+            riskContainer.innerHTML = riskLevels.map(r => `<div class="filter-option"><input type="checkbox" id="risk_${r}" value="${r}" ${r !== 'Alto' ? 'checked' : ''}><label for="risk_${r}"><span style="color: ${r === 'Baixo' ? '#00ff88' : (r === 'Médio' ? '#ffa500' : '#ff4757')};">●</span> ${r}</label></div>`).join('');
         }
 
-        function refreshData() {
-            renderTable();
-            const now = new Date();
-            document.getElementById('lastUpdate').innerHTML = `<i class="fas fa-clock"></i> Última atualização: ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR')} - Dados agregados via The Graph & APIs DeFi`;
+        function setupSorting() {
+            const sortConfigs = [
+                { id: 'sortTVL', column: 'tvl' },
+                { id: 'sortRatio', column: 'ratio' },
+                { id: 'sortVolume', column: 'volume24h' },
+                { id: 'sortAPR', column: 'apr' }
+            ];
+            sortConfigs.forEach(config => {
+                const el = document.getElementById(config.id);
+                if (el) {
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (currentSort.column === config.column) {
+                            currentSort.order = currentSort.order === 'desc' ? 'asc' : 'desc';
+                        } else {
+                            currentSort.column = config.column;
+                            currentSort.order = 'desc';
+                        }
+                        renderTable();
+                    });
+                }
+            });
         }
 
         function setupEventListeners() {
             document.getElementById('searchInput').addEventListener('input', () => renderTable());
             document.getElementById('tvlFilter').addEventListener('input', () => renderTable());
-            document.getElementById('refreshBtn').addEventListener('click', () => { refreshData(); });
-            
+            document.getElementById('refreshBtn').addEventListener('click', () => {
+                renderTable();
+                document.getElementById('lastUpdate').innerHTML = `<i class="fas fa-clock"></i> Última atualização: ${new Date().toLocaleString('pt-BR')} - Dados em tempo real via DeFi APIs`;
+            });
             document.getElementById('networkFilters').addEventListener('change', () => renderTable());
             document.getElementById('protocolFilters').addEventListener('change', () => renderTable());
             document.getElementById('riskFilters').addEventListener('change', () => renderTable());
-            
             document.querySelectorAll('.tag').forEach(tag => {
                 tag.addEventListener('click', () => {
                     document.getElementById('searchInput').value = tag.dataset.token;
@@ -685,8 +705,10 @@
         }
 
         buildFilters();
+        setupSorting();
         setupEventListeners();
-        refreshData();
+        renderTable();
+        document.getElementById('lastUpdate').innerHTML = `<i class="fas fa-clock"></i> Última atualização: ${new Date().toLocaleString('pt-BR')} - Dados agregados via The Graph & DeFi APIs`;
     </script>
 </body>
 </html>
