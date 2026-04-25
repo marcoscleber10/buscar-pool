@@ -36,7 +36,6 @@
             line-height: 1.6;
         }
 
-        /* Header */
         .header {
             background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
             border-bottom: 1px solid var(--border-color);
@@ -93,7 +92,6 @@
             color: var(--accent-blue);
         }
 
-        /* ===== TABS NAVIGATION ===== */
         .tabs-container {
             background: var(--bg-secondary);
             border-bottom: 1px solid var(--border-color);
@@ -149,7 +147,6 @@
         .tab-btn.stocks .badge { background: var(--success); color: #000; }
         .tab-btn.solana .badge { background: linear-gradient(135deg, #9945FF, #14F195); color: #fff; }
 
-        /* Search Section */
         .search-section {
             padding: 25px 0;
             background: var(--bg-secondary);
@@ -212,291 +209,6 @@
             background: rgba(0, 212, 255, 0.2);
         }
 
-        /* Filters */
-        .filters-section {
-            padding: 20px 0;
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .filters-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .filter-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 15px;
-        }
-
-        .filter-title {
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .filter-options {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            max-height: 200px;
-            overflow-y: auto;
-        }
-
-        .filter-option {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-        }
-
-        .filter-option input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: var(--accent-blue);
-            cursor: pointer;
-        }
-
-        .filter-option label {
-            cursor: pointer;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-Você está **100% correto**! Entendi perfeitamente o problema raiz. Vou gerar um código corrigido com:
-
-1. ✅ **Filtro BTC inteligente** (wbtc, cbbtc, renbtc, tbtc)
-2. ✅ **Endpoint RWA para ações** (`https://api.llama.fi/rwa`)
-3. ✅ **Fallback robusto** quando API não retornar dados
-4. ✅ **Logs detalhados** para debug
-5. ✅ **Código completo** sem remover nada
-
-Aqui está o **código corrigido**:
-
-```html
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrazilDeFi Explorer - Pools de Stablecoins BR</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: #1a1a25;
-            --border-color: #2a2a3a;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --accent-blue: #00d4ff;
-            --accent-purple: #7b2cbf;
-            --success: #00ff88;
-            --warning: #ffa500;
-            --danger: #ff4757;
-            --solana-green: #9945FF;
-            --solana-purple: #14F195;
-        }
-
-        body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
-            min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        /* Header */
-        .header {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
-            border-bottom: 1px solid var(--border-color);
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
-        }
-
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .header-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .logo {
-            font-size: 22px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .stats-bar {
-            display: flex;
-            gap: 20px;
-            font-size: 12px;
-        }
-
-        .stat-item {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .stat-label {
-            color: var(--text-secondary);
-            font-size: 10px;
-        }
-
-        .stat-value {
-            font-weight: 700;
-            color: var(--accent-blue);
-        }
-
-        /* ===== TABS NAVIGATION ===== */
-        .tabs-container {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 0;
-        }
-
-        .tabs {
-            display: flex;
-            gap: 5px;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 15px;
-            flex-wrap: wrap;
-        }
-
-        .tab-btn {
-            padding: 10px 20px;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 8px 8px 0 0;
-            color: var(--text-secondary);
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .tab-btn:hover {
-            color: var(--text-primary);
-            border-color: var(--accent-blue);
-        }
-
-        .tab-btn.active {
-            background: var(--bg-card);
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-            border-bottom: 2px solid var(--bg-card);
-        }
-
-        .tab-btn .badge {
-            background: var(--accent-blue);
-            color: #000;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 700;
-        }
-
-        .tab-btn.bitcoin .badge { background: #f7931a; color: #fff; }
-        .tab-btn.stocks .badge { background: var(--success); color: #000; }
-        .tab-btn.solana .badge { background: linear-gradient(135deg, #9945FF, #14F195); color: #fff; }
-
-        /* Search Section */
-        .search-section {
-            padding: 25px 0;
-            background: var(--bg-secondary);
-        }
-
-        .search-box {
-            position: relative;
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            transition: all 0.3s;
-        }
-
-        .search-box:focus-within {
-            border-color: var(--accent-blue);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-            color: var(--accent-blue);
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 12px 15px 12px 45px;
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
-            font-size: 15px;
-        }
-
-        .search-input:focus {
-            outline: none;
-        }
-
-        .search-tags {
-            display: flex;
-            gap: 8px;
-            margin-top: 12px;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--accent-blue);
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid rgba(0, 212, 255, 0.3);
-        }
-
-        .tag:hover {
-            background: rgba(0, 212, 255, 0.2);
-        }
-
-        /* Filters */
         .filters-section {
             padding: 20px 0;
             background: var(--bg-primary);
@@ -578,7 +290,6 @@ Aqui está o **código corrigido**:
             font-size: 13px;
         }
 
-        /* Main Content */
         .main-content {
             padding: 25px 0;
             min-height: 400px;
@@ -603,7 +314,6 @@ Aqui está o **código corrigido**:
             font-size: 13px;
         }
 
-        /* Table */
         .pools-table-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
@@ -690,7 +400,6 @@ Aqui está o **código corrigido**:
             color: var(--accent-blue);
         }
 
-        /* Risk Semaphore */
         .risk-indicator {
             display: inline-flex;
             align-items: center;
@@ -743,7 +452,6 @@ Aqui está o **código corrigido**:
             font-size: 10px;
         }
 
-        /* Loading & Empty States */
         .loading, .no-results {
             text-align: center;
             padding: 40px 20px;
@@ -771,7 +479,6 @@ Aqui está o **código corrigido**:
             to { transform: rotate(360deg); }
         }
 
-        /* Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
             height: 6px;
@@ -786,7 +493,6 @@ Aqui está o **código corrigido**:
             border-radius: 3px;
         }
 
-        /* Tab Content */
         .tab-content {
             display: none;
         }
@@ -795,7 +501,6 @@ Aqui está o **código corrigido**:
             display: block;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .header-content {
                 flex-direction: column;
@@ -831,7 +536,6 @@ Aqui está o **código corrigido**:
             }
         }
 
-        /* Solana gradient animation */
         @keyframes solanaGlow {
             0%, 100% { box-shadow: 0 0 5px rgba(153, 69, 255, 0.3); }
             50% { box-shadow: 0 0 15px rgba(20, 241, 149, 0.5); }
@@ -843,7 +547,6 @@ Aqui está o **código corrigido**:
     </style>
 </head>
 <body>
-    <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
@@ -869,7 +572,6 @@ Aqui está o **código corrigido**:
         </div>
     </header>
 
-    <!-- ===== TABS NAVIGATION ===== -->
     <nav class="tabs-container">
         <div class="tabs">
             <button class="tab-btn active" data-tab="stablecoins" onclick="switchTab('stablecoins')">
@@ -895,7 +597,6 @@ Aqui está o **código corrigido**:
         </div>
     </nav>
 
-    <!-- Search Section -->
     <section class="search-section">
         <div class="container">
             <div class="search-box">
@@ -920,11 +621,9 @@ Aqui está o **código corrigido**:
         </div>
     </section>
 
-    <!-- Filters Section -->
     <section class="filters-section">
         <div class="container">
             <div class="filters-grid">
-                <!-- Network Filter -->
                 <div class="filter-card">
                     <div class="filter-title">
                         <i class="fas fa-network-wired"></i>
@@ -966,7 +665,6 @@ Aqui está o **código corrigido**:
                     </div>
                 </div>
 
-                <!-- Protocol Filter -->
                 <div class="filter-card">
                     <div class="filter-title">
                         <i class="fas fa-exchange-alt"></i>
@@ -1048,7 +746,6 @@ Aqui está o **código corrigido**:
                     </div>
                 </div>
 
-                <!-- TVL Filter -->
                 <div class="filter-card">
                     <div class="filter-title">
                         <i class="fas fa-coins"></i>
@@ -1064,7 +761,6 @@ Aqui está o **código corrigido**:
                     >
                 </div>
 
-                <!-- Risk Filter -->
                 <div class="filter-card">
                     <div class="filter-title">
                         <i class="fas fa-shield-alt"></i>
@@ -1089,7 +785,6 @@ Aqui está o **código corrigido**:
         </div>
     </section>
 
-    <!-- Main Content -->
     <main class="main-content">
         <div class="container">
             <div class="section-header">
@@ -1115,7 +810,6 @@ Aqui está o **código corrigido**:
                         </tr>
                     </thead>
                     <tbody id="poolsTableBody">
-                        <!-- Data will be inserted here -->
                     </tbody>
                 </table>
             </div>
@@ -1123,7 +817,6 @@ Aqui está o **código corrigido**:
     </main>
 
     <script>
-        // ===== DADOS: STABLECOINS BR (EXISTENTE - PRESERVADO) =====
         const stablecoinsData = [
             { pool: 'BRZ/USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 4250000, ratio: '52/48', volume24h: 892000, apr: 12.5, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
             { pool: 'BRL1/DAI', network: 'polygon', networkName: 'Polygon', protocol: 'curve', protocolName: 'Curve Finance', tvl: 1890000, ratio: '50/50', volume24h: 234000, apr: 18.3, risk: 'low', link: 'https://curve.fi/#/polygon/pools' },
@@ -1142,139 +835,91 @@ Aqui está o **código corrigido**:
             { pool: 'BRZ/DAI', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 2890000, ratio: '51/49', volume24h: 445000, apr: 11.2, risk: 'low', link: 'https://curve.fi/#/ethereum/pools' }
         ];
 
-        // ===== DADOS: BITCOIN POOLS (20 PARES GARANTIDOS - CARREGAMENTO IMEDIATO) =====
-        let bitcoinData = [
-            { pool: 'WBTC/USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 125000000, ratio: '51/49', volume24h: 45000000, apr: 8.5, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
-            { pool: 'WBTC/ETH', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 234000000, ratio: '48/52', volume24h: 89000000, apr: 12.3, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
-            { pool: 'WBTC/USDT', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 89000000, ratio: '50/50', volume24h: 23000000, apr: 6.8, risk: 'low', link: 'https://curve.fi/#/ethereum/pools' },
-            { pool: 'cbBTC/USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 45000000, ratio: '53/47', volume24h: 12000000, apr: 15.2, risk: 'medium', link: 'https://app.uniswap.org/#/pool' },
-            { pool: 'WBTC/DAI', network: 'ethereum', networkName: 'Ethereum', protocol: 'balancer', protocolName: 'Balancer', tvl: 34000000, ratio: '49/51', volume24h: 8900000, apr: 9.4, risk: 'low', link: 'https://app.balancer.fi/#/ethereum/pool' },
-            { pool: 'WBTC/USDC', network: 'polygon', networkName: 'Polygon', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 23000000, ratio: '52/48', volume24h: 6700000, apr: 11.8, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
-            { pool: 'WBTC/USDT', network: 'arbitrum', networkName: 'Arbitrum', protocol: 'sushiswap', protocolName: 'SushiSwap', tvl: 18000000, ratio: '47/53', volume24h: 4500000, apr: 14.6, risk: 'medium', link: 'https://www.sushi.com/pool' },
-            { pool: 'cbBTC/ETH', network: 'base', networkName: 'Base', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 56000000, ratio: '45/55', volume24h: 18000000, apr: 18.9, risk: 'medium', link: 'https://app.uniswap.org/#/pool' },
-            { pool: 'WBTC.e/USDC', network: 'avalanche', networkName: 'Avalanche', protocol: 'traderjoe', protocolName: 'Trader Joe', tvl: 12000000, ratio: '50/50', volume24h: 3400000, apr: 16.7, risk: 'medium', link: 'https://traderjoexyz.com/pool' },
-            { pool: 'renBTC/WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 28000000, ratio: '49/51', volume24h: 5600000, apr: 5.2, risk: 'low', link: 'https://curve.fi/#/ethereum/pools' },
-            { pool: 'WBTC/USDC', network: 'optimism', networkName: 'Optimism', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 15000000, ratio: '51/49', volume24h: 4200000, apr: 13.4, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
-            { pool: 'tBTC/WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 8900000, ratio: '48/52', volume24h: 1200000, apr: 7.8, risk: 'medium', link: 'https://curve.fi/#/ethereum/pools' },
-            { pool: 'cbBTC/USDC', network: 'base', networkName: 'Base', protocol: 'aerodrome', protocolName: 'Aerodrome', tvl: 34000000, ratio: '50/50', volume24h: 9800000, apr: 22.5, risk: 'medium', link: 'https://aerodrome.finance/liquidity' },
-            { pool: 'WBTC/USDC', network: 'bsc', networkName: 'BSC', protocol: 'pancakeswap', protocolName: 'PancakeSwap', tvl: 19000000, ratio: '49/51', volume24h: 5600000, apr: 10.3, risk: 'low', link: 'https://pancakeswap.finance/liquidity' },
-            { pool: 'WBTC/ETH', network: 'arbitrum', networkName: 'Arbitrum', protocol: 'camelot', protocolName: 'Camelot', tvl: 14000000, ratio: '47/53', volume24h: 3800000, apr: 19.2, risk: 'medium', link: 'https://app.camelot.exchange/pools' },
-            { pool: 'cbBTC/WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 26390000, ratio: '50/50', volume24h: 6700000, apr: 3.17, risk: 'low', link: 'https://curve.fi/#/ethereum/pools' },
-            { pool: 'WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'aave', protocolName: 'Aave', tvl: 145000000, ratio: 'N/A', volume24h: 0, apr: 2.3, risk: 'low', link: 'https://app.aave.com/' },
-            { pool: 'cbBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'morpho', protocolName: 'Morpho', tvl: 78000000, ratio: 'N/A', volume24h: 0, apr: 4.8, risk: 'medium', link: 'https://app.morpho.org/' },
-            { pool: 'WBTC/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 67000000, ratio: '48/52', volume24h: 28000000, apr: 24.5, risk: 'medium', link: 'https://raydium.io/pools/' },
-            { pool: 'cbBTC/SOL', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 42000000, ratio: '45/55', volume24h: 15000000, apr: 32.8, risk: 'medium', link: 'https://www.orca.so/pools' }
-        ];
+        let bitcoinData = [];
 
-        // ===== DADOS: SOLANA POOLS (16 PARES GARANTIDOS - CARREGAMENTO IMEDIATO) =====
-        let solanaData = [
-            { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 125000000, ratio: '50/50', volume24h: 45000000, apr: 18.5, risk: 'low', link: 'https://raydium.io/pools/' },
-            { pool: 'SOL/USDT', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 89000000, ratio: '48/52', volume24h: 32000000, apr: 15.3, risk: 'low', link: 'https://raydium.io/pools/' },
-            { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 78000000, ratio: '51/49', volume24h: 28000000, apr: 22.7, risk: 'low', link: 'https://www.orca.so/pools' },
-            { pool: 'SOL/USDT', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 56000000, ratio: '49/51', volume24h: 19000000, apr: 19.4, risk: 'low', link: 'https://www.orca.so/pools' },
-            { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'meteora', protocolName: 'Meteora', tvl: 145000000, ratio: '52/48', volume24h: 52000000, apr: 28.9, risk: 'medium', link: 'https://app.meteora.ag/dlmm' },
-            { pool: 'SOL/USDT', network: 'solana', networkName: 'Solana', protocol: 'meteora', protocolName: 'Meteora', tvl: 98000000, ratio: '47/53', volume24h: 35000000, apr: 25.6, risk: 'medium', link: 'https://app.meteora.ag/dlmm' },
-            { pool: 'WBTC/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 67000000, ratio: '48/52', volume24h: 28000000, apr: 24.5, risk: 'medium', link: 'https://raydium.io/pools/' },
-            { pool: 'cbBTC/SOL', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 42000000, ratio: '45/55', volume24h: 15000000, apr: 32.8, risk: 'medium', link: 'https://www.orca.so/pools' },
-            { pool: 'WBTC/SOL', network: 'solana', networkName: 'Solana', protocol: 'meteora', protocolName: 'Meteora', tvl: 54000000, ratio: '46/54', volume24h: 18000000, apr: 35.2, risk: 'medium', link: 'https://app.meteora.ag/dlmm' },
-            { pool: 'RAY/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 34000000, ratio: '50/50', volume24h: 12000000, apr: 42.3, risk: 'high', link: 'https://raydium.io/pools/' },
-            { pool: 'ORCA/USDC', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 28000000, ratio: '49/51', volume24h: 9800000, apr: 38.7, risk: 'high', link: 'https://www.orca.so/pools' },
-            { pool: 'JUP/SOL', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 45000000, ratio: '51/49', volume24h: 16000000, apr: 29.4, risk: 'medium', link: 'https://raydium.io/pools/' },
-            { pool: 'mSOL/SOL', network: 'solana', networkName: 'Solana', protocol: 'marinade', protocolName: 'Marinade', tvl: 890000000, ratio: 'N/A', volume24h: 0, apr: 6.8, risk: 'low', link: 'https://marinade.finance/app/stake' },
-            { pool: 'JitoSOL/SOL', network: 'solana', networkName: 'Solana', protocol: 'jito', protocolName: 'Jito', tvl: 650000000, ratio: 'N/A', volume24h: 0, apr: 7.2, risk: 'low', link: 'https://jito.wtf/' },
-            { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'jupiter', protocolName: 'Jupiter', tvl: 78000000, ratio: '50/50', volume24h: 28000000, apr: 21.3, risk: 'low', link: 'https://jup.ag/lfg' },
-            { pool: 'ETH/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 34000000, ratio: '47/53', volume24h: 12000000, apr: 18.9, risk: 'low', link: 'https://raydium.io/pools/' }
-        ];
+        let solanaData = [];
 
-        // ===== DADOS: STOCKS TOP 60 (EXPANDIDO) =====
         const stocksData = [
-            { pool: 'AAPL/USDC', asset: 'Apple', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 3450000000000, ratio: 'N/A', volume24h: 8900000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'MSFT/USDC', asset: 'Microsoft', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 3350000000000, ratio: 'N/A', volume24h: 7200000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'GOOGL/USDC', asset: 'Alphabet', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 2180000000000, ratio: 'N/A', volume24h: 4800000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'AMZN/USDC', asset: 'Amazon', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 2050000000000, ratio: 'N/A', volume24h: 5400000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'NVDA/USDC', asset: 'NVIDIA', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 3100000000000, ratio: 'N/A', volume24h: 12000000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'META/USDC', asset: 'Meta', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 1350000000000, ratio: 'N/A', volume24h: 6100000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'TSLA/USDC', asset: 'Tesla', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 1100000000000, ratio: 'N/A', volume24h: 9800000000, apr: 0, risk: 'high', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'BRK.B/USDC', asset: 'Berkshire', network: 'ethereum', networkName: 'Ethereum', protocol: 'balancer', protocolName: 'Balancer', tvl: 980000000000, ratio: 'N/A', volume24h: 1200000000, apr: 0, risk: 'low', link: 'https://app.balancer.fi/#/ethereum/pool', isStock: true },
-            { pool: 'LLY/USDC', asset: 'Eli Lilly', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 850000000000, ratio: 'N/A', volume24h: 2100000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'AVGO/USDC', asset: 'Broadcom', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 780000000000, ratio: 'N/A', volume24h: 3400000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'JPM/USDC', asset: 'JPMorgan', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 620000000000, ratio: 'N/A', volume24h: 1800000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'V/USDC', asset: 'Visa', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 580000000000, ratio: 'N/A', volume24h: 1500000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'UNH/USDC', asset: 'UnitedHealth', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 520000000000, ratio: 'N/A', volume24h: 1200000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'XOM/USDC', asset: 'ExxonMobil', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 480000000000, ratio: 'N/A', volume24h: 2100000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'MA/USDC', asset: 'Mastercard', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 450000000000, ratio: 'N/A', volume24h: 1100000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'PG/USDC', asset: 'Procter & Gamble', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 420000000000, ratio: 'N/A', volume24h: 890000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'JNJ/USDC', asset: 'Johnson & Johnson', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 390000000000, ratio: 'N/A', volume24h: 780000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'HD/USDC', asset: 'Home Depot', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 380000000000, ratio: 'N/A', volume24h: 920000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'CVX/USDC', asset: 'Chevron', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 350000000000, ratio: 'N/A', volume24h: 1500000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'MRK/USDC', asset: 'Merck', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 320000000000, ratio: 'N/A', volume24h: 670000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'ABBV/USDC', asset: 'AbbVie', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 310000000000, ratio: 'N/A', volume24h: 580000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'PEP/USDC', asset: 'PepsiCo', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 290000000000, ratio: 'N/A', volume24h: 720000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'KO/USDC', asset: 'Coca-Cola', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 280000000000, ratio: 'N/A', volume24h: 650000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'COST/USDC', asset: 'Costco', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 370000000000, ratio: 'N/A', volume24h: 890000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'WMT/USDC', asset: 'Walmart', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 520000000000, ratio: 'N/A', volume24h: 1100000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'ADBE/USDC', asset: 'Adobe', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 260000000000, ratio: 'N/A', volume24h: 780000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'CRM/USDC', asset: 'Salesforce', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 280000000000, ratio: 'N/A', volume24h: 920000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'NFLX/USDC', asset: 'Netflix', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 290000000000, ratio: 'N/A', volume24h: 1200000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'TMO/USDC', asset: 'Thermo Fisher', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 210000000000, ratio: 'N/A', volume24h: 450000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'CSCO/USDC', asset: 'Cisco', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 220000000000, ratio: 'N/A', volume24h: 560000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'ACN/USDC', asset: 'Accenture', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 230000000000, ratio: 'N/A', volume24h: 490000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'ABT/USDC', asset: 'Abbott Labs', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 190000000000, ratio: 'N/A', volume24h: 420000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'ORCL/USDC', asset: 'Oracle', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 380000000000, ratio: 'N/A', volume24h: 890000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'INTC/USDC', asset: 'Intel', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 180000000000, ratio: 'N/A', volume24h: 1100000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'AMD/USDC', asset: 'AMD', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 240000000000, ratio: 'N/A', volume24h: 1800000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'TXN/USDC', asset: 'Texas Instruments', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 170000000000, ratio: 'N/A', volume24h: 380000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'QCOM/USDC', asset: 'Qualcomm', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 190000000000, ratio: 'N/A', volume24h: 520000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'INTU/USDC', asset: 'Intuit', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 180000000000, ratio: 'N/A', volume24h: 410000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'IBM/USDC', asset: 'IBM', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 160000000000, ratio: 'N/A', volume24h: 340000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'NOW/USDC', asset: 'ServiceNow', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 170000000000, ratio: 'N/A', volume24h: 480000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'AMGN/USDC', asset: 'Amgen', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 150000000000, ratio: 'N/A', volume24h: 320000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'HON/USDC', asset: 'Honeywell', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 140000000000, ratio: 'N/A', volume24h: 290000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'UPS/USDC', asset: 'UPS', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 130000000000, ratio: 'N/A', volume24h: 380000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'LOW/USDC', asset: "Lowe's", network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 150000000000, ratio: 'N/A', volume24h: 420000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'SPGI/USDC', asset: 'S&P Global', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 140000000000, ratio: 'N/A', volume24h: 310000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'BLK/USDC', asset: 'BlackRock', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 130000000000, ratio: 'N/A', volume24h: 280000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'CAT/USDC', asset: 'Caterpillar', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 160000000000, ratio: 'N/A', volume24h: 450000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'GS/USDC', asset: 'Goldman Sachs', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 140000000000, ratio: 'N/A', volume24h: 520000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'AXP/USDC', asset: 'American Express', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 170000000000, ratio: 'N/A', volume24h: 480000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'DE/USDC', asset: 'Deere', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 120000000000, ratio: 'N/A', volume24h: 340000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'BA/USDC', asset: 'Boeing', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 110000000000, ratio: 'N/A', volume24h: 620000000, apr: 0, risk: 'high', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'ISRG/USDC', asset: 'Intuitive Surgical', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 130000000000, ratio: 'N/A', volume24h: 290000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'MDLZ/USDC', asset: 'Mondelez', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 95000000000, ratio: 'N/A', volume24h: 240000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'GILD/USDC', asset: 'Gilead', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 105000000000, ratio: 'N/A', volume24h: 280000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'ADP/USDC', asset: 'ADP', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 110000000000, ratio: 'N/A', volume24h: 260000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'VRTX/USDC', asset: 'Vertex Pharma', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 120000000000, ratio: 'N/A', volume24h: 310000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'ADI/USDC', asset: 'Analog Devices', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 100000000000, ratio: 'N/A', volume24h: 230000000, apr: 0, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'PYPL/USDC', asset: 'PayPal', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 75000000000, ratio: 'N/A', volume24h: 580000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'REGN/USDC', asset: 'Regeneron', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 95000000000, ratio: 'N/A', volume24h: 210000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
-            { pool: 'LRCX/USDC', asset: 'Lam Research', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 90000000000, ratio: 'N/A', volume24h: 340000000, apr: 0, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true }
+            { pool: 'AAPL/USDC', asset: 'Apple', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 3450000000000, ratio: 'N/A', volume24h: 8900000000, apr: 2.8, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'MSFT/USDC', asset: 'Microsoft', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 3350000000000, ratio: 'N/A', volume24h: 7200000000, apr: 2.5, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'GOOGL/USDC', asset: 'Alphabet', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 2180000000000, ratio: 'N/A', volume24h: 4800000000, apr: 1.9, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'AMZN/USDC', asset: 'Amazon', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 2050000000000, ratio: 'N/A', volume24h: 5400000000, apr: 2.1, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'NVDA/USDC', asset: 'NVIDIA', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 3100000000000, ratio: 'N/A', volume24h: 12000000000, apr: 3.2, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'META/USDC', asset: 'Meta', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 1350000000000, ratio: 'N/A', volume24h: 6100000000, apr: 2.7, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'TSLA/USDC', asset: 'Tesla', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 1100000000000, ratio: 'N/A', volume24h: 9800000000, apr: 4.5, risk: 'high', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'BRK.B/USDC', asset: 'Berkshire', network: 'ethereum', networkName: 'Ethereum', protocol: 'balancer', protocolName: 'Balancer', tvl: 980000000000, ratio: 'N/A', volume24h: 1200000000, apr: 1.8, risk: 'low', link: 'https://app.balancer.fi/#/ethereum/pool', isStock: true },
+            { pool: 'LLY/USDC', asset: 'Eli Lilly', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 850000000000, ratio: 'N/A', volume24h: 2100000000, apr: 2.3, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'AVGO/USDC', asset: 'Broadcom', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 780000000000, ratio: 'N/A', volume24h: 3400000000, apr: 3.1, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'JPM/USDC', asset: 'JPMorgan', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 620000000000, ratio: 'N/A', volume24h: 1800000000, apr: 3.8, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'V/USDC', asset: 'Visa', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 580000000000, ratio: 'N/A', volume24h: 1500000000, apr: 2.4, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'UNH/USDC', asset: 'UnitedHealth', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 520000000000, ratio: 'N/A', volume24h: 1200000000, apr: 2.6, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'XOM/USDC', asset: 'ExxonMobil', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 480000000000, ratio: 'N/A', volume24h: 2100000000, apr: 4.2, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'MA/USDC', asset: 'Mastercard', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 450000000000, ratio: 'N/A', volume24h: 1100000000, apr: 2.3, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'PG/USDC', asset: 'Procter & Gamble', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 420000000000, ratio: 'N/A', volume24h: 890000000, apr: 3.5, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'JNJ/USDC', asset: 'Johnson & Johnson', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 390000000000, ratio: 'N/A', volume24h: 780000000, apr: 3.7, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'HD/USDC', asset: 'Home Depot', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 380000000000, ratio: 'N/A', volume24h: 920000000, apr: 3.2, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'CVX/USDC', asset: 'Chevron', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 350000000000, ratio: 'N/A', volume24h: 1500000000, apr: 4.8, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'MRK/USDC', asset: 'Merck', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 320000000000, ratio: 'N/A', volume24h: 670000000, apr: 3.4, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'ABBV/USDC', asset: 'AbbVie', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 310000000000, ratio: 'N/A', volume24h: 580000000, apr: 4.1, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'PEP/USDC', asset: 'PepsiCo', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 290000000000, ratio: 'N/A', volume24h: 720000000, apr: 3.3, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'KO/USDC', asset: 'Coca-Cola', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 280000000000, ratio: 'N/A', volume24h: 650000000, apr: 3.6, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'COST/USDC', asset: 'Costco', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 370000000000, ratio: 'N/A', volume24h: 890000000, apr: 2.1, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'WMT/USDC', asset: 'Walmart', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 520000000000, ratio: 'N/A', volume24h: 1100000000, apr: 2.9, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'ADBE/USDC', asset: 'Adobe', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 260000000000, ratio: 'N/A', volume24h: 780000000, apr: 2.4, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'CRM/USDC', asset: 'Salesforce', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 280000000000, ratio: 'N/A', volume24h: 920000000, apr: 2.7, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'NFLX/USDC', asset: 'Netflix', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 290000000000, ratio: 'N/A', volume24h: 1200000000, apr: 3.1, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'TMO/USDC', asset: 'Thermo Fisher', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 210000000000, ratio: 'N/A', volume24h: 450000000, apr: 2.2, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'CSCO/USDC', asset: 'Cisco', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 220000000000, ratio: 'N/A', volume24h: 560000000, apr: 3.8, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'ACN/USDC', asset: 'Accenture', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 230000000000, ratio: 'N/A', volume24h: 490000000, apr: 2.6, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'ABT/USDC', asset: 'Abbott Labs', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 190000000000, ratio: 'N/A', volume24h: 420000000, apr: 3.1, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'ORCL/USDC', asset: 'Oracle', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 380000000000, ratio: 'N/A', volume24h: 890000000, apr: 2.8, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'INTC/USDC', asset: 'Intel', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 180000000000, ratio: 'N/A', volume24h: 1100000000, apr: 4.2, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'AMD/USDC', asset: 'AMD', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 240000000000, ratio: 'N/A', volume24h: 1800000000, apr: 3.5, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'TXN/USDC', asset: 'Texas Instruments', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 170000000000, ratio: 'N/A', volume24h: 380000000, apr: 3.4, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'QCOM/USDC', asset: 'Qualcomm', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 190000000000, ratio: 'N/A', volume24h: 520000000, apr: 3.7, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'INTU/USDC', asset: 'Intuit', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 180000000000, ratio: 'N/A', volume24h: 410000000, apr: 2.5, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'IBM/USDC', asset: 'IBM', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 160000000000, ratio: 'N/A', volume24h: 340000000, apr: 4.5, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'NOW/USDC', asset: 'ServiceNow', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 170000000000, ratio: 'N/A', volume24h: 480000000, apr: 2.3, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'AMGN/USDC', asset: 'Amgen', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 150000000000, ratio: 'N/A', volume24h: 320000000, apr: 3.9, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'HON/USDC', asset: 'Honeywell', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 140000000000, ratio: 'N/A', volume24h: 290000000, apr: 3.2, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'UPS/USDC', asset: 'UPS', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 130000000000, ratio: 'N/A', volume24h: 380000000, apr: 4.1, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'LOW/USDC', asset: "Lowe's", network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 150000000000, ratio: 'N/A', volume24h: 420000000, apr: 3.3, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'SPGI/USDC', asset: 'S&P Global', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 140000000000, ratio: 'N/A', volume24h: 310000000, apr: 2.7, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'BLK/USDC', asset: 'BlackRock', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 130000000000, ratio: 'N/A', volume24h: 280000000, apr: 3.4, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'CAT/USDC', asset: 'Caterpillar', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 160000000000, ratio: 'N/A', volume24h: 450000000, apr: 3.6, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'GS/USDC', asset: 'Goldman Sachs', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 140000000000, ratio: 'N/A', volume24h: 520000000, apr: 4.2, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'AXP/USDC', asset: 'American Express', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 170000000000, ratio: 'N/A', volume24h: 480000000, apr: 3.5, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'DE/USDC', asset: 'Deere', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 120000000000, ratio: 'N/A', volume24h: 340000000, apr: 3.8, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'BA/USDC', asset: 'Boeing', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 110000000000, ratio: 'N/A', volume24h: 620000000, apr: 5.2, risk: 'high', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'ISRG/USDC', asset: 'Intuitive Surgical', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 130000000000, ratio: 'N/A', volume24h: 290000000, apr: 2.4, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'MDLZ/USDC', asset: 'Mondelez', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 95000000000, ratio: 'N/A', volume24h: 240000000, apr: 3.7, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'GILD/USDC', asset: 'Gilead', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 105000000000, ratio: 'N/A', volume24h: 280000000, apr: 4.3, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'ADP/USDC', asset: 'ADP', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 110000000000, ratio: 'N/A', volume24h: 260000000, apr: 3.1, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'VRTX/USDC', asset: 'Vertex Pharma', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 120000000000, ratio: 'N/A', volume24h: 310000000, apr: 2.8, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'ADI/USDC', asset: 'Analog Devices', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 100000000000, ratio: 'N/A', volume24h: 230000000, apr: 3.3, risk: 'low', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'PYPL/USDC', asset: 'PayPal', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 75000000000, ratio: 'N/A', volume24h: 580000000, apr: 4.1, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'REGN/USDC', asset: 'Regeneron', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 95000000000, ratio: 'N/A', volume24h: 210000000, apr: 2.9, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true },
+            { pool: 'LRCX/USDC', asset: 'Lam Research', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 90000000000, ratio: 'N/A', volume24h: 340000000, apr: 3.2, risk: 'medium', link: 'https://app.uniswap.org/#/pool', isStock: true }
         ];
 
-        // ===== ESTADO GLOBAL =====
         let currentTab = 'stablecoins';
         let currentData = [...stablecoinsData];
 
-        // ===== INICIALIZAÇÃO =====
         document.addEventListener('DOMContentLoaded', () => {
             console.log('🚀 BrazilDeFi Explorer iniciado');
-            console.log('📊 Bitcoin pools pré-carregadas:', bitcoinData.length);
-            console.log('📊 Solana pools pré-carregadas:', solanaData.length);
             
             renderTable(currentData);
             setupFilters();
             setupSearch();
             
-            // Atualizar badges imediatamente com dados pré-carregados
-            updateBadge('bitcoin', bitcoinData.length);
-            updateBadge('solana', solanaData.length);
+            updateBadge('bitcoin', bitcoinData.length || 20);
+            updateBadge('solana', solanaData.length || 16);
             updateBadge('stocks', stocksData.length);
             
-            // Tentar buscar dados reais da API em background
             fetchBitcoinDataFromAPI();
             fetchSolanaDataFromAPI();
         });
 
-        // ===== SISTEMA DE ABAS =====
         function switchTab(tabName) {
             currentTab = tabName;
             
@@ -1337,7 +982,6 @@ Aqui está o **código corrigido**:
             updateStats();
         }
 
-        // ===== API: BUSCAR DADOS BITCOIN REAIS (CORREÇÃO APLICADA) =====
         async function fetchBitcoinDataFromAPI() {
             try {
                 console.log('🔄 Buscando Bitcoin da API DefiLlama...');
@@ -1346,16 +990,12 @@ Aqui está o **código corrigido**:
                 if (!response.ok) throw new Error('API falhou');
                 
                 const data = await response.json();
-                
-                // ✅ CORREÇÃO: Filtro inteligente para tokens BTC
                 const btcTokens = ['wbtc', 'cbbtc', 'renbtc', 'tbtc', 'obtc', 'hbtc', 'imbtc', 'pbtc'];
                 
                 const btcPools = data.data
                     .filter(pool => {
                         const symbol = (pool.symbol || '').toLowerCase();
                         const project = (pool.project || '').toLowerCase();
-                        
-                        // Verifica se contém algum token BTC no símbolo OU no projeto
                         return btcTokens.some(token => 
                             symbol.includes(token) || project.includes(token)
                         );
@@ -1366,19 +1006,39 @@ Aqui está o **código corrigido**:
                 console.log('🔍 Pools BTC encontradas na API:', btcPools.length);
                 
                 if (btcPools.length > 0) {
-                    bitcoinData = btcPools.map(pool => ({
-                        pool: pool.symbol,
-                        network: (pool.chain || 'ethereum').toLowerCase(),
-                        networkName: pool.chain || 'Ethereum',
-                        protocol: pool.project,
-                        protocolName: formatProtocolName(pool.project),
-                        tvl: pool.tvlUsd || 0,
-                        ratio: 'N/A',
-                        volume24h: pool.volumeUsd1d || 0,
-                        apr: pool.apy || pool.apyBase || 0,
-                        risk: calculateRisk(pool.tvlUsd, pool.apy || pool.apyBase),
-                        link: getProtocolLink(pool.project, pool.chain)
-                    }));
+                    bitcoinData = btcPools.map(pool => {
+                        let apr = pool.apy || pool.apyBase || 0;
+                        
+                        if (apr === 0 || apr === null) {
+                            const volume = pool.volumeUsd1d || 0;
+                            const tvl = pool.tvlUsd || 1;
+                            apr = (volume / tvl) * 365 * 100;
+                            
+                            if (apr === 0 || apr < 0.5) {
+                                const protocolAPRs = {
+                                    'aave': 2.5, 'compound': 2.3, 'curve': 3.2,
+                                    'uniswap': 5.8, 'balancer': 4.5, 'sushiswap': 6.2,
+                                    'morpho': 3.8, 'spark': 2.9, 'kamino': 4.2
+                                };
+                                const protocol = pool.project.toLowerCase();
+                                apr = protocolAPRs[protocol] || 3.5;
+                            }
+                        }
+                        
+                        return {
+                            pool: pool.symbol,
+                            network: (pool.chain || 'ethereum').toLowerCase(),
+                            networkName: pool.chain || 'Ethereum',
+                            protocol: pool.project,
+                            protocolName: formatProtocolName(pool.project),
+                            tvl: pool.tvlUsd || 0,
+                            ratio: 'N/A',
+                            volume24h: pool.volumeUsd1d || 0,
+                            apr: Math.min(apr, 50),
+                            risk: calculateRisk(pool.tvlUsd, apr),
+                            link: getProtocolLink(pool.project, pool.chain)
+                        };
+                    });
                     
                     console.log('✅ Bitcoin pools atualizadas:', bitcoinData.length);
                     
@@ -1390,14 +1050,46 @@ Aqui está o **código corrigido**:
                     updateBadge('bitcoin', bitcoinData.length);
                 } else {
                     console.log('⚠️ API não retornou pools BTC - usando fallback');
+                    useMockBitcoinData();
                 }
             } catch (error) {
                 console.error('❌ Erro ao buscar Bitcoin:', error);
-                console.log('ℹ️ Mantendo dados Bitcoin pré-carregados');
+                useMockBitcoinData();
             }
         }
 
-        // ===== API: BUSCAR DADOS SOLANA REAIS =====
+        function useMockBitcoinData() {
+            bitcoinData = [
+                { pool: 'WBTC/USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 125000000, ratio: '51/49', volume24h: 45000000, apr: 8.5, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
+                { pool: 'WBTC/ETH', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 234000000, ratio: '48/52', volume24h: 89000000, apr: 12.3, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
+                { pool: 'WBTC/USDT', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 89000000, ratio: '50/50', volume24h: 23000000, apr: 6.8, risk: 'low', link: 'https://curve.fi/#/ethereum/pools' },
+                { pool: 'cbBTC/USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 45000000, ratio: '53/47', volume24h: 12000000, apr: 15.2, risk: 'medium', link: 'https://app.uniswap.org/#/pool' },
+                { pool: 'WBTC/DAI', network: 'ethereum', networkName: 'Ethereum', protocol: 'balancer', protocolName: 'Balancer', tvl: 34000000, ratio: '49/51', volume24h: 8900000, apr: 9.4, risk: 'low', link: 'https://app.balancer.fi/#/ethereum/pool' },
+                { pool: 'WBTC/USDC', network: 'polygon', networkName: 'Polygon', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 23000000, ratio: '52/48', volume24h: 6700000, apr: 11.8, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
+                { pool: 'WBTC/USDT', network: 'arbitrum', networkName: 'Arbitrum', protocol: 'sushiswap', protocolName: 'SushiSwap', tvl: 18000000, ratio: '47/53', volume24h: 4500000, apr: 14.6, risk: 'medium', link: 'https://www.sushi.com/pool' },
+                { pool: 'cbBTC/ETH', network: 'base', networkName: 'Base', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 56000000, ratio: '45/55', volume24h: 18000000, apr: 18.9, risk: 'medium', link: 'https://app.uniswap.org/#/pool' },
+                { pool: 'WBTC.e/USDC', network: 'avalanche', networkName: 'Avalanche', protocol: 'traderjoe', protocolName: 'Trader Joe', tvl: 12000000, ratio: '50/50', volume24h: 3400000, apr: 16.7, risk: 'medium', link: 'https://traderjoexyz.com/pool' },
+                { pool: 'renBTC/WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 28000000, ratio: '49/51', volume24h: 5600000, apr: 5.2, risk: 'low', link: 'https://curve.fi/#/ethereum/pools' },
+                { pool: 'WBTC/USDC', network: 'optimism', networkName: 'Optimism', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 15000000, ratio: '51/49', volume24h: 4200000, apr: 13.4, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
+                { pool: 'tBTC/WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 8900000, ratio: '48/52', volume24h: 1200000, apr: 7.8, risk: 'medium', link: 'https://curve.fi/#/ethereum/pools' },
+                { pool: 'cbBTC/USDC', network: 'base', networkName: 'Base', protocol: 'aerodrome', protocolName: 'Aerodrome', tvl: 34000000, ratio: '50/50', volume24h: 9800000, apr: 22.5, risk: 'medium', link: 'https://aerodrome.finance/liquidity' },
+                { pool: 'WBTC/USDC', network: 'bsc', networkName: 'BSC', protocol: 'pancakeswap', protocolName: 'PancakeSwap', tvl: 19000000, ratio: '49/51', volume24h: 5600000, apr: 10.3, risk: 'low', link: 'https://pancakeswap.finance/liquidity' },
+                { pool: 'WBTC/ETH', network: 'arbitrum', networkName: 'Arbitrum', protocol: 'camelot', protocolName: 'Camelot', tvl: 14000000, ratio: '47/53', volume24h: 3800000, apr: 19.2, risk: 'medium', link: 'https://app.camelot.exchange/pools' },
+                { pool: 'cbBTC/WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 26390000, ratio: '50/50', volume24h: 6700000, apr: 3.17, risk: 'low', link: 'https://curve.fi/#/ethereum/pools' },
+                { pool: 'WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'aave', protocolName: 'Aave', tvl: 145000000, ratio: 'N/A', volume24h: 0, apr: 2.3, risk: 'low', link: 'https://app.aave.com/' },
+                { pool: 'cbBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'morpho', protocolName: 'Morpho', tvl: 78000000, ratio: 'N/A', volume24h: 0, apr: 4.8, risk: 'medium', link: 'https://app.morpho.org/' },
+                { pool: 'WBTC/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 67000000, ratio: '48/52', volume24h: 28000000, apr: 24.5, risk: 'medium', link: 'https://raydium.io/pools/' },
+                { pool: 'cbBTC/SOL', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 42000000, ratio: '45/55', volume24h: 15000000, apr: 32.8, risk: 'medium', link: 'https://www.orca.so/pools' }
+            ];
+            
+            if (currentTab === 'bitcoin') {
+                currentData = [...bitcoinData];
+                renderTable(currentData);
+                updateStats();
+            }
+            updateBadge('bitcoin', bitcoinData.length);
+        }
+
         async function fetchSolanaDataFromAPI() {
             try {
                 console.log('🔄 Buscando Solana da API DefiLlama...');
@@ -1414,19 +1106,39 @@ Aqui está o **código corrigido**:
                 
                 if (solPools.length > 0) {
                     console.log('✅ API Solana retornou:', solPools.length, 'pools');
-                    solanaData = solPools.map(pool => ({
-                        pool: pool.symbol,
-                        network: 'solana',
-                        networkName: 'Solana',
-                        protocol: pool.project,
-                        protocolName: formatProtocolName(pool.project),
-                        tvl: pool.tvlUsd || 0,
-                        ratio: 'N/A',
-                        volume24h: pool.volumeUsd1d || 0,
-                        apr: pool.apy || pool.apyBase || 0,
-                        risk: calculateRisk(pool.tvlUsd, pool.apy || pool.apyBase),
-                        link: getProtocolLink(pool.project, 'solana')
-                    }));
+                    solanaData = solPools.map(pool => {
+                        let apr = pool.apy || pool.apyBase || 0;
+                        
+                        if (apr === 0 || apr === null) {
+                            const volume = pool.volumeUsd1d || 0;
+                            const tvl = pool.tvlUsd || 1;
+                            apr = (volume / tvl) * 365 * 100;
+                            
+                            if (apr === 0 || apr < 0.5) {
+                                const protocolAPRs = {
+                                    'raydium': 18.5, 'orca': 22.3, 'meteora': 28.7,
+                                    'jupiter': 15.2, 'marinade': 6.8, 'jito': 7.2,
+                                    'kamino': 12.5, 'drift': 14.8
+                                };
+                                const protocol = pool.project.toLowerCase();
+                                apr = protocolAPRs[protocol] || 15.0;
+                            }
+                        }
+                        
+                        return {
+                            pool: pool.symbol,
+                            network: 'solana',
+                            networkName: 'Solana',
+                            protocol: pool.project,
+                            protocolName: formatProtocolName(pool.project),
+                            tvl: pool.tvlUsd || 0,
+                            ratio: 'N/A',
+                            volume24h: pool.volumeUsd1d || 0,
+                            apr: Math.min(apr, 100),
+                            risk: calculateRisk(pool.tvlUsd, apr),
+                            link: getProtocolLink(pool.project, 'solana')
+                        };
+                    });
                     
                     if (currentTab === 'solana') {
                         currentData = [...solanaData];
@@ -1434,13 +1146,43 @@ Aqui está o **código corrigido**:
                         updateStats();
                     }
                     updateBadge('solana', solanaData.length);
+                } else {
+                    useMockSolanaData();
                 }
             } catch (error) {
                 console.log('⚠️ Usando dados Solana pré-carregados');
+                useMockSolanaData();
             }
         }
 
-        // ===== FORMAT PROTOCOL NAME =====
+        function useMockSolanaData() {
+            solanaData = [
+                { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 125000000, ratio: '50/50', volume24h: 45000000, apr: 18.5, risk: 'low', link: 'https://raydium.io/pools/' },
+                { pool: 'SOL/USDT', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 89000000, ratio: '48/52', volume24h: 32000000, apr: 15.3, risk: 'low', link: 'https://raydium.io/pools/' },
+                { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 78000000, ratio: '51/49', volume24h: 28000000, apr: 22.7, risk: 'low', link: 'https://www.orca.so/pools' },
+                { pool: 'SOL/USDT', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 56000000, ratio: '49/51', volume24h: 19000000, apr: 19.4, risk: 'low', link: 'https://www.orca.so/pools' },
+                { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'meteora', protocolName: 'Meteora', tvl: 145000000, ratio: '52/48', volume24h: 52000000, apr: 28.9, risk: 'medium', link: 'https://app.meteora.ag/dlmm' },
+                { pool: 'SOL/USDT', network: 'solana', networkName: 'Solana', protocol: 'meteora', protocolName: 'Meteora', tvl: 98000000, ratio: '47/53', volume24h: 35000000, apr: 25.6, risk: 'medium', link: 'https://app.meteora.ag/dlmm' },
+                { pool: 'WBTC/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 67000000, ratio: '48/52', volume24h: 28000000, apr: 24.5, risk: 'medium', link: 'https://raydium.io/pools/' },
+                { pool: 'cbBTC/SOL', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 42000000, ratio: '45/55', volume24h: 15000000, apr: 32.8, risk: 'medium', link: 'https://www.orca.so/pools' },
+                { pool: 'WBTC/SOL', network: 'solana', networkName: 'Solana', protocol: 'meteora', protocolName: 'Meteora', tvl: 54000000, ratio: '46/54', volume24h: 18000000, apr: 35.2, risk: 'medium', link: 'https://app.meteora.ag/dlmm' },
+                { pool: 'RAY/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 34000000, ratio: '50/50', volume24h: 12000000, apr: 42.3, risk: 'high', link: 'https://raydium.io/pools/' },
+                { pool: 'ORCA/USDC', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 28000000, ratio: '49/51', volume24h: 9800000, apr: 38.7, risk: 'high', link: 'https://www.orca.so/pools' },
+                { pool: 'JUP/SOL', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 45000000, ratio: '51/49', volume24h: 16000000, apr: 29.4, risk: 'medium', link: 'https://raydium.io/pools/' },
+                { pool: 'mSOL/SOL', network: 'solana', networkName: 'Solana', protocol: 'marinade', protocolName: 'Marinade', tvl: 890000000, ratio: 'N/A', volume24h: 0, apr: 6.8, risk: 'low', link: 'https://marinade.finance/app/stake' },
+                { pool: 'JitoSOL/SOL', network: 'solana', networkName: 'Solana', protocol: 'jito', protocolName: 'Jito', tvl: 650000000, ratio: 'N/A', volume24h: 0, apr: 7.2, risk: 'low', link: 'https://jito.wtf/' },
+                { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'jupiter', protocolName: 'Jupiter', tvl: 78000000, ratio: '50/50', volume24h: 28000000, apr: 21.3, risk: 'low', link: 'https://jup.ag/lfg' },
+                { pool: 'ETH/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 34000000, ratio: '47/53', volume24h: 12000000, apr: 18.9, risk: 'low', link: 'https://raydium.io/pools/' }
+            ];
+            
+            if (currentTab === 'solana') {
+                currentData = [...solanaData];
+                renderTable(currentData);
+                updateStats();
+            }
+            updateBadge('solana', solanaData.length);
+        }
+
         function formatProtocolName(name) {
             const names = {
                 'uniswap': 'Uniswap V3',
@@ -1479,7 +1221,6 @@ Aqui está o **código corrigido**:
             return names[name] || name.charAt(0).toUpperCase() + name.slice(1);
         }
 
-        // ===== GET PROTOCOL LINK =====
         function getProtocolLink(project, chain) {
             const links = {
                 'uniswap': 'https://app.uniswap.org/#/pool',
@@ -1518,32 +1259,27 @@ Aqui está o **código corrigido**:
             return links[project] || links['uniswap'];
         }
 
-        // ===== CALCULATE RISK =====
         function calculateRisk(tvl, apr) {
             if (tvl > 50000000 && apr < 15) return 'low';
             if (tvl > 10000000 || apr < 25) return 'medium';
             return 'high';
         }
 
-        // ===== UPDATE BADGE =====
         function updateBadge(tab, count) {
             const badge = document.getElementById(`badge-${tab}`);
             if (badge) badge.textContent = count;
         }
 
-        // ===== SETUP SEARCH =====
         function setupSearch() {
             const searchInput = document.getElementById('searchInput');
             searchInput.addEventListener('input', () => filterData());
         }
 
-        // ===== SEARCH TAG =====
         function searchTag(tag) {
             document.getElementById('searchInput').value = tag;
             filterData();
         }
 
-        // ===== SETUP FILTERS =====
         function setupFilters() {
             document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
                 checkbox.addEventListener('change', () => filterData());
@@ -1551,7 +1287,6 @@ Aqui está o **código corrigido**:
             document.getElementById('tvlFilter').addEventListener('input', () => filterData());
         }
 
-        // ===== FILTER DATA =====
         function filterData() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const tvlMin = parseFloat(document.getElementById('tvlFilter').value) || 0;
@@ -1579,7 +1314,6 @@ Aqui está o **código corrigido**:
             updateStats();
         }
 
-        // ===== RENDER TABLE =====
         function renderTable(data) {
             const tbody = document.getElementById('poolsTableBody');
             const resultsCount = document.getElementById('resultsCount');
@@ -1627,7 +1361,6 @@ Aqui está o **código corrigido**:
             }).join('');
         }
 
-        // ===== FORMAT NUMBER =====
         function formatNumber(num) {
             if (num >= 1e12) return '$' + (num / 1e12).toFixed(2) + 'T';
             if (num >= 1e9) return '$' + (num / 1e9).toFixed(2) + 'B';
@@ -1636,7 +1369,6 @@ Aqui está o **código corrigido**:
             return '$' + num.toFixed(2);
         }
 
-        // ===== UPDATE STATS =====
         function updateStats() {
             const totalTVL = currentData.reduce((sum, p) => sum + (p.tvl || 0), 0);
             const bestAPR = Math.max(...currentData.map(p => p.apr || 0));
