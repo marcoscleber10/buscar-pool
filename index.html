@@ -24,6 +24,8 @@
             --success: #00ff88;
             --warning: #ffa500;
             --danger: #ff4757;
+            --solana-green: #9945FF;
+            --solana-purple: #14F195;
         }
 
         body {
@@ -104,6 +106,7 @@
             max-width: 1400px;
             margin: 0 auto;
             padding: 0 15px;
+            flex-wrap: wrap;
         }
 
         .tab-btn {
@@ -144,6 +147,7 @@
 
         .tab-btn.bitcoin .badge { background: #f7931a; color: #fff; }
         .tab-btn.stocks .badge { background: var(--success); color: #000; }
+        .tab-btn.solana .badge { background: linear-gradient(135deg, #9945FF, #14F195); color: #fff; }
 
         /* Search Section */
         .search-section {
@@ -243,7 +247,7 @@
             display: flex;
             flex-direction: column;
             gap: 8px;
-            max-height: 150px;
+            max-height: 200px;
             overflow-y: auto;
         }
 
@@ -382,6 +386,7 @@
 
         .token-badge.btc { background: linear-gradient(135deg, #f7931a, #ffaa33); }
         .token-badge.stock { background: linear-gradient(135deg, var(--success), #00cc66); }
+        .token-badge.solana { background: linear-gradient(135deg, #9945FF, #14F195); }
 
         .network-badge {
             display: inline-flex;
@@ -541,6 +546,16 @@
                 padding: 2px 6px;
             }
         }
+
+        /* Solana gradient animation */
+        @keyframes solanaGlow {
+            0%, 100% { box-shadow: 0 0 5px rgba(153, 69, 255, 0.3); }
+            50% { box-shadow: 0 0 15px rgba(20, 241, 149, 0.5); }
+        }
+
+        .token-badge.solana {
+            animation: solanaGlow 3s infinite;
+        }
     </style>
 </head>
 <body>
@@ -583,6 +598,11 @@
                 Bitcoin Pools
                 <span class="badge" id="badge-bitcoin">-</span>
             </button>
+            <button class="tab-btn solana" data-tab="solana" onclick="switchTab('solana')">
+                <i class="fas fa-sun"></i>
+                Solana Pools
+                <span class="badge" id="badge-solana">-</span>
+            </button>
             <button class="tab-btn stocks" data-tab="stocks" onclick="switchTab('stocks')">
                 <i class="fas fa-chart-line"></i>
                 Stocks Top 60
@@ -600,7 +620,7 @@
                     type="text" 
                     class="search-input" 
                     id="searchInput"
-                    placeholder="Buscar pares (ex: BRZ/USDC, WBTC/ETH, AAPL/USDC...)"
+                    placeholder="Buscar pares (ex: BRZ/USDC, WBTC/ETH, AAPL/USDC, SOL/USDC...)"
                 >
             </div>
             <div class="search-tags" id="searchTags">
@@ -611,6 +631,7 @@
                 <span class="tag" onclick="searchTag('CREAL')">CREAL</span>
                 <span class="tag" onclick="searchTag('WBTC')">WBTC</span>
                 <span class="tag" onclick="searchTag('cbBTC')">cbBTC</span>
+                <span class="tag" onclick="searchTag('SOL')">SOL</span>
             </div>
         </div>
     </section>
@@ -653,6 +674,10 @@
                         <div class="filter-option">
                             <input type="checkbox" id="optimism" value="optimism" checked>
                             <label for="optimism"><span class="network-icon" style="background: #ff0420;">O</span> Optimism</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="solana" value="solana" checked>
+                            <label for="solana"><span class="network-icon" style="background: linear-gradient(135deg, #9945FF, #14F195);">S</span> Solana</label>
                         </div>
                     </div>
                 </div>
@@ -711,6 +736,30 @@
                         <div class="filter-option">
                             <input type="checkbox" id="aerodrome" value="aerodrome">
                             <label for="aerodrome">Aerodrome</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="meteora" value="meteora" checked>
+                            <label for="meteora">Meteora (Solana)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="orca" value="orca" checked>
+                            <label for="orca">Orca (Solana)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="raydium" value="raydium" checked>
+                            <label for="raydium">Raydium (Solana)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="jupiter" value="jupiter">
+                            <label for="jupiter">Jupiter (Solana)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="marinade" value="marinade">
+                            <label for="marinade">Marinade (Solana)</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="jito" value="jito">
+                            <label for="jito">Jito (Solana)</label>
                         </div>
                     </div>
                 </div>
@@ -790,7 +839,7 @@
     </main>
 
     <script>
-        // ===== DADOS: STABLECOINS BR (EXISTENTE) =====
+        // ===== DADOS: STABLECOINS BR (EXISTENTE - PRESERVADO) =====
         const stablecoinsData = [
             { pool: 'BRZ/USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 4250000, ratio: '52/48', volume24h: 892000, apr: 12.5, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
             { pool: 'BRL1/DAI', network: 'polygon', networkName: 'Polygon', protocol: 'curve', protocolName: 'Curve Finance', tvl: 1890000, ratio: '50/50', volume24h: 234000, apr: 18.3, risk: 'low', link: 'https://curve.fi/#/polygon/pools' },
@@ -809,15 +858,13 @@
             { pool: 'BRZ/DAI', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 2890000, ratio: '51/49', volume24h: 445000, apr: 11.2, risk: 'low', link: 'https://curve.fi/#/ethereum/pools' }
         ];
 
-        // ===== DADOS: BITCOIN POOLS (MELHORADO - 15+ PARES REAIS) =====
+        // ===== DADOS: BITCOIN POOLS (18+ PARES REAIS) =====
         let bitcoinData = [];
         
-        // Tokens de Bitcoin expandidos
-        const bitcoinTokens = [
-            'WBTC', 'cbBTC', 'renBTC', 'tBTC', 'OBTC', 
-            'WBTC.e', 'HBTC', 'imBTC', 'pBTC', 'anyBTC',
-            'BTC.b', 'BTC', 'LBTC'
-        ];
+        const bitcoinTokens = ['WBTC', 'cbBTC', 'renBTC', 'tBTC', 'OBTC', 'WBTC.e', 'HBTC', 'imBTC', 'pBTC', 'anyBTC', 'BTC.b', 'BTC', 'LBTC'];
+
+        // ===== DADOS: SOLANA POOLS (15+ PARES REAIS) =====
+        let solanaData = [];
 
         // ===== DADOS: STOCKS TOP 60 (EXPANDIDO) =====
         const stocksData = [
@@ -892,26 +939,25 @@
             renderTable(currentData);
             setupFilters();
             setupSearch();
-            fetchBitcoinData(); // Carrega dados do Bitcoin via API
+            fetchBitcoinData();
+            fetchSolanaData();
         });
 
         // ===== SISTEMA DE ABAS =====
         function switchTab(tabName) {
             currentTab = tabName;
             
-            // Atualiza botões das abas
             document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
             document.querySelector(`[data-tab="${tabName}"]`).classList.add('active');
             
-            // Atualiza título da seção
             const titles = {
                 stablecoins: 'Pools de Stablecoins BR',
                 bitcoin: 'Pools de Bitcoin Tokenizado (Dados Reais)',
+                solana: 'Pools Solana (Meteora, Orca, Raydium)',
                 stocks: 'Stocks Tokenizadas - Top 60'
             };
             document.getElementById('sectionTitle').textContent = titles[tabName];
             
-            // Atualiza headers da tabela
             const tvlHeader = document.getElementById('tvlHeader');
             const volumeHeader = document.getElementById('volumeHeader');
             if (tabName === 'stocks') {
@@ -922,10 +968,7 @@
                 volumeHeader.textContent = 'Volume 24h';
             }
             
-            // Atualiza tags de busca
             updateSearchTags(tabName);
-            
-            // Carrega dados da aba
             loadDataForTab(tabName);
         }
 
@@ -934,6 +977,7 @@
             const tags = {
                 stablecoins: ['BRZ', 'BRL1', 'BRLA', 'Depix', 'CREAL', 'USDC', 'USDT'],
                 bitcoin: ['WBTC', 'cbBTC', 'BTC', 'ETH', 'USDC', 'renBTC', 'tBTC'],
+                solana: ['SOL', 'WBTC', 'USDC', 'USDT', 'RAY', 'ORCA', 'JUP'],
                 stocks: ['AAPL', 'MSFT', 'NVDA', 'AMZN', 'GOOGL', 'META', 'TSLA']
             };
             tagsContainer.innerHTML = tags[tab].map(tag => 
@@ -952,11 +996,18 @@
                 } else {
                     showLoading();
                 }
+            } else if (tab === 'solana') {
+                if (solanaData.length > 0) {
+                    currentData = [...solanaData];
+                    renderTable(currentData);
+                } else {
+                    showLoading();
+                }
             } else if (tab === 'stocks') {
                 currentData = [...stocksData];
                 renderTable(currentData);
             }
-            filterData(); // Aplica filtros atuais
+            filterData();
         }
 
         function showLoading() {
@@ -971,42 +1022,33 @@
             `;
         }
 
-        // ===== API DEFILLAMA PARA BITCOIN POOLS (CORRIGIDO) =====
+        // ===== API DEFILLAMA PARA BITCOIN POOLS =====
         async function fetchBitcoinData() {
             try {
-                console.log('🔄 Buscando dados da DefiLlama API...');
+                console.log('🔄 Buscando dados Bitcoin da DefiLlama API...');
                 
                 const response = await fetch('https://yields.llama.fi/pools');
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
                 
                 const data = await response.json();
-                console.log('✅ Dados recebidos da DefiLlama:', data.data?.length || 0, 'pools');
+                console.log('✅ Dados recebidos:', data.data?.length || 0, 'pools');
                 
                 if (!data.data || data.data.length === 0) {
-                    console.warn('⚠️ API retornou array vazio');
+                    console.warn('⚠️ API retornou vazio');
                     useMockBitcoinData();
                     return;
                 }
                 
-                // Filtra pools com Bitcoin tokenizado - FILTRO MELHORADO
                 const btcPools = data.data
                     .filter(pool => {
                         const symbols = (pool.symbol || '').toUpperCase();
-                        
-                        // Verifica se contém algum token de Bitcoin
-                        const hasBitcoinToken = bitcoinTokens.some(token => 
-                            symbols.includes(token.toUpperCase())
-                        );
-                        
-                        return hasBitcoinToken;
+                        return bitcoinTokens.some(token => symbols.includes(token.toUpperCase()));
                     })
                     .sort((a, b) => (b.tvlUsd || 0) - (a.tvlUsd || 0))
-                    .slice(0, 50); // Pega até 50 pools
+                    .slice(0, 50);
                 
-                console.log('🔍 Pools de Bitcoin encontradas:', btcPools.length);
+                console.log('🔍 Pools Bitcoin encontradas:', btcPools.length);
                 
                 if (btcPools.length > 0) {
                     bitcoinData = btcPools.map(pool => {
@@ -1030,29 +1072,100 @@
                         };
                     });
                     
-                    console.log('💾 Dados de Bitcoin processados:', bitcoinData.length, 'pools');
+                    console.log('💾 Bitcoin pools processadas:', bitcoinData.length);
                     
                     if (currentTab === 'bitcoin') {
                         currentData = [...bitcoinData];
                         renderTable(currentData);
                         updateStats();
                     }
-                    
                     updateBadge('bitcoin', bitcoinData.length);
                     
                 } else {
-                    console.warn('⚠️ Nenhuma pool de Bitcoin encontrada na API');
+                    console.warn('⚠️ Nenhuma pool Bitcoin na API');
                     useMockBitcoinData();
                 }
                 
             } catch (error) {
-                console.error('❌ Erro ao buscar dados da DefiLlama:', error);
+                console.error('❌ Erro DefiLlama Bitcoin:', error);
                 useMockBitcoinData();
             }
         }
 
+        // ===== API DEFILLAMA PARA SOLANA POOLS =====
+        async function fetchSolanaData() {
+            try {
+                console.log('🔄 Buscando dados Solana da DefiLlama API...');
+                
+                const response = await fetch('https://yields.llama.fi/pools');
+                
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const data = await response.json();
+                
+                if (!data.data || data.data.length === 0) {
+                    useMockSolanaData();
+                    return;
+                }
+                
+                // Filtrar pools Solana
+                const solanaProtocols = ['raydium', 'orca', 'meteora', 'jupiter', 'marinade', 'jito', 'kamino', 'drift', 'solend', 'marginfi'];
+                
+                const solPools = data.data
+                    .filter(pool => {
+                        const chain = (pool.chain || '').toLowerCase();
+                        const project = (pool.project || '').toLowerCase();
+                        return chain === 'solana' || solanaProtocols.includes(project);
+                    })
+                    .sort((a, b) => (b.tvlUsd || 0) - (a.tvlUsd || 0))
+                    .slice(0, 50);
+                
+                console.log('🔍 Pools Solana encontradas:', solPools.length);
+                
+                if (solPools.length > 0) {
+                    solanaData = solPools.map(pool => {
+                        const projectName = pool.project || 'unknown';
+                        const chainName = pool.chain || 'solana';
+                        
+                        return {
+                            pool: pool.symbol || 'SOL/USDC',
+                            network: chainName.toLowerCase(),
+                            networkName: chainName.charAt(0).toUpperCase() + chainName.slice(1),
+                            protocol: projectName,
+                            protocolName: formatProtocolName(projectName),
+                            tvl: pool.tvlUsd || 0,
+                            ratio: 'N/A',
+                            volume24h: pool.volumeUsd1d || (pool.tvlUsd * 0.05),
+                            apr: pool.apy || pool.apyBase || 0,
+                            risk: calculateRisk(pool.tvlUsd, pool.apy || pool.apyBase),
+                            link: getProtocolLink(projectName, chainName),
+                            apyBase: pool.apyBase || 0,
+                            apyReward: pool.apyReward || 0
+                        };
+                    });
+                    
+                    console.log('💾 Solana pools processadas:', solanaData.length);
+                    
+                    if (currentTab === 'solana') {
+                        currentData = [...solanaData];
+                        renderTable(currentData);
+                        updateStats();
+                    }
+                    updateBadge('solana', solanaData.length);
+                    
+                } else {
+                    useMockSolanaData();
+                }
+                
+            } catch (error) {
+                console.error('❌ Erro DefiLlama Solana:', error);
+                useMockSolanaData();
+            }
+        }
+
+        // ===== FALLBACK: BITCOIN MOCK DATA (18+ PARES) =====
         function useMockBitcoinData() {
-            console.log('📝 Usando dados mock para Bitcoin (15+ pares)');
+            console.log('📝 Usando dados mock Bitcoin (18+ pares)');
             
             bitcoinData = [
                 { pool: 'WBTC/USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 125000000, ratio: '51/49', volume24h: 45000000, apr: 8.5, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
@@ -1063,7 +1176,7 @@
                 { pool: 'WBTC/USDC', network: 'polygon', networkName: 'Polygon', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 23000000, ratio: '52/48', volume24h: 6700000, apr: 11.8, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
                 { pool: 'WBTC/USDT', network: 'arbitrum', networkName: 'Arbitrum', protocol: 'sushiswap', protocolName: 'SushiSwap', tvl: 18000000, ratio: '47/53', volume24h: 4500000, apr: 14.6, risk: 'medium', link: 'https://www.sushi.com/pool' },
                 { pool: 'cbBTC/ETH', network: 'base', networkName: 'Base', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 56000000, ratio: '45/55', volume24h: 18000000, apr: 18.9, risk: 'medium', link: 'https://app.uniswap.org/#/pool' },
-                { pool: 'WBTC.e/USDC', network: 'avalanche', networkName: 'Avalanche', protocol: 'traderjoe', protocolName: 'Trader Joe', tvl: 12000000, ratio: '50/50', volume24h: 3400000, apr: 16.7, risk: 'medium', link: 'https://traderjoexyz.com/avalanche/pool' },
+                { pool: 'WBTC.e/USDC', network: 'avalanche', networkName: 'Avalanche', protocol: 'traderjoe', protocolName: 'Trader Joe', tvl: 12000000, ratio: '50/50', volume24h: 3400000, apr: 16.7, risk: 'medium', link: 'https://traderjoexyz.com/pool' },
                 { pool: 'renBTC/WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 28000000, ratio: '49/51', volume24h: 5600000, apr: 5.2, risk: 'low', link: 'https://curve.fi/#/ethereum/pools' },
                 { pool: 'WBTC/USDC', network: 'optimism', networkName: 'Optimism', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 15000000, ratio: '51/49', volume24h: 4200000, apr: 13.4, risk: 'low', link: 'https://app.uniswap.org/#/pool' },
                 { pool: 'tBTC/WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 8900000, ratio: '48/52', volume24h: 1200000, apr: 7.8, risk: 'medium', link: 'https://curve.fi/#/ethereum/pools' },
@@ -1072,7 +1185,9 @@
                 { pool: 'WBTC/ETH', network: 'arbitrum', networkName: 'Arbitrum', protocol: 'camelot', protocolName: 'Camelot', tvl: 14000000, ratio: '47/53', volume24h: 3800000, apr: 19.2, risk: 'medium', link: 'https://app.camelot.exchange/pools' },
                 { pool: 'cbBTC/WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 26390000, ratio: '50/50', volume24h: 6700000, apr: 3.17, risk: 'low', link: 'https://curve.fi/#/ethereum/pools' },
                 { pool: 'WBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'aave', protocolName: 'Aave', tvl: 145000000, ratio: 'N/A', volume24h: 0, apr: 2.3, risk: 'low', link: 'https://app.aave.com/' },
-                { pool: 'cbBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'morpho', protocolName: 'Morpho', tvl: 78000000, ratio: 'N/A', volume24h: 0, apr: 4.8, risk: 'medium', link: 'https://app.morpho.org/' }
+                { pool: 'cbBTC', network: 'ethereum', networkName: 'Ethereum', protocol: 'morpho', protocolName: 'Morpho', tvl: 78000000, ratio: 'N/A', volume24h: 0, apr: 4.8, risk: 'medium', link: 'https://app.morpho.org/' },
+                { pool: 'WBTC/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 67000000, ratio: '48/52', volume24h: 28000000, apr: 24.5, risk: 'medium', link: 'https://raydium.io/pools/' },
+                { pool: 'cbBTC/SOL', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 42000000, ratio: '45/55', volume24h: 15000000, apr: 32.8, risk: 'medium', link: 'https://www.orca.so/pools' }
             ];
             
             if (currentTab === 'bitcoin') {
@@ -1083,6 +1198,38 @@
             updateBadge('bitcoin', bitcoinData.length);
         }
 
+        // ===== FALLBACK: SOLANA MOCK DATA (15+ PARES) =====
+        function useMockSolanaData() {
+            console.log('📝 Usando dados mock Solana (15+ pares)');
+            
+            solanaData = [
+                { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 125000000, ratio: '50/50', volume24h: 45000000, apr: 18.5, risk: 'low', link: 'https://raydium.io/pools/' },
+                { pool: 'SOL/USDT', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 89000000, ratio: '48/52', volume24h: 32000000, apr: 15.3, risk: 'low', link: 'https://raydium.io/pools/' },
+                { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 78000000, ratio: '51/49', volume24h: 28000000, apr: 22.7, risk: 'low', link: 'https://www.orca.so/pools' },
+                { pool: 'SOL/USDT', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 56000000, ratio: '49/51', volume24h: 19000000, apr: 19.4, risk: 'low', link: 'https://www.orca.so/pools' },
+                { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'meteora', protocolName: 'Meteora', tvl: 145000000, ratio: '52/48', volume24h: 52000000, apr: 28.9, risk: 'medium', link: 'https://app.meteora.ag/dlmm' },
+                { pool: 'SOL/USDT', network: 'solana', networkName: 'Solana', protocol: 'meteora', protocolName: 'Meteora', tvl: 98000000, ratio: '47/53', volume24h: 35000000, apr: 25.6, risk: 'medium', link: 'https://app.meteora.ag/dlmm' },
+                { pool: 'WBTC/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 67000000, ratio: '48/52', volume24h: 28000000, apr: 24.5, risk: 'medium', link: 'https://raydium.io/pools/' },
+                { pool: 'cbBTC/SOL', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 42000000, ratio: '45/55', volume24h: 15000000, apr: 32.8, risk: 'medium', link: 'https://www.orca.so/pools' },
+                { pool: 'WBTC/SOL', network: 'solana', networkName: 'Solana', protocol: 'meteora', protocolName: 'Meteora', tvl: 54000000, ratio: '46/54', volume24h: 18000000, apr: 35.2, risk: 'medium', link: 'https://app.meteora.ag/dlmm' },
+                { pool: 'RAY/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 34000000, ratio: '50/50', volume24h: 12000000, apr: 42.3, risk: 'high', link: 'https://raydium.io/pools/' },
+                { pool: 'ORCA/USDC', network: 'solana', networkName: 'Solana', protocol: 'orca', protocolName: 'Orca', tvl: 28000000, ratio: '49/51', volume24h: 9800000, apr: 38.7, risk: 'high', link: 'https://www.orca.so/pools' },
+                { pool: 'JUP/SOL', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 45000000, ratio: '51/49', volume24h: 16000000, apr: 29.4, risk: 'medium', link: 'https://raydium.io/pools/' },
+                { pool: 'mSOL/SOL', network: 'solana', networkName: 'Solana', protocol: 'marinade', protocolName: 'Marinade', tvl: 890000000, ratio: 'N/A', volume24h: 0, apr: 6.8, risk: 'low', link: 'https://marinade.finance/app/stake' },
+                { pool: 'JitoSOL/SOL', network: 'solana', networkName: 'Solana', protocol: 'jito', protocolName: 'Jito', tvl: 650000000, ratio: 'N/A', volume24h: 0, apr: 7.2, risk: 'low', link: 'https://jito.wtf/' },
+                { pool: 'SOL/USDC', network: 'solana', networkName: 'Solana', protocol: 'jupiter', protocolName: 'Jupiter', tvl: 78000000, ratio: '50/50', volume24h: 28000000, apr: 21.3, risk: 'low', link: 'https://jup.ag/lfg' },
+                { pool: 'ETH/USDC', network: 'solana', networkName: 'Solana', protocol: 'raydium', protocolName: 'Raydium', tvl: 34000000, ratio: '47/53', volume24h: 12000000, apr: 18.9, risk: 'low', link: 'https://raydium.io/pools/' }
+            ];
+            
+            if (currentTab === 'solana') {
+                currentData = [...solanaData];
+                renderTable(currentData);
+                updateStats();
+            }
+            updateBadge('solana', solanaData.length);
+        }
+
+        // ===== FORMAT PROTOCOL NAME =====
         function formatProtocolName(name) {
             const names = {
                 'uniswap': 'Uniswap V3',
@@ -1106,22 +1253,33 @@
                 'ellipsis': 'Ellipsis Finance',
                 'morpho': 'Morpho',
                 'aerodrome': 'Aerodrome',
-                'camelot': 'Camelot'
+                'camelot': 'Camelot',
+                'meteora': 'Meteora DLMM',
+                'orca': 'Orca',
+                'raydium': 'Raydium',
+                'jupiter': 'Jupiter',
+                'marinade': 'Marinade Finance',
+                'jito': 'Jito',
+                'kamino': 'Kamino',
+                'drift': 'Drift Protocol',
+                'solend': 'Solend',
+                'marginfi': 'Marginfi'
             };
             return names[name] || name.charAt(0).toUpperCase() + name.slice(1);
         }
 
+        // ===== GET PROTOCOL LINK =====
         function getProtocolLink(project, chain) {
             const links = {
                 'uniswap': 'https://app.uniswap.org/#/pool',
                 'curve': `https://curve.fi/#/${chain || 'ethereum'}/pools`,
-                'balancer': 'https://app.balancer.fi/#/ethereum/pool',
+                'balancer': `https://app.balancer.fi/#/${chain || 'ethereum'}/pool`,
                 'pancakeswap': 'https://pancakeswap.finance/liquidity',
                 'sushiswap': 'https://www.sushi.com/pool',
                 'aave': 'https://app.aave.com/',
                 'convex': 'https://www.convexfinance.com/stake',
                 'quickswap': 'https://quickswap.exchange/#/pool',
-                'traderjoe': 'https://traderjoexyz.com/avalanche/pool',
+                'traderjoe': 'https://traderjoexyz.com/pool',
                 'gmx': 'https://app.gmx.io/',
                 'radiant': 'https://app.radiant.capital/',
                 'compound': 'https://app.compound.finance/',
@@ -1134,33 +1292,47 @@
                 'ellipsis': 'https://ellipsis.finance/pool',
                 'morpho': 'https://app.morpho.org/',
                 'aerodrome': 'https://aerodrome.finance/liquidity',
-                'camelot': 'https://app.camelot.exchange/pools'
+                'camelot': 'https://app.camelot.exchange/pools',
+                'meteora': 'https://app.meteora.ag/dlmm',
+                'orca': 'https://www.orca.so/pools',
+                'raydium': 'https://raydium.io/pools/',
+                'jupiter': 'https://jup.ag/lfg',
+                'marinade': 'https://marinade.finance/app/stake',
+                'jito': 'https://jito.wtf/',
+                'kamino': 'https://app.kamino.finance/',
+                'drift': 'https://app.drift.trade/',
+                'solend': 'https://app.solend.fi/',
+                'marginfi': 'https://app.marginfi.com/'
             };
             return links[project] || links['uniswap'];
         }
 
+        // ===== CALCULATE RISK =====
         function calculateRisk(tvl, apr) {
             if (tvl > 50000000 && apr < 15) return 'low';
             if (tvl > 10000000 || apr < 25) return 'medium';
             return 'high';
         }
 
+        // ===== UPDATE BADGE =====
         function updateBadge(tab, count) {
             const badge = document.getElementById(`badge-${tab}`);
             if (badge) badge.textContent = count;
         }
 
-        // ===== FUNÇÕES EXISTENTES =====
+        // ===== SETUP SEARCH =====
         function setupSearch() {
             const searchInput = document.getElementById('searchInput');
             searchInput.addEventListener('input', () => filterData());
         }
 
+        // ===== SEARCH TAG =====
         function searchTag(tag) {
             document.getElementById('searchInput').value = tag;
             filterData();
         }
 
+        // ===== SETUP FILTERS =====
         function setupFilters() {
             document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
                 checkbox.addEventListener('change', () => filterData());
@@ -1168,6 +1340,7 @@
             document.getElementById('tvlFilter').addEventListener('input', () => filterData());
         }
 
+        // ===== FILTER DATA =====
         function filterData() {
             const searchTerm = document.getElementById('searchInput').value.toLowerCase();
             const tvlMin = parseFloat(document.getElementById('tvlFilter').value) || 0;
@@ -1195,6 +1368,7 @@
             updateStats();
         }
 
+        // ===== RENDER TABLE =====
         function renderTable(data) {
             const tbody = document.getElementById('poolsTableBody');
             const resultsCount = document.getElementById('resultsCount');
@@ -1207,14 +1381,18 @@
             }
 
             tbody.innerHTML = data.map(pool => {
-                const tokenClass = pool.isStock ? 'stock' : (pool.pool.includes('WBTC') || pool.pool.includes('cbBTC') || pool.pool.includes('BTC') ? 'btc' : '');
+                let tokenClass = '';
+                if (pool.isStock) tokenClass = 'stock';
+                else if (pool.pool.includes('WBTC') || pool.pool.includes('cbBTC') || pool.pool.includes('BTC')) tokenClass = 'btc';
+                else if (pool.network === 'solana') tokenClass = 'solana';
+                
                 const token1 = pool.isStock ? pool.asset : pool.pool.split('/')[0];
                 const token2 = pool.isStock ? 'USDC' : (pool.pool.split('/')[1] || '');
                 
                 return `
                 <tr>
                     <td>
-                        <a href="${pool.link}" target="_blank" class="pool-link">
+                        <a href="${pool.link}" target="_blank" rel="noopener noreferrer" class="pool-link">
                             <div class="pool-name">
                                 <span class="token-badge ${tokenClass}">${token1}</span>
                                 ${token2 ? `<span style="color: var(--text-secondary);">/</span><span class="token-badge">${token2}</span>` : ''}
@@ -1238,6 +1416,7 @@
             }).join('');
         }
 
+        // ===== FORMAT NUMBER =====
         function formatNumber(num) {
             if (num >= 1e12) return '$' + (num / 1e12).toFixed(2) + 'T';
             if (num >= 1e9) return '$' + (num / 1e9).toFixed(2) + 'B';
@@ -1246,6 +1425,7 @@
             return '$' + num.toFixed(2);
         }
 
+        // ===== UPDATE STATS =====
         function updateStats() {
             const totalTVL = currentData.reduce((sum, p) => sum + (p.tvl || 0), 0);
             const bestAPR = Math.max(...currentData.map(p => p.apr || 0));
