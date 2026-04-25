@@ -38,7 +38,7 @@
         .header {
             background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
             border-bottom: 1px solid var(--border-color);
-            padding: 20px 0;
+            padding: 15px 0;
             position: sticky;
             top: 0;
             z-index: 100;
@@ -48,7 +48,7 @@
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 15px;
         }
 
         .header-content {
@@ -56,31 +56,24 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 20px;
+            gap: 15px;
         }
 
         .logo {
-            font-size: 28px;
+            font-size: 22px;
             font-weight: 800;
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .logo i {
-            font-size: 32px;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            gap: 8px;
         }
 
         .stats-bar {
             display: flex;
-            gap: 30px;
-            font-size: 14px;
+            gap: 20px;
+            font-size: 12px;
         }
 
         .stat-item {
@@ -90,7 +83,7 @@
 
         .stat-label {
             color: var(--text-secondary);
-            font-size: 12px;
+            font-size: 10px;
         }
 
         .stat-value {
@@ -100,70 +93,58 @@
 
         /* Search Section */
         .search-section {
-            padding: 40px 0;
+            padding: 25px 0;
             background: var(--bg-secondary);
-        }
-
-        .search-container {
-            position: relative;
-            max-width: 800px;
-            margin: 0 auto;
         }
 
         .search-box {
             position: relative;
             background: var(--bg-card);
             border: 2px solid var(--border-color);
-            border-radius: 16px;
-            padding: 20px;
+            border-radius: 12px;
+            padding: 15px;
             transition: all 0.3s;
         }
 
         .search-box:focus-within {
             border-color: var(--accent-blue);
-            box-shadow: 0 0 30px rgba(0, 212, 255, 0.15);
         }
 
         .search-icon {
             position: absolute;
-            left: 25px;
+            left: 20px;
             top: 50%;
             transform: translateY(-50%);
-            font-size: 24px;
+            font-size: 18px;
             color: var(--accent-blue);
         }
 
         .search-input {
             width: 100%;
-            padding: 15px 20px 15px 60px;
+            padding: 12px 15px 12px 45px;
             background: transparent;
             border: none;
             color: var(--text-primary);
-            font-size: 18px;
-            font-weight: 500;
+            font-size: 15px;
         }
 
         .search-input:focus {
             outline: none;
         }
 
-        .search-input::placeholder {
-            color: var(--text-secondary);
-        }
-
         .search-tags {
             display: flex;
-            gap: 10px;
-            margin-top: 15px;
+            gap: 8px;
+            margin-top: 12px;
             flex-wrap: wrap;
         }
 
         .tag {
             background: rgba(0, 212, 255, 0.1);
             color: var(--accent-blue);
-            padding: 6px 14px;
-            border-radius: 20px;
-            font-size: 13px;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
             cursor: pointer;
             transition: all 0.3s;
             border: 1px solid rgba(0, 212, 255, 0.3);
@@ -171,127 +152,120 @@
 
         .tag:hover {
             background: rgba(0, 212, 255, 0.2);
-            transform: translateY(-2px);
         }
 
         /* Filters */
         .filters-section {
-            padding: 30px 0;
+            padding: 20px 0;
             background: var(--bg-primary);
             border-bottom: 1px solid var(--border-color);
         }
 
         .filters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
         }
 
         .filter-card {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 20px;
+            border-radius: 10px;
+            padding: 15px;
         }
 
         .filter-title {
-            font-size: 14px;
+            font-size: 12px;
             font-weight: 600;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             color: var(--text-secondary);
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .filter-options {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            max-height: 200px;
+            gap: 8px;
+            max-height: 150px;
             overflow-y: auto;
         }
 
         .filter-option {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             cursor: pointer;
-            padding: 8px;
-            border-radius: 6px;
-            transition: background 0.2s;
-        }
-
-        .filter-option:hover {
-            background: rgba(255, 255, 255, 0.05);
         }
 
         .filter-option input[type="checkbox"] {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             accent-color: var(--accent-blue);
             cursor: pointer;
         }
 
         .filter-option label {
             cursor: pointer;
-            font-size: 14px;
+            font-size: 13px;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
 
         .network-icon {
-            width: 20px;
-            height: 20px;
+            width: 18px;
+            height: 18px;
             border-radius: 50%;
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 10px;
+            font-weight: bold;
         }
 
         .tvl-input {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border-radius: 6px;
             color: var(--text-primary);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* Main Content */
         .main-content {
-            padding: 40px 0;
+            padding: 25px 0;
+            min-height: 400px;
         }
 
         .section-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
         }
 
         .section-title {
-            font-size: 24px;
+            font-size: 18px;
             font-weight: 700;
         }
 
         .results-count {
             color: var(--text-secondary);
-            font-size: 14px;
+            font-size: 13px;
         }
 
         /* Table */
         .pools-table-container {
             background: var(--bg-card);
             border: 1px solid var(--border-color);
-            border-radius: 16px;
+            border-radius: 12px;
             overflow: hidden;
             overflow-x: auto;
         }
@@ -299,6 +273,7 @@
         .pools-table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 13px;
         }
 
         .pools-table thead {
@@ -307,73 +282,64 @@
         }
 
         .pools-table th {
-            padding: 16px;
+            padding: 12px 10px;
             text-align: left;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
             color: var(--text-secondary);
-            cursor: pointer;
-            user-select: none;
             white-space: nowrap;
         }
 
-        .pools-table th:hover {
-            color: var(--text-primary);
-        }
-
         .pools-table td {
-            padding: 16px;
+            padding: 12px 10px;
             border-bottom: 1px solid var(--border-color);
-            font-size: 14px;
         }
 
         .pools-table tbody tr {
-            transition: background 0.2s;
+            transition: all 0.2s;
+            cursor: pointer;
         }
 
         .pools-table tbody tr:hover {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(0, 212, 255, 0.05);
+        }
+
+        .pool-link {
+            text-decoration: none;
+            color: inherit;
+            display: block;
         }
 
         .pool-name {
             font-weight: 600;
             display: flex;
             align-items: center;
-            gap: 10px;
-        }
-
-        .token-pair {
-            display: flex;
-            align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
 
         .token-badge {
             background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            padding: 4px 10px;
-            border-radius: 6px;
+            padding: 3px 8px;
+            border-radius: 4px;
             font-weight: 700;
-            font-size: 12px;
+            font-size: 11px;
         }
 
         .network-badge {
             display: inline-flex;
             align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
+            gap: 4px;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
             background: rgba(255, 255, 255, 0.1);
         }
 
         .protocol-badge {
-            padding: 4px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 500;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-size: 11px;
             background: rgba(0, 212, 255, 0.1);
             color: var(--accent-blue);
         }
@@ -382,34 +348,31 @@
         .risk-indicator {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+            gap: 6px;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 11px;
             font-weight: 600;
         }
 
         .risk-low {
             background: rgba(0, 255, 136, 0.15);
             color: var(--success);
-            border: 1px solid rgba(0, 255, 136, 0.3);
         }
 
         .risk-medium {
             background: rgba(255, 165, 0, 0.15);
             color: var(--warning);
-            border: 1px solid rgba(255, 165, 0, 0.3);
         }
 
         .risk-high {
             background: rgba(255, 71, 87, 0.15);
             color: var(--danger);
-            border: 1px solid rgba(255, 71, 87, 0.3);
         }
 
         .semaphore-dot {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
             border-radius: 50%;
             animation: pulse 2s infinite;
         }
@@ -428,14 +391,29 @@
             font-weight: 600;
         }
 
-        .value-neutral {
-            color: var(--text-primary);
+        .external-link {
+            color: var(--accent-blue);
+            margin-left: 5px;
+            font-size: 10px;
+        }
+
+        /* Loading & Empty States */
+        .loading, .no-results {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--text-secondary);
+        }
+
+        .no-results i {
+            font-size: 40px;
+            margin-bottom: 10px;
+            opacity: 0.5;
         }
 
         /* Scrollbar */
         ::-webkit-scrollbar {
-            width: 8px;
-            height: 8px;
+            width: 6px;
+            height: 6px;
         }
 
         ::-webkit-scrollbar-track {
@@ -444,11 +422,7 @@
 
         ::-webkit-scrollbar-thumb {
             background: var(--border-color);
-            border-radius: 4px;
-        }
-
-        ::-webkit-scrollbar-thumb:hover {
-            background: var(--accent-blue);
+            border-radius: 3px;
         }
 
         /* Responsive */
@@ -460,6 +434,7 @@
 
             .stats-bar {
                 justify-content: center;
+                gap: 15px;
             }
 
             .filters-grid {
@@ -472,26 +447,13 @@
 
             .pools-table th,
             .pools-table td {
-                padding: 12px 8px;
+                padding: 8px 5px;
             }
-        }
 
-        .loading {
-            text-align: center;
-            padding: 40px;
-            color: var(--text-secondary);
-        }
-
-        .no-results {
-            text-align: center;
-            padding: 60px 20px;
-            color: var(--text-secondary);
-        }
-
-        .no-results i {
-            font-size: 48px;
-            margin-bottom: 15px;
-            opacity: 0.5;
+            .token-badge, .network-badge, .protocol-badge {
+                font-size: 10px;
+                padding: 2px 6px;
+            }
         }
     </style>
 </head>
@@ -511,7 +473,7 @@
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Pools Ativas</span>
-                        <span class="stat-value">156</span>
+                        <span class="stat-value" id="totalPools">156</span>
                     </div>
                     <div class="stat-item">
                         <span class="stat-label">Melhor APR</span>
@@ -525,25 +487,23 @@
     <!-- Search Section -->
     <section class="search-section">
         <div class="container">
-            <div class="search-container">
-                <div class="search-box">
-                    <i class="fas fa-search search-icon"></i>
-                    <input 
-                        type="text" 
-                        class="search-input" 
-                        id="searchInput"
-                        placeholder="Buscar pares (ex: BRZ/USDC, BRL1/DAI, CREAL/ETH...)"
-                    >
-                </div>
-                <div class="search-tags">
-                    <span class="tag" onclick="searchTag('BRZ')">BRZ</span>
-                    <span class="tag" onclick="searchTag('BRL1')">BRL1</span>
-                    <span class="tag" onclick="searchTag('BRLA')">BRLA</span>
-                    <span class="tag" onclick="searchTag('Depix')">Depix</span>
-                    <span class="tag" onclick="searchTag('CREAL')">CREAL</span>
-                    <span class="tag" onclick="searchTag('USDC')">USDC</span>
-                    <span class="tag" onclick="searchTag('USDT')">USDT</span>
-                </div>
+            <div class="search-box">
+                <i class="fas fa-search search-icon"></i>
+                <input 
+                    type="text" 
+                    class="search-input" 
+                    id="searchInput"
+                    placeholder="Buscar pares (ex: BRZ/USDC, BRL1/DAI, CREAL/ETH...)"
+                >
+            </div>
+            <div class="search-tags">
+                <span class="tag" onclick="searchTag('BRZ')">BRZ</span>
+                <span class="tag" onclick="searchTag('BRL1')">BRL1</span>
+                <span class="tag" onclick="searchTag('BRLA')">BRLA</span>
+                <span class="tag" onclick="searchTag('Depix')">Depix</span>
+                <span class="tag" onclick="searchTag('CREAL')">CREAL</span>
+                <span class="tag" onclick="searchTag('USDC')">USDC</span>
+                <span class="tag" onclick="searchTag('USDT')">USDT</span>
             </div>
         </div>
     </section>
@@ -574,10 +534,6 @@
                         <div class="filter-option">
                             <input type="checkbox" id="arbitrum" value="arbitrum">
                             <label for="arbitrum"><span class="network-icon" style="background: #2d374b;">A</span> Arbitrum</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="solana" value="solana">
-                            <label for="solana"><span class="network-icon" style="background: #00ffa3; color: #000;">S</span> Solana</label>
                         </div>
                         <div class="filter-option">
                             <input type="checkbox" id="base" value="base">
@@ -613,10 +569,6 @@
                             <input type="checkbox" id="sushiswap" value="sushiswap">
                             <label for="sushiswap">SushiSwap</label>
                         </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="raydium" value="raydium">
-                            <label for="raydium">Raydium</label>
-                        </div>
                     </div>
                 </div>
 
@@ -634,9 +586,6 @@
                         min="0"
                         step="1000"
                     >
-                    <div style="margin-top: 10px; font-size: 12px; color: var(--text-secondary);">
-                        Ex: 100000 = $100k
-                    </div>
                 </div>
 
                 <!-- Risk Filter -->
@@ -647,4 +596,375 @@
                     </div>
                     <div class="filter-options">
                         <div class="filter-option">
-                            <input type="checkbox" id="riskLow"
+                            <input type="checkbox" id="riskLow" value="low" checked>
+                            <label for="riskLow"><span style="color: var(--success);">●</span> Baixo</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="riskMedium" value="medium" checked>
+                            <label for="riskMedium"><span style="color: var(--warning);">●</span> Médio</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="riskHigh" value="high">
+                            <label for="riskHigh"><span style="color: var(--danger);">●</span> Alto</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">
+                    <i class="fas fa-list" style="margin-right: 8px; color: var(--accent-blue);"></i>
+                    Pools de Liquidez
+                </h2>
+                <span class="results-count" id="resultsCount">Carregando...</span>
+            </div>
+
+            <div class="pools-table-container">
+                <table class="pools-table">
+                    <thead>
+                        <tr>
+                            <th>Pool</th>
+                            <th>Rede</th>
+                            <th>Protocolo</th>
+                            <th>TVL</th>
+                            <th>Ratio</th>
+                            <th>Volume 24h</th>
+                            <th>APR</th>
+                            <th>Risco</th>
+                        </tr>
+                    </thead>
+                    <tbody id="poolsTableBody">
+                        <!-- Data will be inserted here -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Dados das pools com links para os protocolos
+        const poolsData = [
+            {
+                pool: 'BRZ/USDC',
+                network: 'ethereum',
+                networkName: 'Ethereum',
+                protocol: 'uniswap',
+                protocolName: 'Uniswap V3',
+                tvl: 4250000,
+                ratio: '52/48',
+                volume24h: 892000,
+                apr: 12.5,
+                risk: 'low',
+                link: 'https://app.uniswap.org/#/pool'
+            },
+            {
+                pool: 'BRL1/DAI',
+                network: 'polygon',
+                networkName: 'Polygon',
+                protocol: 'curve',
+                protocolName: 'Curve Finance',
+                tvl: 1890000,
+                ratio: '50/50',
+                volume24h: 234000,
+                apr: 18.3,
+                risk: 'low',
+                link: 'https://curve.fi/#/polygon/pools'
+            },
+            {
+                pool: 'BRZ/USDT',
+                network: 'bsc',
+                networkName: 'BSC',
+                protocol: 'pancakeswap',
+                protocolName: 'PancakeSwap',
+                tvl: 3100000,
+                ratio: '48/52',
+                volume24h: 567000,
+                apr: 15.7,
+                risk: 'low',
+                link: 'https://pancakeswap.finance/liquidity'
+            },
+            {
+                pool: 'BRLA/USDC',
+                network: 'ethereum',
+                networkName: 'Ethereum',
+                protocol: 'balancer',
+                protocolName: 'Balancer',
+                tvl: 890000,
+                ratio: '55/45',
+                volume24h: 123000,
+                apr: 22.1,
+                risk: 'medium',
+                link: 'https://app.balancer.fi/#/ethereum/pool'
+            },
+            {
+                pool: 'Depix/BUSD',
+                network: 'bsc',
+                networkName: 'BSC',
+                protocol: 'pancakeswap',
+                protocolName: 'PancakeSwap',
+                tvl: 456000,
+                ratio: '60/40',
+                volume24h: 89000,
+                apr: 28.4,
+                risk: 'medium',
+                link: 'https://pancakeswap.finance/liquidity'
+            },
+            {
+                pool: 'CREAL/USDC',
+                network: 'polygon',
+                networkName: 'Polygon',
+                protocol: 'uniswap',
+                protocolName: 'Uniswap V3',
+                tvl: 2340000,
+                ratio: '47/53',
+                volume24h: 445000,
+                apr: 16.9,
+                risk: 'low',
+                link: 'https://app.uniswap.org/#/pool'
+            },
+            {
+                pool: 'BRZ/ETH',
+                network: 'ethereum',
+                networkName: 'Ethereum',
+                protocol: 'uniswap',
+                protocolName: 'Uniswap V3',
+                tvl: 5670000,
+                ratio: '45/55',
+                volume24h: 1230000,
+                apr: 24.6,
+                risk: 'medium',
+                link: 'https://app.uniswap.org/#/pool'
+            },
+            {
+                pool: 'BRL1/USDT',
+                network: 'arbitrum',
+                networkName: 'Arbitrum',
+                protocol: 'sushiswap',
+                protocolName: 'SushiSwap',
+                tvl: 678000,
+                ratio: '51/49',
+                volume24h: 156000,
+                apr: 19.8,
+                risk: 'medium',
+                link: 'https://www.sushi.com/pool'
+            },
+            {
+                pool: 'BRZ/BRL1',
+                network: 'polygon',
+                networkName: 'Polygon',
+                protocol: 'curve',
+                protocolName: 'Curve Finance',
+                tvl: 1230000,
+                ratio: '49/51',
+                volume24h: 234000,
+                apr: 8.5,
+                risk: 'low',
+                link: 'https://curve.fi/#/polygon/pools'
+            },
+            {
+                pool: 'BRLA/USDT',
+                network: 'bsc',
+                networkName: 'BSC',
+                protocol: 'pancakeswap',
+                protocolName: 'PancakeSwap',
+                tvl: 345000,
+                ratio: '53/47',
+                volume24h: 67000,
+                apr: 31.2,
+                risk: 'high',
+                link: 'https://pancakeswap.finance/liquidity'
+            },
+            {
+                pool: 'CREAL/ETH',
+                network: 'base',
+                networkName: 'Base',
+                protocol: 'uniswap',
+                protocolName: 'Uniswap V3',
+                tvl: 1560000,
+                ratio: '42/58',
+                volume24h: 389000,
+                apr: 27.3,
+                risk: 'medium',
+                link: 'https://app.uniswap.org/#/pool'
+            },
+            {
+                pool: 'Depix/USDC',
+                network: 'ethereum',
+                networkName: 'Ethereum',
+                protocol: 'uniswap',
+                protocolName: 'Uniswap V3',
+                tvl: 234000,
+                ratio: '58/42',
+                volume24h: 45000,
+                apr: 35.6,
+                risk: 'high',
+                link: 'https://app.uniswap.org/#/pool'
+            },
+            {
+                pool: 'BRZ/MATIC',
+                network: 'polygon',
+                networkName: 'Polygon',
+                protocol: 'uniswap',
+                protocolName: 'Uniswap V3',
+                tvl: 890000,
+                ratio: '46/54',
+                volume24h: 178000,
+                apr: 21.4,
+                risk: 'medium',
+                link: 'https://app.uniswap.org/#/pool'
+            },
+            {
+                pool: 'BRL1/USDC',
+                network: 'ethereum',
+                networkName: 'Ethereum',
+                protocol: 'uniswap',
+                protocolName: 'Uniswap V3',
+                tvl: 567000,
+                ratio: '50/50',
+                volume24h: 123000,
+                apr: 17.8,
+                risk: 'low',
+                link: 'https://app.uniswap.org/#/pool'
+            },
+            {
+                pool: 'BRZ/DAI',
+                network: 'ethereum',
+                networkName: 'Ethereum',
+                protocol: 'curve',
+                protocolName: 'Curve Finance',
+                tvl: 2890000,
+                ratio: '51/49',
+                volume24h: 445000,
+                apr: 11.2,
+                risk: 'low',
+                link: 'https://curve.fi/#/ethereum/pools'
+            }
+        ];
+
+        let currentData = [...poolsData];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            renderTable(currentData);
+            setupFilters();
+            setupSearch();
+        });
+
+        function setupSearch() {
+            const searchInput = document.getElementById('searchInput');
+            searchInput.addEventListener('input', () => filterData());
+        }
+
+        function searchTag(tag) {
+            document.getElementById('searchInput').value = tag;
+            filterData();
+        }
+
+        function setupFilters() {
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', () => filterData());
+            });
+
+            document.getElementById('tvlFilter').addEventListener('input', () => filterData());
+        }
+
+        function filterData() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const tvlMin = parseFloat(document.getElementById('tvlFilter').value) || 0;
+            
+            const selectedNetworks = Array.from(document.querySelectorAll('#networkFilters input:checked'))
+                .map(cb => cb.value);
+            
+            const selectedProtocols = Array.from(document.querySelectorAll('#protocolFilters input:checked'))
+                .map(cb => cb.value);
+            
+            const selectedRisks = Array.from(document.querySelectorAll('input[id^="risk"]:checked'))
+                .map(cb => cb.value);
+
+            currentData = poolsData.filter(pool => {
+                const matchesSearch = !searchTerm || 
+                    pool.pool.toLowerCase().includes(searchTerm) ||
+                    pool.networkName.toLowerCase().includes(searchTerm) ||
+                    pool.protocolName.toLowerCase().includes(searchTerm);
+                
+                const matchesNetwork = selectedNetworks.includes(pool.network);
+                const matchesProtocol = selectedProtocols.includes(pool.protocol);
+                const matchesTVL = pool.tvl >= tvlMin;
+                const matchesRisk = selectedRisks.includes(pool.risk);
+
+                return matchesSearch && matchesNetwork && matchesProtocol && matchesTVL && matchesRisk;
+            });
+
+            renderTable(currentData);
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('poolsTableBody');
+            const resultsCount = document.getElementById('resultsCount');
+            const totalPools = document.getElementById('totalPools');
+            
+            resultsCount.textContent = `${data.length} pools encontradas`;
+            totalPools.textContent = data.length;
+
+            if (data.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="8">
+                            <div class="no-results">
+                                <i class="fas fa-search"></i>
+                                <p>Nenhuma pool encontrada com os filtros selecionados</p>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = data.map(pool => `
+                <tr>
+                    <td>
+                        <a href="${pool.link}" target="_blank" class="pool-link">
+                            <div class="pool-name">
+                                <span class="token-badge">${pool.pool.split('/')[0]}</span>
+                                <span style="color: var(--text-secondary);">/</span>
+                                <span class="token-badge">${pool.pool.split('/')[1]}</span>
+                                <i class="fas fa-external-link-alt external-link"></i>
+                            </div>
+                        </a>
+                    </td>
+                    <td>
+                        <span class="network-badge">${pool.networkName}</span>
+                    </td>
+                    <td>
+                        <span class="protocol-badge">${pool.protocolName}</span>
+                    </td>
+                    <td class="value-neutral">$${formatNumber(pool.tvl)}</td>
+                    <td class="value-neutral">${pool.ratio}</td>
+                    <td class="value-neutral">$${formatNumber(pool.volume24h)}</td>
+                    <td class="value-positive">${pool.apr.toFixed(2)}%</td>
+                    <td>
+                        <span class="risk-indicator risk-${pool.risk}">
+                            <span class="semaphore-dot"></span>
+                            ${pool.risk === 'low' ? 'Baixo' : pool.risk === 'medium' ? 'Médio' : 'Alto'}
+                        </span>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function formatNumber(num) {
+            if (num >= 1000000) {
+                return (num / 1000000).toFixed(2) + 'M';
+            } else if (num >= 1000) {
+                return (num / 1000).toFixed(2) + 'K';
+            }
+            return num.toFixed(2);
+        }
+    </script>
+</body>
+</html>
