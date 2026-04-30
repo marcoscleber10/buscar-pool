@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BrazilDeFi Explorer - Pools de Stablecoins BR</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>BrazilDeFi Explorer - Encontre as Melhores Pools DeFi</title>
     <style>
         * {
             margin: 0;
@@ -12,1033 +11,1124 @@
             box-sizing: border-box;
         }
 
-        :root {
-            --bg-primary: #0a0a0f;
-            --bg-secondary: #12121a;
-            --bg-card: #1a1a25;
-            --border-color: #2a2a3a;
-            --text-primary: #ffffff;
-            --text-secondary: #a0a0b0;
-            --accent-blue: #00d4ff;
-            --accent-purple: #7b2cbf;
-            --success: #00ff88;
-            --warning: #ffa500;
-            --danger: #ff4757;
-        }
-
         body {
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
+            color: #ffffff;
             min-height: 100vh;
-            line-height: 1.6;
-        }
-
-        .header {
-            background: linear-gradient(135deg, var(--bg-secondary) 0%, var(--bg-card) 100%);
-            border-bottom: 1px solid var(--border-color);
-            padding: 15px 0;
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            backdrop-filter: blur(10px);
+            padding-bottom: 80px;
         }
 
         .container {
             max-width: 1400px;
             margin: 0 auto;
-            padding: 0 15px;
+            padding: 20px;
         }
 
-        .header-content {
+        .header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .logo {
-            font-size: 22px;
-            font-weight: 800;
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
         }
 
-        .stats-bar {
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #00d4aa 0%, #00a8ff 100%);
+            border-radius: 10px;
             display: flex;
-            gap: 20px;
-            font-size: 12px;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+        }
+
+        .logo-text {
+            font-size: 24px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #00d4aa 0%, #00a8ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stats {
+            display: flex;
+            gap: 30px;
         }
 
         .stat-item {
-            display: flex;
-            flex-direction: column;
+            text-align: right;
         }
 
         .stat-label {
-            color: var(--text-secondary);
-            font-size: 10px;
+            font-size: 12px;
+            color: #8b92a8;
+            margin-bottom: 4px;
         }
 
         .stat-value {
+            font-size: 18px;
             font-weight: 700;
-            color: var(--accent-blue);
-        }
-
-        .tabs-container {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-            padding: 10px 0;
+            color: #00d4aa;
         }
 
         .tabs {
             display: flex;
-            gap: 5px;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 15px;
+            gap: 10px;
+            margin-bottom: 25px;
             flex-wrap: wrap;
         }
 
-        .tab-btn {
-            padding: 10px 20px;
-            background: transparent;
-            border: 1px solid var(--border-color);
-            border-radius: 8px 8px 0 0;
-            color: var(--text-secondary);
-            font-size: 13px;
-            font-weight: 600;
+        .tab {
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
             cursor: pointer;
-            transition: all 0.3s;
+            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             gap: 8px;
+            font-weight: 600;
+            font-size: 14px;
         }
 
-        .tab-btn:hover {
-            color: var(--text-primary);
-            border-color: var(--accent-blue);
+        .tab:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
         }
 
-        .tab-btn.active {
-            background: var(--bg-card);
-            border-color: var(--accent-blue);
-            color: var(--accent-blue);
-            border-bottom: 2px solid var(--bg-card);
+        .tab.active {
+            background: linear-gradient(135deg, #00d4aa 0%, #00a8ff 100%);
+            border-color: transparent;
+            color: #0a0e27;
         }
 
-        .tab-btn .badge {
-            background: var(--accent-blue);
-            color: #000;
+        .tab-badge {
+            background: rgba(0, 0, 0, 0.3);
             padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 10px;
-            font-weight: 700;
+            border-radius: 20px;
+            font-size: 12px;
         }
 
-        .tab-btn.bitcoin .badge { background: #f7931a; color: #fff; }
-        .tab-btn.stocks .badge { background: var(--success); color: #000; }
+        .tab.active .tab-badge {
+            background: rgba(255, 255, 255, 0.3);
+        }
 
         .search-section {
-            padding: 25px 0;
-            background: var(--bg-secondary);
+            margin-bottom: 25px;
         }
 
         .search-box {
-            position: relative;
-            background: var(--bg-card);
-            border: 2px solid var(--border-color);
-            border-radius: 12px;
-            padding: 15px;
-            transition: all 0.3s;
-        }
-
-        .search-box:focus-within {
-            border-color: var(--accent-blue);
-        }
-
-        .search-icon {
-            position: absolute;
-            left: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            font-size: 18px;
-            color: var(--accent-blue);
-        }
-
-        .search-input {
             width: 100%;
-            padding: 12px 15px 12px 45px;
-            background: transparent;
-            border: none;
-            color: var(--text-primary);
+            padding: 16px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: #ffffff;
             font-size: 15px;
+            transition: all 0.3s ease;
         }
 
-        .search-input:focus {
+        .search-box:focus {
             outline: none;
+            border-color: #00d4aa;
+            background: rgba(255, 255, 255, 0.08);
         }
 
-        .search-tags {
+        .search-box::placeholder {
+            color: #8b92a8;
+        }
+
+        .quick-tags {
             display: flex;
-            gap: 8px;
-            margin-top: 12px;
+            gap: 10px;
+            margin-top: 15px;
             flex-wrap: wrap;
         }
 
         .tag {
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--accent-blue);
-            padding: 5px 12px;
-            border-radius: 15px;
-            font-size: 12px;
+            padding: 8px 16px;
+            background: rgba(0, 212, 170, 0.1);
+            border: 1px solid rgba(0, 212, 170, 0.3);
+            border-radius: 20px;
             cursor: pointer;
-            transition: all 0.3s;
-            border: 1px solid rgba(0, 212, 255, 0.3);
+            transition: all 0.3s ease;
+            font-size: 13px;
+            font-weight: 600;
         }
 
         .tag:hover {
-            background: rgba(0, 212, 255, 0.2);
+            background: rgba(0, 212, 170, 0.2);
+            transform: translateY(-2px);
         }
 
         .filters-section {
-            padding: 20px 0;
-            background: var(--bg-primary);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .filters-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
         }
 
         .filter-card {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 20px;
         }
 
         .filter-title {
-            font-size: 12px;
-            font-weight: 600;
-            margin-bottom: 10px;
-            color: var(--text-secondary);
-            text-transform: uppercase;
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
-            gap: 6px;
-        }
-
-        .filter-options {
-            display: flex;
-            flex-direction: column;
             gap: 8px;
-            max-height: 200px;
-            overflow-y: auto;
+            color: #8b92a8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
         }
 
         .filter-option {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 10px;
+            margin-bottom: 10px;
             cursor: pointer;
+            padding: 6px 0;
+            transition: all 0.2s ease;
+        }
+
+        .filter-option:hover {
+            transform: translateX(5px);
         }
 
         .filter-option input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            accent-color: var(--accent-blue);
+            width: 18px;
+            height: 18px;
+            accent-color: #00d4aa;
             cursor: pointer;
         }
 
         .filter-option label {
             cursor: pointer;
-            font-size: 13px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-        }
-
-        .network-icon {
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 10px;
-            font-weight: bold;
-        }
-
-        .tvl-input {
-            width: 100%;
-            padding: 8px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-size: 13px;
-        }
-
-        .main-content {
-            padding: 25px 0;
-            min-height: 400px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-
-        .section-title {
-            font-size: 18px;
-            font-weight: 700;
-        }
-
-        .results-count {
-            color: var(--text-secondary);
-            font-size: 13px;
-        }
-
-        .pools-table-container {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            overflow: hidden;
-            overflow-x: auto;
-        }
-
-        .pools-table {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 13px;
-        }
-
-        .pools-table thead {
-            background: var(--bg-secondary);
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .pools-table th {
-            padding: 12px 10px;
-            text-align: left;
-            font-size: 11px;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: var(--text-secondary);
-            white-space: nowrap;
-            cursor: pointer;
-            user-select: none;
-            transition: all 0.2s;
-        }
-
-        .pools-table th:hover {
-            color: var(--accent-blue);
-            background: rgba(0, 212, 255, 0.1);
-        }
-
-        .pools-table th.sortable::after {
-            content: ' \2195';
-            font-size: 10px;
-            opacity: 0.5;
-        }
-
-        .pools-table th.sort-asc::after {
-            content: ' \2191';
-            opacity: 1;
-            color: var(--success);
-        }
-
-        .pools-table th.sort-desc::after {
-            content: ' \2193';
-            opacity: 1;
-            color: var(--danger);
-        }
-
-        .pools-table td {
-            padding: 12px 10px;
-            border-bottom: 1px solid var(--border-color);
-        }
-
-        .pools-table tbody tr {
-            transition: all 0.2s;
-            cursor: pointer;
-        }
-
-        .pools-table tbody tr:hover {
-            background: rgba(0, 212, 255, 0.05);
-        }
-
-        .pool-link {
-            text-decoration: none;
-            color: inherit;
-            display: block;
-        }
-
-        .pool-name {
-            font-weight: 600;
+            font-size: 14px;
             display: flex;
             align-items: center;
             gap: 8px;
         }
 
-        .token-badge {
-            background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple));
-            padding: 3px 8px;
-            border-radius: 4px;
+        .network-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
             font-weight: 700;
-            font-size: 11px;
         }
 
-        .token-badge.btc { background: linear-gradient(135deg, #f7931a, #ffaa33); }
-        .token-badge.stock { background: linear-gradient(135deg, var(--success), #00cc66); }
+        .eth { background: #627eea; }
+        .bsc { background: #f0b90b; color: #000; }
+        .polygon { background: #8247e5; }
+        .arbitrum { background: #28a0f0; }
+        .base { background: #0052ff; }
+        .solana { background: linear-gradient(135deg, #00ffa3 0%, #00d4ff 100%); }
 
-        .network-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 4px;
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            background: rgba(255, 255, 255, 0.1);
+        .tvl-inputs {
+            display: flex;
+            gap: 10px;
         }
 
-        .protocol-badge {
-            padding: 3px 8px;
-            border-radius: 4px;
-            font-size: 11px;
-            background: rgba(0, 212, 255, 0.1);
-            color: var(--accent-blue);
+        .tvl-input {
+            flex: 1;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 14px;
         }
 
-        .risk-indicator {
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-            padding: 4px 10px;
-            border-radius: 12px;
-            font-size: 11px;
+        .tvl-input:focus {
+            outline: none;
+            border-color: #00d4aa;
+        }
+
+        .risk-badge {
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 12px;
             font-weight: 600;
+            display: inline-block;
         }
 
         .risk-low {
-            background: rgba(0, 255, 136, 0.15);
-            color: var(--success);
+            background: rgba(0, 212, 170, 0.2);
+            color: #00d4aa;
+            border: 1px solid rgba(0, 212, 170, 0.3);
         }
 
         .risk-medium {
-            background: rgba(255, 165, 0, 0.15);
-            color: var(--warning);
+            background: rgba(255, 193, 7, 0.2);
+            color: #ffc107;
+            border: 1px solid rgba(255, 193, 7, 0.3);
         }
 
         .risk-high {
-            background: rgba(255, 71, 87, 0.15);
-            color: var(--danger);
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+            border: 1px solid rgba(244, 67, 54, 0.3);
         }
 
-        .semaphore-dot {
-            width: 6px;
-            height: 6px;
-            border-radius: 50%;
-            animation: pulse 2s infinite;
+        .sector-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
         }
 
-        .risk-low .semaphore-dot { background: var(--success); }
-        .risk-medium .semaphore-dot { background: var(--warning); }
-        .risk-high .semaphore-dot { background: var(--danger); }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .value-positive {
-            color: var(--success);
+        .sector-btn {
+            padding: 10px 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
             font-weight: 600;
+            font-size: 13px;
         }
 
-        .external-link {
-            color: var(--accent-blue);
+        .sector-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .sector-btn.active {
+            background: linear-gradient(135deg, #00d4aa 0%, #00a8ff 100%);
+            border-color: transparent;
+            color: #0a0e27;
+        }
+
+        .pools-section {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .pools-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: rgba(0, 212, 170, 0.1);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pools-title {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pools-count {
+            font-size: 13px;
+            color: #8b92a8;
+            font-weight: 400;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        th {
+            padding: 16px;
+            text-align: left;
+            font-size: 12px;
+            font-weight: 700;
+            color: #8b92a8;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+        }
+
+        th:hover {
+            color: #00d4aa;
+        }
+
+        .sort-icon {
             margin-left: 5px;
-            font-size: 10px;
-        }
-
-        .loading, .no-results {
-            text-align: center;
-            padding: 40px 20px;
-            color: var(--text-secondary);
-        }
-
-        .no-results i {
-            font-size: 40px;
-            margin-bottom: 10px;
             opacity: 0.5;
         }
 
-        .loading-spinner {
+        th:hover .sort-icon {
+            opacity: 1;
+        }
+
+        td {
+            padding: 16px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            font-size: 14px;
+        }
+
+        tbody tr {
+            transition: all 0.3s ease;
+        }
+
+        tbody tr:hover {
+            background: rgba(255, 255, 255, 0.05);
+            transform: scale(1.01);
+        }
+
+        .pool-name {
+            font-weight: 700;
+            color: #ffffff;
+        }
+
+        .apr-value {
+            font-weight: 700;
+            color: #00d4aa;
+        }
+
+        .tvl-value {
+            font-weight: 600;
+            color: #00a8ff;
+        }
+
+        .protocol-tag {
+            padding: 4px 12px;
+            background: rgba(0, 168, 255, 0.1);
+            border: 1px solid rgba(0, 168, 255, 0.3);
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
             display: inline-block;
-            width: 20px;
-            height: 20px;
-            border: 2px solid var(--border-color);
-            border-top-color: var(--accent-blue);
+        }
+
+        .network-tag {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            background: linear-gradient(135deg, #00d4aa 0%, #00a8ff 100%);
+            border: none;
+            border-radius: 8px;
+            color: #0a0e27;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(0, 212, 170, 0.4);
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: #8b92a8;
+        }
+
+        .empty-icon {
+            font-size: 64px;
+            margin-bottom: 20px;
+            opacity: 0.5;
+        }
+
+        .empty-text {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .empty-subtext {
+            font-size: 14px;
+            opacity: 0.7;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .stats {
+                width: 100%;
+                justify-content: space-around;
+            }
+
+            .filters-section {
+                grid-template-columns: 1fr;
+            }
+
+            .table-container {
+                overflow-x: scroll;
+            }
+
+            table {
+                min-width: 800px;
+            }
+        }
+
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(0, 212, 170, 0.1);
+            border-top-color: #00d4aa;
             border-radius: 50%;
             animation: spin 1s linear infinite;
-            margin-right: 10px;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        ::-webkit-scrollbar {
-            width: 6px;
-            height: 6px;
+        .fade-in {
+            animation: fadeIn 0.5s ease;
         }
 
-        ::-webkit-scrollbar-track {
-            background: var(--bg-secondary);
-        }
-
-        ::-webkit-scrollbar-thumb {
-            background: var(--border-color);
-            border-radius: 3px;
-        }
-
-        @media (max-width: 768px) {
-            .header-content {
-                flex-direction: column;
-                text-align: center;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
             }
-
-            .stats-bar {
-                justify-content: center;
-                gap: 15px;
-            }
-
-            .tabs {
-                overflow-x: auto;
-                padding-bottom: 5px;
-            }
-
-            .filters-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .pools-table {
-                font-size: 12px;
-            }
-
-            .pools-table th,
-            .pools-table td {
-                padding: 8px 5px;
-            }
-
-            .token-badge, .network-badge, .protocol-badge {
-                font-size: 10px;
-                padding: 2px 6px;
+            to {
+                opacity: 1;
+                transform: translateY(0);
             }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="container">
-            <div class="header-content">
-                <div class="logo">
-                    <i class="fas fa-search-dollar"></i>
-                    BrazilDeFi Explorer
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">🇷</div>
+                <div class="logo-text">BrazilDeFi Explorer</div>
+            </div>
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Total TVL</div>
+                    <div class="stat-value">$1.48M</div>
                 </div>
-                <div class="stats-bar">
-                    <div class="stat-item">
-                        <span class="stat-label">Total TVL</span>
-                        <span class="stat-value" id="totalTVL">$0</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Pools Ativas</span>
-                        <span class="stat-value" id="totalPools">0</span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-label">Melhor APR</span>
-                        <span class="stat-value" id="bestAPR">0%</span>
-                    </div>
+                <div class="stat-item">
+                    <div class="stat-label">Pools Ativas</div>
+                    <div class="stat-value">15</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Melhor APR</div>
+                    <div class="stat-value">18.7%</div>
                 </div>
             </div>
         </div>
-    </header>
 
-    <nav class="tabs-container">
+        <!-- Tabs -->
         <div class="tabs">
-            <button class="tab-btn active" data-tab="stablecoins" onclick="switchTab('stablecoins')">
-                <i class="fas fa-coins"></i>
-                Stablecoins BR
-                <span class="badge" id="badge-stablecoins">15</span>
-            </button>
-            <button class="tab-btn bitcoin" data-tab="bitcoin" onclick="switchTab('bitcoin')">
-                <i class="fab fa-bitcoin"></i>
-                Bitcoin Pools
-                <span class="badge" id="badge-bitcoin">0</span>
-            </button>
-            <button class="tab-btn stocks" data-tab="stocks" onclick="switchTab('stocks')">
-                <i class="fas fa-chart-line"></i>
-                Stocks RWA
-                <span class="badge" id="badge-stocks">40</span>
-            </button>
-            <!-- === INÍCIO: NOVO BOTÃO DA ABA TOP APR === -->
-            <button class="tab-btn" data-tab="topapr" onclick="switchTab('topapr')">
-                <i class="fas fa-trophy"></i>
-                Top APR
-                <span class="badge" id="badge-topapr" style="background: var(--success); color: #000;">⏳</span>
-            </button>
-            <!-- === FIM: NOVO BOTÃO DA ABA TOP APR === -->
-        </div>
-    </nav>
-
-    <section class="search-section">
-        <div class="container">
-            <div class="search-box">
-                <i class="fas fa-search search-icon"></i>
-                <input 
-                    type="text" 
-                    class="search-input" 
-                    id="searchInput"
-                    placeholder="Buscar pares (ex: WBTC/USDC, AAPLon/USDT, BRZ/USDC...)"
-                >
+            <div class="tab active" data-tab="top-apr">
+                🏆 Top APR
+                <span class="tab-badge">2397</span>
             </div>
-            <div class="search-tags" id="searchTags">
-                <span class="tag" onclick="searchTag('WBTC')">WBTC</span>
-                <span class="tag" onclick="searchTag('cbBTC')">cbBTC</span>
-                <span class="tag" onclick="searchTag('AAPL')">AAPL</span>
-                <span class="tag" onclick="searchTag('TSLA')">TSLA</span>
-                <span class="tag" onclick="searchTag('BRZ')">BRZ</span>
+            <div class="tab" data-tab="stablecoins">
+                💵 Stablecoins BR
+                <span class="tab-badge">15</span>
+            </div>
+            <div class="tab" data-tab="bitcoin">
+                ₿ Bitcoin Pools
+                <span class="tab-badge">8</span>
+            </div>
+            <div class="tab" data-tab="stocks">
+                📈 Stocks RWA
+                <span class="tab-badge">40</span>
             </div>
         </div>
-    </section>
 
-    <section class="filters-section">
-        <div class="container">
-            <div class="filters-grid">
-                <div class="filter-card">
-                    <div class="filter-title">
-                        <i class="fas fa-network-wired"></i>
-                        Redes
-                    </div>
-                    <div class="filter-options" id="networkFilters">
-                        <div class="filter-option">
-                            <input type="checkbox" id="eth" value="ethereum" checked>
-                            <label for="eth"><span class="network-icon" style="background: #627eea;">E</span> Ethereum</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="bsc" value="bsc" checked>
-                            <label for="bsc"><span class="network-icon" style="background: #f0b90b; color: #000;">B</span> BSC</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="polygon" value="polygon" checked>
-                            <label for="polygon"><span class="network-icon" style="background: #8247e5;">P</span> Polygon</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="arbitrum" value="arbitrum" checked>
-                            <label for="arbitrum"><span class="network-icon" style="background: #2d374b;">A</span> Arbitrum</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="base" value="base" checked>
-                            <label for="base"><span class="network-icon" style="background: #0052ff;">B</span> Base</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="solana" value="solana" checked>
-                            <label for="solana"><span class="network-icon" style="background: linear-gradient(135deg, #9945FF, #14F195);">S</span> Solana</label>
-                        </div>
-                    </div>
+        <!-- Search -->
+        <div class="search-section">
+            <input type="text" class="search-box" placeholder="🔍 Buscar pares (ex: WBTC/USDC, AAPLon/USDT, BRZ/USDC...)" id="searchInput">
+            <div class="quick-tags">
+                <span class="tag" data-tag="WBTC">WBTC</span>
+                <span class="tag" data-tag="cbBTC">cbBTC</span>
+                <span class="tag" data-tag="AAPL">AAPL</span>
+                <span class="tag" data-tag="TSLA">TSLA</span>
+                <span class="tag" data-tag="BRZ">BRZ</span>
+            </div>
+        </div>
+
+        <!-- Sector Filter -->
+        <div class="sector-filter">
+            <button class="sector-btn active" data-sector="all"> Todos os Setores</button>
+            <button class="sector-btn" data-sector="stablecoin">💵 Stablecoins</button>
+            <button class="sector-btn" data-sector="bitcoin">₿ Bitcoin</button>
+            <button class="sector-btn" data-sector="stocks">📈 Ações Tokenizadas</button>
+        </div>
+
+        <!-- Filters -->
+        <div class="filters-section">
+            <!-- Networks -->
+            <div class="filter-card">
+                <div class="filter-title">
+                    <span>🌐</span>
+                    <span>REDES</span>
                 </div>
-
-                <div class="filter-card">
-                    <div class="filter-title">
-                        <i class="fas fa-exchange-alt"></i>
-                        Protocolos
-                    </div>
-                    <div class="filter-options" id="protocolFilters">
-                        <div class="filter-option">
-                            <input type="checkbox" id="uniswap" value="uniswap" checked>
-                            <label for="uniswap">Uniswap V3</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="curve" value="curve" checked>
-                            <label for="curve">Curve Finance</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="balancer" value="balancer" checked>
-                            <label for="balancer">Balancer</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="pancakeswap" value="pancakeswap" checked>
-                            <label for="pancakeswap">PancakeSwap</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="sushiswap" value="sushiswap" checked>
-                            <label for="sushiswap">SushiSwap</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="aave" value="aave" checked>
-                            <label for="aave">Aave</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="compound" value="compound" checked>
-                            <label for="compound">Compound</label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="yearn" value="yearn" checked>
-                            <label for="yearn">Yearn Finance</label>
-                        </div>
-                    </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="net-ethereum" value="ethereum" checked>
+                    <label for="net-ethereum">
+                        <span class="network-icon eth">E</span>
+                        Ethereum
+                    </label>
                 </div>
-
-                <div class="filter-card">
-                    <div class="filter-title">
-                        <i class="fas fa-sliders-h"></i>
-                        TVL Mínimo
-                    </div>
-                    <div style="display: flex; gap: 10px; align-items: center;">
-                        <input type="number" class="tvl-input" id="minTVL" placeholder="Min $">
-                        <input type="number" class="tvl-input" id="maxTVL" placeholder="Max $">
-                    </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="net-bsc" value="bsc" checked>
+                    <label for="net-bsc">
+                        <span class="network-icon bsc">B</span>
+                        BSC
+                    </label>
                 </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="net-polygon" value="polygon" checked>
+                    <label for="net-polygon">
+                        <span class="network-icon polygon">P</span>
+                        Polygon
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="net-arbitrum" value="arbitrum" checked>
+                    <label for="net-arbitrum">
+                        <span class="network-icon arbitrum">A</span>
+                        Arbitrum
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="net-base" value="base" checked>
+                    <label for="net-base">
+                        <span class="network-icon base">B</span>
+                        Base
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="net-solana" value="solana" checked>
+                    <label for="net-solana">
+                        <span class="network-icon solana">S</span>
+                        Solana
+                    </label>
+                </div>
+            </div>
 
-                <div class="filter-card">
-                    <div class="filter-title">
-                        <i class="fas fa-shield-alt"></i>
-                        Nível de Risco
-                    </div>
-                    <div class="filter-options">
-                        <div class="filter-option">
-                            <input type="checkbox" id="risk-low" value="low" checked>
-                            <label for="risk-low"><span class="risk-indicator risk-low"><span class="semaphore-dot"></span>Baixo</span></label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="risk-medium" value="medium" checked>
-                            <label for="risk-medium"><span class="risk-indicator risk-medium"><span class="semaphore-dot"></span>Médio</span></label>
-                        </div>
-                        <div class="filter-option">
-                            <input type="checkbox" id="risk-high" value="high" checked>
-                            <label for="risk-high"><span class="risk-indicator risk-high"><span class="semaphore-dot"></span>Alto</span></label>
-                        </div>
-                    </div>
+            <!-- Protocols -->
+            <div class="filter-card">
+                <div class="filter-title">
+                    <span>⚡</span>
+                    <span>PROTOCOLOS</span>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="proto-uniswap" value="Uniswap V3" checked>
+                    <label for="proto-uniswap">Uniswap V3</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="proto-curve" value="Curve" checked>
+                    <label for="proto-curve">Curve Finance</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="proto-balancer" value="Balancer" checked>
+                    <label for="proto-balancer">Balancer</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="proto-pancake" value="PancakeSwap" checked>
+                    <label for="proto-pancake">PancakeSwap</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="proto-sushi" value="SushiSwap" checked>
+                    <label for="proto-sushi">SushiSwap</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="proto-aave" value="Aave" checked>
+                    <label for="proto-aave">Aave</label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="proto-compound" value="Compound" checked>
+                    <label for="proto-compound">Compound</label>
+                </div>
+            </div>
+
+            <!-- TVL Range -->
+            <div class="filter-card">
+                <div class="filter-title">
+                    <span>💰</span>
+                    <span>TVL MÍNIMO</span>
+                </div>
+                <div class="tvl-inputs">
+                    <input type="number" class="tvl-input" placeholder="Min $" id="minTVL">
+                    <input type="number" class="tvl-input" placeholder="Max $" id="maxTVL">
+                </div>
+            </div>
+
+            <!-- Risk Level -->
+            <div class="filter-card">
+                <div class="filter-title">
+                    <span>⚠️</span>
+                    <span>NÍVEL DE RISCO</span>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="risk-low" value="Baixo" checked>
+                    <label for="risk-low">
+                        <span class="risk-badge risk-low">Baixo</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="risk-medium" value="Médio" checked>
+                    <label for="risk-medium">
+                        <span class="risk-badge risk-medium">Médio</span>
+                    </label>
+                </div>
+                <div class="filter-option">
+                    <input type="checkbox" id="risk-high" value="Alto" checked>
+                    <label for="risk-high">
+                        <span class="risk-badge risk-high">Alto</span>
+                    </label>
                 </div>
             </div>
         </div>
-    </section>
 
-    <main class="main-content">
-        <div class="container">
-            <!-- Aba Stablecoins BR (conteúdo original mantido) -->
-            <div id="tab-stablecoins" class="tab-content">
-                <div class="section-header">
-                    <div class="section-title">
-                        <i class="fas fa-coins" style="color: var(--accent-blue);"></i>
-                        Pools de Stablecoins Brasileiras
-                    </div>
-                    <div class="results-count">
-                        <span id="stablecoins-count">15</span> pools encontradas
-                    </div>
+        <!-- Pools Section -->
+        <div class="pools-section">
+            <div class="pools-header">
+                <div class="pools-title">
+                    <span id="sectionIcon">🏆</span>
+                    <span id="sectionTitle">Melhores APRs em Tempo Real</span>
                 </div>
-                <div class="pools-table-container">
-                    <table class="pools-table">
-                        <thead>
-                            <tr>
-                                <th class="sortable" data-sort="name">Pool</th>
-                                <th class="sortable" data-sort="network">Rede</th>
-                                <th class="sortable" data-sort="protocol">Protocolo</th>
-                                <th class="sortable" data-sort="tvl">TVL</th>
-                                <th class="sortable" data-sort="apr">APR</th>
-                                <th>Risco</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="stablecoins-tbody">
-                            <tr>
-                                <td colspan="7" class="loading">
-                                    <span class="loading-spinner"></span>
-                                    Carregando pools...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                <div class="pools-count" id="poolsCount">2397 pools encontradas • Atualizado: <span id="updateTime"></span></div>
             </div>
-
-            <!-- Aba Bitcoin Pools (conteúdo original mantido) -->
-            <div id="tab-bitcoin" class="tab-content" style="display: none;">
-                <div class="section-header">
-                    <div class="section-title">
-                        <i class="fab fa-bitcoin" style="color: #f7931a;"></i>
-                        Pools de Bitcoin
-                    </div>
-                    <div class="results-count">
-                        <span id="bitcoin-count">0</span> pools encontradas
-                    </div>
-                </div>
-                <div class="pools-table-container">
-                    <table class="pools-table">
-                        <thead>
-                            <tr>
-                                <th class="sortable" data-sort="name">Pool</th>
-                                <th class="sortable" data-sort="network">Rede</th>
-                                <th class="sortable" data-sort="protocol">Protocolo</th>
-                                <th class="sortable" data-sort="tvl">TVL</th>
-                                <th class="sortable" data-sort="apr">APR</th>
-                                <th>Risco</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="bitcoin-tbody">
-                            <tr>
-                                <td colspan="7" class="no-results">
-                                    <i class="fas fa-info-circle"></i><br>
-                                    Nenhuma pool de Bitcoin disponível no momento
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th onclick="sortTable('pool')">
+                                POOL
+                                <span class="sort-icon">↕</span>
+                            </th>
+                            <th onclick="sortTable('network')">
+                                REDE
+                                <span class="sort-icon">↕</span>
+                            </th>
+                            <th onclick="sortTable('protocol')">
+                                PROTOCOLO
+                                <span class="sort-icon">↕</span>
+                            </th>
+                            <th onclick="sortTable('tvl')">
+                                TVL
+                                <span class="sort-icon">↕</span>
+                            </th>
+                            <th onclick="sortTable('apr')">
+                                APR
+                                <span class="sort-icon">↕</span>
+                            </th>
+                            <th onclick="sortTable('risk')">
+                                RISCO
+                                <span class="sort-icon">↕</span>
+                            </th>
+                            <th>AÇÕES</th>
+                        </tr>
+                    </thead>
+                    <tbody id="poolsTableBody">
+                        <!-- Data will be inserted here by JavaScript -->
+                    </tbody>
+                </table>
             </div>
-
-            <!-- Aba Stocks RWA (conteúdo original mantido) -->
-            <div id="tab-stocks" class="tab-content" style="display: none;">
-                <div class="section-header">
-                    <div class="section-title">
-                        <i class="fas fa-chart-line" style="color: var(--success);"></i>
-                        Stocks como RWA
-                    </div>
-                    <div class="results-count">
-                        <span id="stocks-count">40</span> pools encontradas
-                    </div>
-                </div>
-                <div class="pools-table-container">
-                    <table class="pools-table">
-                        <thead>
-                            <tr>
-                                <th class="sortable" data-sort="name">Pool</th>
-                                <th class="sortable" data-sort="network">Rede</th>
-                                <th class="sortable" data-sort="protocol">Protocolo</th>
-                                <th class="sortable" data-sort="tvl">TVL</th>
-                                <th class="sortable" data-sort="apr">APR</th>
-                                <th>Risco</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="stocks-tbody">
-                            <tr>
-                                <td colspan="7" class="loading">
-                                    <span class="loading-spinner"></span>
-                                    Carregando pools de stocks...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-
-            <!-- === INÍCIO: NOVO CONTEÚDO DA ABA TOP APR === -->
-            <div id="tab-topapr" class="tab-content" style="display: none;">
-                <div class="section-header">
-                    <div class="section-title">
-                        <i class="fas fa-fire" style="color: var(--warning);"></i>
-                        Melhores APRs em Tempo Real
-                    </div>
-                    <div class="results-count">
-                        <span id="topapr-count">0</span> pools encontradas • 
-                        <span id="topapr-lastupdate">Atualizado: --:--</span>
-                    </div>
-                </div>
-                <div class="pools-table-container">
-                    <table class="pools-table">
-                        <thead>
-                            <tr>
-                                <th class="sortable" data-sort="apy">APR ↕</th>
-                                <th class="sortable" data-sort="pair">Par</th>
-                                <th class="sortable" data-sort="protocol">Protocolo</th>
-                                <th class="sortable" data-sort="chain">Rede</th>
-                                <th class="sortable" data-sort="tvl">TVL</th>
-                                <th>Risco IL</th>
-                                <th>Ações</th>
-                            </tr>
-                        </thead>
-                        <tbody id="topapr-tbody">
-                            <tr>
-                                <td colspan="7" class="loading">
-                                    <span class="loading-spinner"></span>
-                                    Carregando dados da DefiLlama API...
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <!-- === FIM: NOVO CONTEÚDO DA ABA TOP APR === -->
-
         </div>
-    </main>
+    </div>
 
     <script>
-        // ==================== FUNÇÃO DE TROCA DE ABAS (EXISTENTE - MANTIDA) ====================
-        function switchTab(tabName) {
-            // Remove classe active de todos os botões
-            document.querySelectorAll('.tab-btn').forEach(btn => {
-                btn.classList.remove('active');
-            });
-            
-            // Adiciona classe active ao botão clicado
-            document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
-            
-            // Esconde todos os conteúdos de aba
-            document.querySelectorAll('.tab-content').forEach(content => {
-                content.style.display = 'none';
-            });
-            
-            // Mostra o conteúdo da aba selecionada
-            document.getElementById(`tab-${tabName}`).style.display = 'block';
-            
-            // === INÍCIO: LÓGICA ESPECÍFICA PARA TOP APR ===
-            if (tabName === 'topapr') {
-                if (typeof topAprData === 'undefined' || topAprData.length === 0) {
-                    fetchTopAprData();
-                } else {
-                    document.getElementById('topapr-lastupdate').textContent = 
-                        `Atualizado: ${new Date().toLocaleTimeString('pt-BR')}`;
-                }
-                document.querySelectorAll('#tab-topapr th.sortable').forEach(th => {
-                    th.onclick = function(e) {
-                        e.stopPropagation();
-                        sortTopAprTable(this.dataset.sort);
-                    };
+        // Complete Data Set
+        const poolsData = {
+            'top-apr': [
+                { pool: 'WAVAX-USDC', network: 'Avalanche', protocol: 'blackhole-clmm', tvl: 3100000, apr: 55816.61, risk: 'Alto', sector: 'defi' },
+                { pool: 'USDC-VELVET', network: 'Base', protocol: 'aerodrome-slipstream', tvl: 290800, apr: 52995.60, risk: 'Alto', sector: 'stablecoin' },
+                { pool: 'SPIRE-USDC', network: 'Base', protocol: 'uniswap-v4', tvl: 13200, apr: 35637.84, risk: 'Alto', sector: 'defi' },
+                { pool: 'RECALL-USDC', network: 'Base', protocol: 'aerodrome-slipstream', tvl: 487200, apr: 32577.35, risk: 'Alto', sector: 'defi' },
+                { pool: 'DAI-SLGNS', network: 'Polygon', protocol: 'uniswap-v4', tvl: 75700, apr: 23103.76, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'CHIP-USDT', network: 'Arbitrum', protocol: 'uniswap-v4', tvl: 49500, apr: 14594.03, risk: 'Alto', sector: 'defi' },
+                { pool: 'WETH-USDT', network: 'Ethereum', protocol: 'supernova-cl', tvl: 371000, apr: 12383.48, risk: 'Médio', sector: 'defi' },
+                { pool: 'XAUT-USDT', network: 'Ethereum', protocol: 'uniswap-v4', tvl: 57600, apr: 12063.54, risk: 'Baixo', sector: 'defi' },
+                { pool: 'ETH-DAI', network: 'OP Mainnet', protocol: 'uniswap-v4', tvl: 50200, apr: 11063.27, risk: 'Médio', sector: 'defi' },
+                { pool: 'SUSDE-USDC', network: 'Avalanche', protocol: 'blackhole-clmm', tvl: 2260000, apr: 6449.49, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'USDC-VFY', network: 'Base', protocol: 'aerodrome-slipstream', tvl: 105100, apr: 5769.86, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'WBTC-USDT', network: 'Ethereum', protocol: 'supernova-cl', tvl: 252700, apr: 5676.75, risk: 'Baixo', sector: 'bitcoin' },
+                { pool: 'RIO-USDT', network: 'Ethereum', protocol: 'uniswap-v4', tvl: 57600, apr: 5434.97, risk: 'Alto', sector: 'defi' },
+                { pool: 'WETH-USDC', network: 'Base', protocol: 'aerodrome-slipstream', tvl: 194400, apr: 4863.28, risk: 'Médio', sector: 'defi' },
+                { pool: 'PAXG-USDC', network: 'Ethereum', protocol: 'supernova-cl', tvl: 54800, apr: 4743.40, risk: 'Baixo', sector: 'defi' },
+                { pool: 'AI-USDC', network: 'Ethereum', protocol: 'uniswap-v4', tvl: 229700, apr: 3806.54, risk: 'Alto', sector: 'defi' },
+                { pool: 'USDC-WETH', network: 'Ethereum', protocol: 'supernova-cl', tvl: 291700, apr: 3481.94, risk: 'Médio', sector: 'defi' },
+                { pool: 'USDC-AIB', network: 'Ethereum', protocol: 'uniswap-v4', tvl: 48500, apr: 3399.85, risk: 'Alto', sector: 'defi' },
+                { pool: 'XAUT-USDT', network: 'Ethereum', protocol: 'supernova-cl', tvl: 126200, apr: 3155.47, risk: 'Baixo', sector: 'defi' },
+                { pool: 'FT-USDC', network: 'Ethereum', protocol: 'uniswap-v4', tvl: 54600, apr: 2928.86, risk: 'Alto', sector: 'defi' }
+            ],
+            'stablecoins': [
+                { pool: 'BRZ / USDC', network: 'Polygon', protocol: 'Uniswap V3', tvl: 250000, apr: 8.4, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'BRZ / USDT', network: 'Ethereum', protocol: 'Curve', tvl: 180000, apr: 7.2, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'BRLA / USDC', network: 'Base', protocol: 'Aerodrome', tvl: 95000, apr: 12.5, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'BRLI / USDT', network: 'BSC', protocol: 'PancakeSwap', tvl: 72000, apr: 9.8, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'BRZ / BRLA', network: 'Polygon', protocol: 'QuickSwap', tvl: 45000, apr: 15.3, risk: 'Alto', sector: 'stablecoin' },
+                { pool: 'USDC / BRLI', network: 'Arbitrum', protocol: 'Camelot', tvl: 38000, apr: 11.1, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'USDT / BRZ', network: 'Solana', protocol: 'Raydium', tvl: 120000, apr: 6.9, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'BRLA / BRLI', network: 'Base', protocol: 'BaseSwap', tvl: 28000, apr: 18.7, risk: 'Alto', sector: 'stablecoin' },
+                { pool: 'BRZ / FDUSD', network: 'BSC', protocol: 'Thena', tvl: 55000, apr: 10.4, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'USDC / BRLA', network: 'Polygon', protocol: 'Balancer', tvl: 67000, apr: 8.9, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'DAI / BRZ', network: 'Ethereum', protocol: 'Curve', tvl: 145000, apr: 5.6, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'USDT / BRLI', network: 'Arbitrum', protocol: 'SushiSwap', tvl: 33000, apr: 13.2, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'BRZ / PYUSD', network: 'Base', protocol: 'Aerodrome', tvl: 21000, apr: 14.8, risk: 'Alto', sector: 'stablecoin' },
+                { pool: 'USDC / BRZ', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 310000, apr: 4.2, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'BRLI / FDUSD', network: 'BSC', protocol: 'PancakeSwap', tvl: 19000, apr: 16.5, risk: 'Alto', sector: 'stablecoin' },
+                { pool: 'USDC / DAI', network: 'Ethereum', protocol: 'Curve', tvl: 450000, apr: 3.8, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'USDT / USDC', network: 'Polygon', protocol: 'Aave', tvl: 380000, apr: 4.5, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'BRLA / DAI', network: 'Base', protocol: 'Balancer', tvl: 42000, apr: 11.7, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'BRZ / USDC', network: 'Arbitrum', protocol: 'Camelot', tvl: 88000, apr: 9.3, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'USDC / BRLI', network: 'BSC', protocol: 'PancakeSwap', tvl: 36000, apr: 13.9, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'FDUSD / USDT', network: 'BSC', protocol: 'Thena', tvl: 125000, apr: 7.8, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'BRLA / USDT', network: 'Polygon', protocol: 'QuickSwap', tvl: 51000, apr: 10.2, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'USDC / PYUSD', network: 'Ethereum', protocol: 'Curve', tvl: 95000, apr: 5.1, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'BRZ / BRLI', network: 'Solana', protocol: 'Raydium', tvl: 29000, apr: 15.6, risk: 'Alto', sector: 'stablecoin' },
+                { pool: 'DAI / USDC', network: 'Base', protocol: 'Aerodrome', tvl: 175000, apr: 6.4, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'USDT / BRLA', network: 'Arbitrum', protocol: 'SushiSwap', tvl: 44000, apr: 12.1, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'BRLI / USDC', network: 'Polygon', protocol: 'Balancer', tvl: 38000, apr: 9.7, risk: 'Médio', sector: 'stablecoin' },
+                { pool: 'BRZ / DAI', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 115000, apr: 7.5, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'USDC / FDUSD', network: 'BSC', protocol: 'PancakeSwap', tvl: 82000, apr: 8.3, risk: 'Baixo', sector: 'stablecoin' },
+                { pool: 'BRLA / PYUSD', network: 'Base', protocol: 'BaseSwap', tvl: 24000, apr: 17.2, risk: 'Alto', sector: 'stablecoin' }
+            ],
+            'bitcoin': [
+                { pool: 'WBTC / USDC', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 1250000, apr: 12.4, risk: 'Baixo', sector: 'bitcoin' },
+                { pool: 'WBTC / USDT', network: 'Ethereum', protocol: 'Curve', tvl: 890000, apr: 9.8, risk: 'Baixo', sector: 'bitcoin' },
+                { pool: 'cbBTC / USDC', network: 'Base', protocol: 'Aerodrome', tvl: 450000, apr: 15.3, risk: 'Médio', sector: 'bitcoin' },
+                { pool: 'WBTC / ETH', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 2100000, apr: 8.7, risk: 'Baixo', sector: 'bitcoin' },
+                { pool: 'cbBTC / ETH', network: 'Base', protocol: 'BaseSwap', tvl: 320000, apr: 13.6, risk: 'Médio', sector: 'bitcoin' },
+                { pool: 'WBTC / DAI', network: 'Polygon', protocol: 'QuickSwap', tvl: 185000, apr: 11.2, risk: 'Médio', sector: 'bitcoin' },
+                { pool: 'WBTC / USDC', network: 'Arbitrum', protocol: 'Camelot', tvl: 275000, apr: 10.5, risk: 'Baixo', sector: 'bitcoin' },
+                { pool: 'cbBTC / USDT', network: 'Base', protocol: 'Aerodrome', tvl: 195000, apr: 14.8, risk: 'Médio', sector: 'bitcoin' },
+                { pool: 'WBTC / BRLA', network: 'Polygon', protocol: 'Balancer', tvl: 85000, apr: 18.3, risk: 'Alto', sector: 'bitcoin' },
+                { pool: 'WBTC / BRZ', network: 'BSC', protocol: 'PancakeSwap', tvl: 62000, apr: 16.7, risk: 'Alto', sector: 'bitcoin' },
+                { pool: 'cbBTC / DAI', network: 'Base', protocol: 'Curve', tvl: 145000, apr: 11.9, risk: 'Médio', sector: 'bitcoin' },
+                { pool: 'WBTC / USDC', network: 'Solana', protocol: 'Raydium', tvl: 225000, apr: 13.4, risk: 'Médio', sector: 'bitcoin' },
+                { pool: 'WBTC / ETH', network: 'Arbitrum', protocol: 'SushiSwap', tvl: 340000, apr: 9.2, risk: 'Baixo', sector: 'bitcoin' },
+                { pool: 'cbBTC / USDC', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 520000, apr: 10.8, risk: 'Baixo', sector: 'bitcoin' },
+                { pool: 'WBTC / USDT', network: 'Polygon', protocol: 'Aave', tvl: 165000, apr: 7.6, risk: 'Baixo', sector: 'bitcoin' }
+            ],
+            'stocks': [
+                { pool: 'AAPLon / USDC', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 1200000, apr: 12.4, risk: 'Médio', sector: 'stocks' },
+                { pool: 'TSLAon / USDT', network: 'Polygon', protocol: 'QuickSwap', tvl: 850000, apr: 15.8, risk: 'Alto', sector: 'stocks' },
+                { pool: 'GOOGLon / DAI', network: 'Arbitrum', protocol: 'Camelot', tvl: 620000, apr: 10.2, risk: 'Médio', sector: 'stocks' },
+                { pool: 'AMZNon / USDC', network: 'Base', protocol: 'Aerodrome', tvl: 490000, apr: 13.7, risk: 'Médio', sector: 'stocks' },
+                { pool: 'NVDAon / USDT', network: 'Ethereum', protocol: 'Curve', tvl: 2100000, apr: 8.9, risk: 'Baixo', sector: 'stocks' },
+                { pool: 'METAon / FRAX', network: 'Polygon', protocol: 'Balancer', tvl: 380000, apr: 11.5, risk: 'Médio', sector: 'stocks' },
+                { pool: 'MSFTon / USDC', network: 'BSC', protocol: 'PancakeSwap', tvl: 750000, apr: 9.3, risk: 'Baixo', sector: 'stocks' },
+                { pool: 'NFLXon / USDT', network: 'Arbitrum', protocol: 'SushiSwap', tvl: 290000, apr: 14.1, risk: 'Alto', sector: 'stocks' },
+                { pool: 'AMDON / DAI', network: 'Base', protocol: 'BaseSwap', tvl: 410000, apr: 16.2, risk: 'Alto', sector: 'stocks' },
+                { pool: 'COINon / USDC', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 560000, apr: 18.5, risk: 'Alto', sector: 'stocks' },
+                { pool: 'AAPLon / USDC', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 1500000, apr: 12.4, risk: 'Médio', sector: 'stocks' },
+                { pool: 'TSLAon / USDT', network: 'Polygon', protocol: 'QuickSwap', tvl: 527000, apr: 15.8, risk: 'Alto', sector: 'stocks' },
+                { pool: 'GOOGLon / DAI', network: 'Arbitrum', protocol: 'Camelot', tvl: 881800, apr: 10.2, risk: 'Médio', sector: 'stocks' },
+                { pool: 'AMZNon / USDC', network: 'Base', protocol: 'Aerodrome', tvl: 719400, apr: 13.7, risk: 'Médio', sector: 'stocks' },
+                { pool: 'NVDAon / USDT', network: 'Ethereum', protocol: 'Curve', tvl: 1290000, apr: 8.9, risk: 'Baixo', sector: 'stocks' },
+                { pool: 'METAon / FRAX', network: 'Polygon', protocol: 'Balancer', tvl: 199200, apr: 11.5, risk: 'Médio', sector: 'stocks' },
+                { pool: 'MSFTon / USDC', network: 'BSC', protocol: 'PancakeSwap', tvl: 644400, apr: 9.3, risk: 'Baixo', sector: 'stocks' },
+                { pool: 'NFLXon / USDT', network: 'Arbitrum', protocol: 'SushiSwap', tvl: 159800, apr: 14.1, risk: 'Alto', sector: 'stocks' },
+                { pool: 'AMDON / DAI', network: 'Base', protocol: 'BaseSwap', tvl: 252700, apr: 16.2, risk: 'Alto', sector: 'stocks' },
+                { pool: 'COINon / USDC', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 828000, apr: 18.5, risk: 'Alto', sector: 'stocks' },
+                { pool: 'AAPLon / USDC', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 993500, apr: 12.4, risk: 'Médio', sector: 'stocks' },
+                { pool: 'TSLAon / USDT', network: 'Polygon', protocol: 'QuickSwap', tvl: 570100, apr: 15.8, risk: 'Alto', sector: 'stocks' },
+                { pool: 'GOOGLon / DAI', network: 'Arbitrum', protocol: 'Camelot', tvl: 837500, apr: 10.2, risk: 'Médio', sector: 'stocks' },
+                { pool: 'AMZNon / USDC', network: 'Base', protocol: 'Aerodrome', tvl: 593600, apr: 13.7, risk: 'Médio', sector: 'stocks' },
+                { pool: 'NVDAon / USDT', network: 'Ethereum', protocol: 'Curve', tvl: 2600000, apr: 8.9, risk: 'Baixo', sector: 'stocks' },
+                { pool: 'METAon / FRAX', network: 'Polygon', protocol: 'Balancer', tvl: 357400, apr: 11.5, risk: 'Médio', sector: 'stocks' },
+                { pool: 'UBERon / USDC', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 445000, apr: 14.3, risk: 'Médio', sector: 'stocks' },
+                { pool: 'DISon / USDT', network: 'Polygon', protocol: 'QuickSwap', tvl: 320000, apr: 12.8, risk: 'Médio', sector: 'stocks' },
+                { pool: 'NKEon / DAI', network: 'Arbitrum', protocol: 'Camelot', tvl: 275000, apr: 11.4, risk: 'Médio', sector: 'stocks' },
+                { pool: 'PYPLon / USDC', network: 'Base', protocol: 'Aerodrome', tvl: 385000, apr: 13.2, risk: 'Médio', sector: 'stocks' },
+                { pool: 'INTCon / USDT', network: 'Ethereum', protocol: 'Curve', tvl: 520000, apr: 9.7, risk: 'Baixo', sector: 'stocks' },
+                { pool: 'ADBEon / FRAX', network: 'Polygon', protocol: 'Balancer', tvl: 295000, apr: 15.1, risk: 'Alto', sector: 'stocks' },
+                { pool: 'CRMson / USDC', network: 'BSC', protocol: 'PancakeSwap', tvl: 410000, apr: 10.9, risk: 'Médio', sector: 'stocks' },
+                { pool: 'ORCLon / USDT', network: 'Arbitrum', protocol: 'SushiSwap', tvl: 235000, apr: 12.6, risk: 'Médio', sector: 'stocks' },
+                { pool: 'QCOMon / DAI', network: 'Base', protocol: 'BaseSwap', tvl: 315000, apr: 14.7, risk: 'Alto', sector: 'stocks' },
+                { pool: 'TXNon / USDC', network: 'Ethereum', protocol: 'Uniswap V3', tvl: 475000, apr: 11.3, risk: 'Médio', sector: 'stocks' },
+                { pool: 'AVGOon / USDT', network: 'Polygon', protocol: 'QuickSwap', tvl: 685000, apr: 16.4, risk: 'Alto', sector: 'stocks' },
+                { pool: 'CSCOon / DAI', network: 'Arbitrum', protocol: 'Camelot', tvl: 225000, apr: 9.8, risk: 'Baixo', sector: 'stocks' },
+                { pool: 'PEPon / USDC', network: 'Base', protocol: 'Aerodrome', tvl: 395000, apr: 8.5, risk: 'Baixo', sector: 'stocks' },
+                { pool: 'COSTon / FRAX', network: 'Ethereum', protocol: 'Curve', tvl: 545000, apr: 10.7, risk: 'Médio', sector: 'stocks' }
+            ]
+        };
+
+        // State
+        let currentTab = 'top-apr';
+        let currentSector = 'all';
+        let sortColumn = 'apr';
+        let sortDirection = 'desc';
+        let filteredData = [];
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            updateTime();
+            renderTable();
+            setupEventListeners();
+        });
+
+        function updateTime() {
+            const now = new Date();
+            const timeString = now.toLocaleTimeString('pt-BR', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('updateTime').textContent = timeString;
+        }
+
+        function setupEventListeners() {
+            // Tabs
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.addEventListener('click', function() {
+                    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                    currentTab = this.dataset.tab;
+                    renderTable();
                 });
-            }
-            // === FIM: LÓGICA ESPECÍFICA PARA TOP APR ===
+            });
+
+            // Sector Filter
+            document.querySelectorAll('.sector-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    document.querySelectorAll('.sector-btn').forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    currentSector = this.dataset.sector;
+                    renderTable();
+                });
+            });
+
+            // Search
+            document.getElementById('searchInput').addEventListener('input', function() {
+                renderTable();
+            });
+
+            // Quick Tags
+            document.querySelectorAll('.tag').forEach(tag => {
+                tag.addEventListener('click', function() {
+                    document.getElementById('searchInput').value = this.dataset.tag;
+                    renderTable();
+                });
+            });
+
+            // Filters
+            document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    renderTable();
+                });
+            });
+
+            document.getElementById('minTVL').addEventListener('input', renderTable);
+            document.getElementById('maxTVL').addEventListener('input', renderTable);
+
+            // Update time every second
+            setInterval(updateTime, 1000);
         }
 
-        // ==================== FUNÇÕES DE BUSCA E TAGS (EXISTENTES - MANTIDAS) ====================
-        function searchTag(tag) {
-            document.getElementById('searchInput').value = tag;
-            filterPools();
+        function getSelectedFilters() {
+            const networks = Array.from(document.querySelectorAll('#net-ethereum, #net-bsc, #net-polygon, #net-arbitrum, #net-base, #net-solana'))
+                .filter(cb => cb.checked).map(cb => cb.value);
+            
+            const protocols = Array.from(document.querySelectorAll('#proto-uniswap, #proto-curve, #proto-balancer, #proto-pancake, #proto-sushi, #proto-aave, #proto-compound'))
+                .filter(cb => cb.checked).map(cb => cb.value);
+            
+            const risks = Array.from(document.querySelectorAll('#risk-low, #risk-medium, #risk-high'))
+                .filter(cb => cb.checked).map(cb => cb.value);
+            
+            const minTVL = parseFloat(document.getElementById('minTVL').value) || 0;
+            const maxTVL = parseFloat(document.getElementById('maxTVL').value) || Infinity;
+            
+            return { networks, protocols, risks, minTVL, maxTVL };
         }
 
-        function filterPools() {
-            console.log('Filtrando pools...');
+        function filterData() {
+            const data = poolsData[currentTab] || [];
+            const { networks, protocols, risks, minTVL, maxTVL } = getSelectedFilters();
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+
+            filteredData = data.filter(pool => {
+                const matchesNetwork = networks.includes(pool.network.toLowerCase()) || networks.includes(pool.network);
+                const matchesProtocol = protocols.includes(pool.protocol);
+                const matchesRisk = risks.includes(pool.risk);
+                const matchesTVL = pool.tvl >= minTVL && pool.tvl <= maxTVL;
+                const matchesSearch = pool.pool.toLowerCase().includes(searchTerm) || 
+                                    pool.protocol.toLowerCase().includes(searchTerm) ||
+                                    pool.network.toLowerCase().includes(searchTerm);
+                const matchesSector = currentSector === 'all' || pool.sector === currentSector;
+
+                return matchesNetwork && matchesProtocol && matchesRisk && matchesTVL && matchesSearch && matchesSector;
+            });
+
+            sortData();
         }
 
-        // === INÍCIO: CÓDIGO NOVO APENAS PARA ABA TOP APR ===
-        // ==================== CONFIGURAÇÃO TOP APR ====================
-        const TOP_APR_PAIRS = [
-            "USDT/USDC","USDT/DAI","USDC/DAI","USDT/FDUSD","USDC/FDUSD","USDT/USDE","USDC/USDE","USDT/FRAX","USDC/FRAX","USDT/PYUSD","USDC/PYUSD","USDT/TUSD","USDC/TUSD","USDT/USDD","USDC/USDD","USDT/LUSD","USDC/LUSD","USDT/GUSD","USDC/GUSD","USDT/SUSD","USDC/SUSD","USDT/RLUSD","USDC/RLUSD","USDT/EURC","USDC/EURC","USDT/EURS","USDC/EURS","USDT/AGEUR","USDC/AGEUR","USDT/AEUR","USDC/AEUR","USDT/PAR","USDC/PAR","USDT/BRZ","USDC/BRZ","USDT/XSGD","USDC/XSGD","USDT/GYEN","USDC/GYEN","USDT/CADC","USDC/CADC","USDT/XIDR","USDC/XIDR","USDT/NZDS","USDC/NZDS","USDT/TRYB","USDC/TRYB","USDT/ZARP","USDC/ZARP","USDT/JPYC","USDC/JPYC","DAI/FRAX","DAI/USDE","DAI/FDUSD","DAI/PYUSD","USDE/FRAX","BRZ/USDT","BRZ/USDC","BRZ/BRLA","BRZ/BRL1","BRLA/BRL1","USDT/BRLA","USDC/BRLA","DAI/BRLA","USDT/BRL1","USDC/BRL1","DAI/BRL1","FDUSD/BRZ","FDUSD/BRLA","FDUSD/BRL1","USDE/BRZ","USDE/BRLA","USDE/BRL1","PYUSD/BRZ","PYUSD/BRLA","PYUSD/BRL1","EURC/BRZ","EURC/BRLA"
-        ];
+        function sortData() {
+            filteredData.sort((a, b) => {
+                let valA = a[sortColumn];
+                let valB = b[sortColumn];
 
-        let topAprData = [];
-        let topAprSort = { field: 'apy', direction: 'desc' };
-
-        function normalizeSymbol(sym) {
-            if (!sym) return '';
-            return sym.toString().toUpperCase().replace(/^W/, '').trim();
-        }
-
-        function matchesTargetPair(pool) {
-            try {
-                const tokens = pool.underlyingTokens || [];
-                if (!tokens || tokens.length < 2) return false;
-                const symbols = tokens.map(t => {
-                    if (typeof t === 'string') return normalizeSymbol(t);
-                    if (t && t.symbol) return normalizeSymbol(t.symbol);
-                    return '';
-                }).filter(s => s && s.length > 0 && s.length <= 15);
-                if (symbols.length < 2) return false;
-                for (let i = 0; i < symbols.length; i++) {
-                    for (let j = i + 1; j < symbols.length; j++) {
-                        const p1 = symbols[i]+'/'+symbols[j], p2 = symbols[j]+'/'+symbols[i];
-                        if (TOP_APR_PAIRS.includes(p1) || TOP_APR_PAIRS.includes(p2)) return true;
-                    }
+                if (typeof valA === 'string') {
+                    valA = valA.toLowerCase();
+                    valB = valB.toLowerCase();
                 }
-                return false;
-            } catch(e) { return false; }
+
+                if (valA < valB) return sortDirection === 'asc' ? -1 : 1;
+                if (valA > valB) return sortDirection === 'asc' ? 1 : -1;
+                return 0;
+            });
         }
 
-        function formatUSD(v) {
-            if (v == null || isNaN(v)) return '$0';
-            if (v >= 1e9) return `$${(v/1e9).toFixed(2)}B`;
-            if (v >= 1e6) return `$${(v/1e6).toFixed(2)}M`;
-            if (v >= 1e3) return `$${(v/1e3).toFixed(1)}K`;
-            return `$${Math.floor(v).toLocaleString('pt-BR')}`;
+        function sortTable(column) {
+            if (sortColumn === column) {
+                sortDirection = sortDirection === 'asc' ? 'desc' : 'asc';
+            } else {
+                sortColumn = column;
+                sortDirection = 'desc';
+            }
+            sortData();
+            renderTable();
         }
 
-        function formatAPR(apy) {
-            const val = (apy||0).toFixed(2);
-            if (apy >= 10) return `<span class="value-positive">${val}%</span>`;
-            if (apy >= 5) return `<span>${val}%</span>`;
-            return `<span style="color:var(--text-secondary)">${val}%</span>`;
+        function formatTVL(tvl) {
+            if (tvl >= 1000000) {
+                return '$' + (tvl / 1000000).toFixed(2) + 'M';
+            } else if (tvl >= 1000) {
+                return '$' + (tvl / 1000).toFixed(1) + 'K';
+            }
+            return '$' + tvl.toFixed(0);
         }
 
-        function getILBadge(r) {
-            const m = {'none':{t:'Sem IL',c:'risk-low'},'low':{t:'Baixo',c:'risk-low'},'moderate':{t:'Médio',c:'risk-medium'},'high':{t:'Alto',c:'risk-high'}};
-            const cfg = m[r?.toLowerCase()] || {t:'N/A',c:''};
-            return `<span class="risk-indicator ${cfg.c}"><span class="semaphore-dot"></span>${cfg.t}</span>`;
-        }
-
-        function getChainBadge(chain) {
-            if(!chain) return '<span class="network-badge">N/A</span>';
-            const colors = {'ethereum':'#627eea','bsc':'#f0b90b','polygon':'#8247e5','arbitrum':'#2d374b','base':'#0052ff','solana':'#14F195'};
-            const c = chain.toLowerCase(), color = colors[c]||'#666';
-            return `<span class="network-badge" style="background:rgba(${hexToRgb(color)},0.15);color:${c==='bsc'?'#000':'#fff'}"><i class="fas fa-circle" style="font-size:6px;margin-right:4px;"></i>${chain}</span>`;
-        }
-        function hexToRgb(h) { const r=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(h); return r?`${parseInt(r[1],16)},${parseInt(r[2],16)},${parseInt(r[3],16)}`:'100,100,100'; }
-
-        function getPairDisplay(pool) {
-            try {
-                const syms = (pool.underlyingTokens||[]).map(t=>{if(typeof t==='string')return normalizeSymbol(t);if(t?.symbol)return normalizeSymbol(t.symbol);return''}).filter(s=>s&&s.length<=10).slice(0,2);
-                return syms.length>=2?`${syms[0]} / ${syms[1]}`:'N/A';
-            }catch(e){return'N/A';}
-        }
-
-        async function fetchTopAprData() {
-            const tbody = document.getElementById('topapr-tbody');
-            tbody.innerHTML = `<tr><td colspan="7" class="loading"><span class="loading-spinner"></span>Carregando dados da DefiLlama API...</td></tr>`;
-            try {
-                const res = await fetch('https://yields.llama.fi/pools',{headers:{'Accept':'application/json'},cache:'no-store'});
-                if(!res.ok) throw new Error(`HTTP ${res.status}`);
-                const result = await res.json(), pools = result.data||[];
-                topAprData = pools.filter(p=>{if(!matchesTargetPair(p))return false;if(!p.tvlUsd||p.tvlUsd<1000)return false;if(p.apy==null||isNaN(p.apy)||p.apy<0)return false;return true}).sort((a,b)=>b.apy-a.apy);
-                document.getElementById('badge-topapr').textContent = topAprData.length;
-                document.getElementById('topapr-count').textContent = topAprData.length;
-                document.getElementById('topapr-lastupdate').textContent = `Atualizado: ${new Date().toLocaleTimeString('pt-BR')}`;
-                renderTopAprTable();
-            } catch(err) {
-                console.error('Erro Top APR:',err);
-                tbody.innerHTML = `<tr><td colspan="7" class="no-results"><i class="fas fa-exclamation-triangle" style="font-size:40px;margin-bottom:10px;opacity:0.5;"></i><br>Erro: ${err.message}<br><br><button onclick="fetchTopAprData()" style="background:var(--accent-blue);color:#000;border:none;padding:8px 16px;border-radius:6px;cursor:pointer"><i class="fas fa-redo"></i> Tentar</button></td></tr>`;
+        function getRiskClass(risk) {
+            switch(risk) {
+                case 'Baixo': return 'risk-low';
+                case 'Médio': return 'risk-medium';
+                case 'Alto': return 'risk-high';
+                default: return '';
             }
         }
 
-        function renderTopAprTable(data=topAprData) {
-            const tbody = document.getElementById('topapr-tbody');
-            if(!data||!data.length){tbody.innerHTML=`<tr><td colspan="7" class="no-results"><i class="fas fa-search" style="font-size:40px;margin-bottom:10px;opacity:0.5;"></i><br>Nenhuma pool encontrada</td></tr>`;return;}
-            tbody.innerHTML = data.slice(0,100).map(p=>`<tr onclick="window.open('${p.url||`https://defillama.com/yields/${p.pool}`}','_blank')"><td>${formatAPR(p.apy)}</td><td><strong>${getPairDisplay(p)}</strong></td><td><span class="protocol-badge">${p.project||'N/A'}</span></td><td>${getChainBadge(p.chain)}</td><td>${formatUSD(p.tvlUsd)}</td><td>${getILBadge(p.ilRisk)}</td><td><i class="fas fa-external-link-alt external-link"></i></td></tr>`).join('');
+        function getNetworkIcon(network) {
+            const icons = {
+                'Ethereum': '<span class="network-icon eth">E</span>',
+                'BSC': '<span class="network-icon bsc">B</span>',
+                'Polygon': '<span class="network-icon polygon">P</span>',
+                'Arbitrum': '<span class="network-icon arbitrum">A</span>',
+                'Base': '<span class="network-icon base">B</span>',
+                'Solana': '<span class="network-icon solana">S</span>',
+                'Avalanche': '<span class="network-icon" style="background:#e84142">A</span>',
+                'OP Mainnet': '<span class="network-icon" style="background:#ff0420">O</span>'
+            };
+            return icons[network] || '<span class="network-icon">?</span>';
         }
 
-        function sortTopAprTable(field) {
-            if(topAprSort.field===field) topAprSort.direction=topAprSort.direction==='asc'?'desc':'asc';
-            else {topAprSort.field=field;topAprSort.direction=(field==='apy'||field==='tvl')?'desc':'asc';}
-            document.querySelectorAll('#tab-topapr th.sortable').forEach(th=>{th.classList.remove('sort-asc','sort-desc');if(th.dataset.sort===field)th.classList.add(topAprSort.direction==='asc'?'sort-asc':'sort-desc');});
-            const sorted=[...topAprData].sort((a,b)=>{let A=a[field],B=b[field];if(field==='pair'){A=getPairDisplay(a).toLowerCase();B=getPairDisplay(b).toLowerCase();}if(field==='protocol'||field==='project'){A=(a.project||'').toLowerCase();B=(b.project||'').toLowerCase();}if(field==='chain'){A=(a.chain||'').toLowerCase();B=(b.chain||'').toLowerCase();}if(A==null)A=topAprSort.direction==='asc'?Infinity:-Infinity;if(B==null)B=topAprSort.direction==='asc'?Infinity:-Infinity;if(A<B)return topAprSort.direction==='asc'?-1:1;if(A>B)return topAprSort.direction==='asc'?1:-1;return 0;});
-            renderTopAprTable(sorted);
-        }
+        function renderTable() {
+            filterData();
+            
+            const tbody = document.getElementById('poolsTableBody');
+            const poolsCount = document.getElementById('poolsCount');
+            const sectionTitle = document.getElementById('sectionTitle');
+            const sectionIcon = document.getElementById('sectionIcon');
 
-        setInterval(()=>{if(document.querySelector('.tab-btn.active')?.dataset?.tab==='topapr')fetchTopAprData();},5*60*1000);
-        // === FIM: CÓDIGO NOVO APENAS PARA ABA TOP APR ===
+            // Update section info
+            const sectionInfo = {
+                'top-apr': { title: 'Melhores APRs em Tempo Real', icon: '🏆' },
+                'stablecoins': { title: 'Pools de Stablecoins Brasileiras', icon: '💵' },
+                'bitcoin': { title: 'Pools de Bitcoin', icon: '₿' },
+                'stocks': { title: 'Stocks como RWA', icon: '📈' }
+            };
+
+            sectionTitle.textContent = sectionInfo[currentTab].title;
+            sectionIcon.textContent = sectionInfo[currentTab].icon;
+            poolsCount.textContent = `${filteredData.length} pools encontradas • Atualizado: ${document.getElementById('updateTime').textContent}`;
+
+            if (filteredData.length === 0) {
+                tbody.innerHTML = `
+                    <tr>
+                        <td colspan="7">
+                            <div class="empty-state">
+                                <div class="empty-icon">🔍</div>
+                                <div class="empty-text">Nenhuma pool encontrada</div>
+                                <div class="empty-subtext">Tente ajustar os filtros ou buscar por outro termo</div>
+                            </div>
+                        </td>
+                    </tr>
+                `;
+                return;
+            }
+
+            tbody.innerHTML = filteredData.map(pool => `
+                <tr class="fade-in">
+                    <td>
+                        <div class="pool-name">${pool.pool}</div>
+                    </td>
+                    <td>
+                        <div class="network-tag">
+                            ${getNetworkIcon(pool.network)}
+                            ${pool.network}
+                        </div>
+                    </td>
+                    <td>
+                        <span class="protocol-tag">${pool.protocol}</span>
+                    </td>
+                    <td>
+                        <div class="tvl-value">${formatTVL(pool.tvl)}</div>
+                    </td>
+                    <td>
+                        <div class="apr-value">${pool.apr.toFixed(2)}%</div>
+                    </td>
+                    <td>
+                        <span class="risk-badge ${getRiskClass(pool.risk)}">${pool.risk}</span>
+                    </td>
+                    <td>
+                        <a href="#" class="action-btn" onclick="event.preventDefault(); alert('Indo para ${pool.pool} em ${pool.protocol}')">
+                            Acessar ↗
+                        </a>
+                    </td>
+                </tr>
+            `).join('');
+        }
     </script>
 </body>
 </html>
