@@ -141,6 +141,7 @@
             font-weight: 700;
         }
 
+        .tab-btn.topapr .badge { background: #ff00ff; color: #fff; }
         .tab-btn.bitcoin .badge { background: #f7931a; color: #fff; }
         .tab-btn.stocks .badge { background: var(--success); color: #000; }
 
@@ -444,6 +445,7 @@
 
         .token-badge.btc { background: linear-gradient(135deg, #f7931a, #ffaa33); }
         .token-badge.stock { background: linear-gradient(135deg, var(--success), #00cc66); }
+        .token-badge.highapr { background: linear-gradient(135deg, #ff00ff, #ff4757); }
 
         .network-badge {
             display: inline-flex;
@@ -625,7 +627,12 @@
 
     <nav class="tabs-container">
         <div class="tabs">
-            <button class="tab-btn active" data-tab="stablecoins" onclick="switchTab('stablecoins')">
+            <button class="tab-btn topapr active" data-tab="topapr" onclick="switchTab('topapr')">
+                <i class="fas fa-trophy"></i>
+                Top APR
+                <span class="badge" id="badge-topapr">20</span>
+            </button>
+            <button class="tab-btn" data-tab="stablecoins" onclick="switchTab('stablecoins')">
                 <i class="fas fa-coins"></i>
                 Stablecoins BR
                 <span class="badge" id="badge-stablecoins">30</span>
@@ -715,6 +722,14 @@
                             <input type="checkbox" id="solana" value="solana" checked>
                             <label for="solana"><span class="network-icon" style="background: linear-gradient(135deg, #9945FF, #14F195);">S</span> Solana</label>
                         </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="avalanche" value="avalanche" checked>
+                            <label for="avalanche"><span class="network-icon" style="background: #e84142;">A</span> Avalanche</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="opmainnet" value="opmainnet" checked>
+                            <label for="opmainnet"><span class="network-icon" style="background: #ff0420;">O</span> OP Mainnet</label>
+                        </div>
                     </div>
                 </div>
 
@@ -772,6 +787,14 @@
                             <input type="checkbox" id="camelot" value="camelot" checked>
                             <label for="camelot">Camelot</label>
                         </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="blackhole" value="blackhole" checked>
+                            <label for="blackhole">Blackhole CLMM</label>
+                        </div>
+                        <div class="filter-option">
+                            <input type="checkbox" id="supernova" value="supernova" checked>
+                            <label for="supernova">Supernova CL</label>
+                        </div>
                     </div>
                 </div>
 
@@ -819,7 +842,7 @@
             <div class="section-header">
                 <h2 class="section-title">
                     <i class="fas fa-list" style="margin-right: 8px; color: var(--accent-blue);"></i>
-                    <span id="sectionTitle">Pools de Liquidez</span>
+                    <span id="sectionTitle">Melhores APRs em Tempo Real</span>
                 </h2>
                 <span class="results-count" id="resultsCount">Carregando...</span>
             </div>
@@ -847,9 +870,34 @@
 
     <script>
         // ============================================
-        // DADOS COMPLETOS - ~80+ PAIRS
+        // DADOS COMPLETOS - ~105 PAIRS
         // ============================================
         
+        // ABA 1: TOP APR (APRs ALTÍSSIMOS)
+        const topAPRData = [
+            { pool: 'WAVAX-USDC', network: 'avalanche', networkName: 'Avalanche', protocol: 'blackhole', protocolName: 'Blackhole CLMM', tvl: 3100000, ratio: '52/48', volume24h: 892000, apr: 55816.61, risk: 'high', link: 'https://app.uniswap.org/#/pool', sector: 'defi' },
+            { pool: 'USDC-VELVET', network: 'base', networkName: 'Base', protocol: 'aerodrome', protocolName: 'Aerodrome Slipstream', tvl: 290800, ratio: '50/50', volume24h: 234000, apr: 52995.60, risk: 'high', link: 'https://aerodrome.finance/liquidity', sector: 'stablecoin' },
+            { pool: 'SPIRE-USDC', network: 'base', networkName: 'Base', protocol: 'uniswap', protocolName: 'Uniswap V4', tvl: 13200, ratio: '48/52', volume24h: 567000, apr: 35637.84, risk: 'high', link: 'https://app.uniswap.org/#/pool', sector: 'defi' },
+            { pool: 'RECALL-USDC', network: 'base', networkName: 'Base', protocol: 'aerodrome', protocolName: 'Aerodrome Slipstream', tvl: 487200, ratio: '55/45', volume24h: 123000, apr: 32577.35, risk: 'high', link: 'https://aerodrome.finance/liquidity', sector: 'defi' },
+            { pool: 'DAI-SLGNS', network: 'polygon', networkName: 'Polygon', protocol: 'uniswap', protocolName: 'Uniswap V4', tvl: 75700, ratio: '60/40', volume24h: 89000, apr: 23103.76, risk: 'medium', link: 'https://app.uniswap.org/#/pool', sector: 'stablecoin' },
+            { pool: 'CHIP-USDT', network: 'arbitrum', networkName: 'Arbitrum', protocol: 'uniswap', protocolName: 'Uniswap V4', tvl: 49500, ratio: '47/53', volume24h: 445000, apr: 14594.03, risk: 'high', link: 'https://app.uniswap.org/#/pool', sector: 'defi' },
+            { pool: 'WETH-USDT', network: 'ethereum', networkName: 'Ethereum', protocol: 'supernova', protocolName: 'Supernova CL', tvl: 371000, ratio: '45/55', volume24h: 1230000, apr: 12383.48, risk: 'medium', link: 'https://supernova.exchange/', sector: 'defi' },
+            { pool: 'XAUT-USDT', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V4', tvl: 57600, ratio: '51/49', volume24h: 156000, apr: 12063.54, risk: 'low', link: 'https://app.uniswap.org/#/pool', sector: 'defi' },
+            { pool: 'ETH-DAI', network: 'opmainnet', networkName: 'OP Mainnet', protocol: 'uniswap', protocolName: 'Uniswap V4', tvl: 50200, ratio: '49/51', volume24h: 234000, apr: 11063.27, risk: 'medium', link: 'https://app.uniswap.org/#/pool', sector: 'defi' },
+            { pool: 'SUSDE-USDC', network: 'avalanche', networkName: 'Avalanche', protocol: 'blackhole', protocolName: 'Blackhole CLMM', tvl: 2260000, ratio: '53/47', volume24h: 67000, apr: 6449.49, risk: 'low', link: 'https://app.uniswap.org/#/pool', sector: 'stablecoin' },
+            { pool: 'USDC-VFY', network: 'base', networkName: 'Base', protocol: 'aerodrome', protocolName: 'Aerodrome Slipstream', tvl: 105100, ratio: '50/50', volume24h: 120000, apr: 5769.86, risk: 'medium', link: 'https://aerodrome.finance/liquidity', sector: 'stablecoin' },
+            { pool: 'WBTC-USDT', network: 'ethereum', networkName: 'Ethereum', protocol: 'supernova', protocolName: 'Supernova CL', tvl: 252700, ratio: '48/52', volume24h: 89000000, apr: 5676.75, risk: 'low', link: 'https://supernova.exchange/', sector: 'bitcoin' },
+            { pool: 'RIO-USDT', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V4', tvl: 57600, ratio: '45/55', volume24h: 18000000, apr: 5434.97, risk: 'high', link: 'https://app.uniswap.org/#/pool', sector: 'defi' },
+            { pool: 'WETH-USDC', network: 'base', networkName: 'Base', protocol: 'aerodrome', protocolName: 'Aerodrome Slipstream', tvl: 194400, ratio: '50/50', volume24h: 9800000, apr: 4863.28, risk: 'medium', link: 'https://aerodrome.finance/liquidity', sector: 'defi' },
+            { pool: 'PAXG-USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'supernova', protocolName: 'Supernova CL', tvl: 54800, ratio: '52/48', volume24h: 6700000, apr: 4743.40, risk: 'low', link: 'https://supernova.exchange/', sector: 'defi' },
+            { pool: 'AI-USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V4', tvl: 229700, ratio: '46/54', volume24h: 178000, apr: 3806.54, risk: 'high', link: 'https://app.uniswap.org/#/pool', sector: 'defi' },
+            { pool: 'USDC-WETH', network: 'ethereum', networkName: 'Ethereum', protocol: 'supernova', protocolName: 'Supernova CL', tvl: 291700, ratio: '50/50', volume24h: 123000, apr: 3481.94, risk: 'medium', link: 'https://supernova.exchange/', sector: 'defi' },
+            { pool: 'USDC-AIB', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V4', tvl: 48500, ratio: '58/42', volume24h: 45000, apr: 3399.85, risk: 'high', link: 'https://app.uniswap.org/#/pool', sector: 'defi' },
+            { pool: 'XAUT-USDT', network: 'ethereum', networkName: 'Ethereum', protocol: 'supernova', protocolName: 'Supernova CL', tvl: 126200, ratio: '51/49', volume24h: 445000, apr: 3155.47, risk: 'low', link: 'https://supernova.exchange/', sector: 'defi' },
+            { pool: 'FT-USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V4', tvl: 54600, ratio: '50/50', volume24h: 123000, apr: 2928.86, risk: 'high', link: 'https://app.uniswap.org/#/pool', sector: 'defi' }
+        ];
+
+        // ABA 2: STABLECOINS BR
         const stablecoinsData = [
             { pool: 'BRZ/USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 4250000, ratio: '52/48', volume24h: 892000, apr: 12.5, risk: 'low', link: 'https://app.uniswap.org/#/pool', sector: 'stablecoin' },
             { pool: 'BRL1/DAI', network: 'polygon', networkName: 'Polygon', protocol: 'curve', protocolName: 'Curve Finance', tvl: 1890000, ratio: '50/50', volume24h: 234000, apr: 18.3, risk: 'low', link: 'https://curve.fi/#/polygon/pools', sector: 'stablecoin' },
@@ -883,6 +931,7 @@
             { pool: 'USDC/PYUSD', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 2100000, ratio: '51/49', volume24h: 423000, apr: 6.3, risk: 'low', link: 'https://curve.fi/#/ethereum/pools', sector: 'stablecoin' }
         ];
 
+        // ABA 3: BITCOIN POOLS
         const bitcoinData = [
             { pool: 'WBTC/USDC', network: 'ethereum', networkName: 'Ethereum', protocol: 'uniswap', protocolName: 'Uniswap V3', tvl: 125000000, ratio: '51/49', volume24h: 45000000, apr: 8.5, risk: 'low', link: 'https://app.uniswap.org/#/pool', sector: 'bitcoin' },
             { pool: 'WBTC/USDT', network: 'ethereum', networkName: 'Ethereum', protocol: 'curve', protocolName: 'Curve Finance', tvl: 89000000, ratio: '50/50', volume24h: 23000000, apr: 7.2, risk: 'low', link: 'https://curve.fi/#/ethereum/pools', sector: 'bitcoin' },
@@ -901,6 +950,7 @@
             { pool: 'WBTC/BRZ', network: 'bsc', networkName: 'BSC', protocol: 'pancakeswap', protocolName: 'PancakeSwap', tvl: 8900000, ratio: '49/51', volume24h: 1800000, apr: 16.7, risk: 'high', link: 'https://pancakeswap.finance/liquidity', sector: 'bitcoin' }
         ];
 
+        // ABA 4: STOCKS RWA
         const stocksData = [
             { pool: 'AAPLon/USDT', asset: 'Apple', network: 'ethereum', networkName: 'Ethereum', protocol: 'backed', protocolName: 'Backed Finance', tvl: 45000000, ratio: 'N/A', volume24h: 8900000, apr: 3.2, risk: 'low', link: 'https://backed.fi/', isStock: true, sector: 'stocks' },
             { pool: 'AAPLon/USDC', asset: 'Apple', network: 'ethereum', networkName: 'Ethereum', protocol: 'backed', protocolName: 'Backed Finance', tvl: 52000000, ratio: 'N/A', volume24h: 9800000, apr: 3.5, risk: 'low', link: 'https://backed.fi/', isStock: true, sector: 'stocks' },
@@ -947,10 +997,10 @@
         // ============================================
         // ESTADO DA APLICAÇÃO
         // ============================================
-        let currentTab = 'stablecoins';
+        let currentTab = 'topapr';
         let currentSector = 'all';
-        let currentData = [...stablecoinsData];
-        let originalData = [...stablecoinsData];
+        let currentData = [...topAPRData];
+        let originalData = [...topAPRData];
         let aprSortDirection = 0;
         let tvlSortDirection = 0;
 
@@ -964,6 +1014,7 @@
             setupFilters();
             setupSearch();
             
+            updateBadge('topapr', topAPRData.length);
             updateBadge('stablecoins', stablecoinsData.length);
             updateBadge('bitcoin', bitcoinData.length);
             updateBadge('stocks', stocksData.length);
@@ -986,10 +1037,11 @@
             
             // Atualiza setor para "all" e botão ativo
             document.querySelectorAll('.sector-btn').forEach(btn => btn.classList.remove('active'));
-            document.querySelector('.sector-btn[data-sector="all"]').classList.add('active');
+            document.querySelector('.sector-btn').classList.add('active');
             
             // Atualiza título da seção
             const titles = {
+                topapr: 'Melhores APRs em Tempo Real',
                 stablecoins: 'Pools de Stablecoins Brasileiras',
                 bitcoin: 'Pools de Bitcoin Tokenizado',
                 stocks: 'Ações Americanas Tokenizadas (RWA)'
@@ -1021,6 +1073,7 @@
         function updateSearchTags(tab) {
             const tagsContainer = document.getElementById('searchTags');
             const tags = {
+                topapr: ['WAVAX', 'USDC', 'WETH', 'WBTC', 'ETH', 'DAI'],
                 stablecoins: ['BRZ', 'BRL1', 'BRLA', 'Depix', 'CREAL', 'USDC', 'USDT', 'DAI'],
                 bitcoin: ['WBTC', 'cbBTC', 'BTC', 'ETH', 'USDC', 'USDT', 'WSOL', 'DAI'],
                 stocks: ['AAPL', 'TSLA', 'MSFT', 'AMZN', 'GOOGL', 'NVDA', 'META', 'NFLX', 'AMD', 'COIN']
@@ -1031,7 +1084,9 @@
         }
 
         function loadDataForTab(tab) {
-            if (tab === 'stablecoins') {
+            if (tab === 'topapr') {
+                originalData = [...topAPRData];
+            } else if (tab === 'stablecoins') {
                 originalData = [...stablecoinsData];
             } else if (tab === 'bitcoin') {
                 originalData = [...bitcoinData];
@@ -1108,7 +1163,9 @@
                 'camelot': 'Camelot',
                 'quickswap': 'QuickSwap',
                 'baseswap': 'BaseSwap',
-                'thena': 'Thena'
+                'thena': 'Thena',
+                'blackhole': 'Blackhole CLMM',
+                'supernova': 'Supernova CL'
             };
             return names[name] || name.charAt(0).toUpperCase() + name.slice(1);
         }
@@ -1129,7 +1186,9 @@
                 'camelot': 'https://app.camelot.exchange/pools',
                 'quickswap': 'https://quickswap.exchange/#/pool',
                 'baseswap': 'https://baseswap.fi/liquidity',
-                'thena': 'https://www.thena.fi/liquidity'
+                'thena': 'https://www.thena.fi/liquidity',
+                'blackhole': 'https://blackhole.finance/',
+                'supernova': 'https://supernova.exchange/'
             };
             return links[project] || links['uniswap'];
         }
@@ -1226,6 +1285,7 @@
                 let tokenClass = '';
                 if (pool.isStock) tokenClass = 'stock';
                 else if (pool.pool.includes('WBTC') || pool.pool.includes('cbBTC') || pool.pool.includes('BTC')) tokenClass = 'btc';
+                else if (pool.apr > 100) tokenClass = 'highapr';
                 
                 const token1 = pool.isStock ? pool.asset : pool.pool.split('/')[0];
                 const token2 = pool.pool.split('/')[1] || '';
