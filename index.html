@@ -913,36 +913,28 @@
     </main>
 
     <script>
-        // ==================== FUNÇÃO DE TROCA DE ABAS (EXISTENTE) ====================
+        // ==================== FUNÇÃO DE TROCA DE ABAS ====================
         function switchTab(tabName) {
-            // Remove classe active de todos os botões
             document.querySelectorAll('.tab-btn').forEach(btn => {
                 btn.classList.remove('active');
             });
             
-            // Adiciona classe active ao botão clicado
             document.querySelector(`.tab-btn[data-tab="${tabName}"]`).classList.add('active');
             
-            // Esconde todos os conteúdos de aba
             document.querySelectorAll('.tab-content').forEach(content => {
                 content.style.display = 'none';
             });
             
-            // Mostra o conteúdo da aba selecionada
             document.getElementById(`tab-${tabName}`).style.display = 'block';
             
-            // Lógica específica para Top APR
             if (tabName === 'topapr') {
-                // Carrega dados apenas na primeira visita à aba
                 if (typeof topAprData === 'undefined' || topAprData.length === 0) {
                     fetchTopAprData();
                 } else {
-                    // Atualiza timestamp se já tiver dados
                     document.getElementById('topapr-lastupdate').textContent = 
                         `Atualizado: ${new Date().toLocaleTimeString('pt-BR')}`;
                 }
                 
-                // Adiciona listeners de ordenação
                 document.querySelectorAll('#tab-topapr th.sortable').forEach(th => {
                     th.onclick = function(e) {
                         e.stopPropagation();
@@ -952,113 +944,80 @@
             }
         }
 
-        // ==================== FUNÇÕES DE BUSCA E TAGS (EXISTENTES) ====================
         function searchTag(tag) {
             document.getElementById('searchInput').value = tag;
             filterPools();
         }
 
         function filterPools() {
-            // Lógica de filtro existente (mantida)
             console.log('Filtrando pools...');
         }
 
         // ==================== CONFIGURAÇÃO TOP APR ====================
-        const TOP_APR_PAIRS = [
-            // Stablecoins USD
-            "USDT/USDC", "USDT/DAI", "USDC/DAI", "USDT/FDUSD", "USDC/FDUSD",
-            "USDT/USDE", "USDC/USDE", "USDT/FRAX", "USDC/FRAX", "USDT/PYUSD",
-            "USDC/PYUSD", "USDT/TUSD", "USDC/TUSD", "USDT/USDD", "USDC/USDD",
-            "USDT/LUSD", "USDC/LUSD", "USDT/GUSD", "USDC/GUSD", "USDT/SUSD",
-            "USDC/SUSD", "USDT/RLUSD", "USDC/RLUSD",
-            
-            // Stablecoins EUR
-            "USDT/EURC", "USDC/EURC", "USDT/EURS", "USDC/EURS",
-            "USDT/AGEUR", "USDC/AGEUR", "USDT/AEUR", "USDC/AEUR",
-            
-            // Stablecoins regionais
-            "USDT/PAR", "USDC/PAR", "USDT/BRZ", "USDC/BRZ",
-            "USDT/XSGD", "USDC/XSGD", "USDT/GYEN", "USDC/GYEN",
-            "USDT/CADC", "USDC/CADC", "USDT/XIDR", "USDC/XIDR",
-            "USDT/NZDS", "USDC/NZDS", "USDT/TRYB", "USDC/TRYB",
-            "USDT/ZARP", "USDC/ZARP", "USDT/JPYC", "USDC/JPYC",
-            
-            // Pares entre stablecoins não-USD
-            "DAI/FRAX", "DAI/USDE", "DAI/FDUSD", "DAI/PYUSD",
-            "USDE/FRAX", "USDC/EURS",
-            
-            // Pares com BRZ, BRLA, BRL1
-            "BRZ/USDT", "BRZ/USDC", "BRZ/BRLA", "BRZ/BRL1",
-            "BRLA/BRL1", "USDT/BRLA", "USDC/BRLA", "DAI/BRLA",
-            "USDT/BRL1", "USDC/BRL1", "DAI/BRL1",
-            "FDUSD/BRZ", "FDUSD/BRLA", "FDUSD/BRL1",
-            "USDE/BRZ", "USDE/BRLA", "USDE/BRL1",
-            "PYUSD/BRZ", "PYUSD/BRLA", "PYUSD/BRL1",
-            "EURC/BRZ", "EURC/BRLA"
-        ].map(p => p.replace(/\s+/g, '').toUpperCase());
+        const TARGET_SYMBOLS = [
+            'USDT', 'USDC', 'DAI', 'FDUSD', 'FRAX', 'PYUSD', 'TUSD', 'USDD', 
+            'LUSD', 'GUSD', 'SUSD', 'USDE', 'RLUSD', 'EURC', 'EURS', 'AGEUR', 
+            'AEUR', 'PAR', 'BRZ', 'BRLA', 'BRL1', 'XSGD', 'GYEN', 'CADC', 
+            'XIDR', 'NZDS', 'TRYB', 'ZARP', 'JPYC'
+        ];
 
-        // Variáveis globais para a aba Top APR
         let topAprData = [];
         let topAprSort = { field: 'apy', direction: 'desc' };
 
-        // Normaliza símbolo para comparação (remove prefixos como "0x", "w", etc.)
         function normalizeSymbol(sym) {
             if (!sym) return '';
-            return sym.toUpperCase()
-                .replace(/^W/, '')      // WBTC → BTC
-                .replace(/^X/, '')      // XSGD → SGD
-                .replace(/^WETH$/, 'ETH')
-                .replace(/^0X[A-F0-9]+$/i, '') // Remove endereços
-                .replace(/\s+/g, '')
-                .trim();
+            let normalized = sym.toString().toUpperCase().trim();
+            normalized = normalized.replace(/^(W|X|C)/, '');
+            if (normalized.match(/^0X[A-F0-9]{40,}$/i)) return '';
+            return normalized;
         }
 
-        // Verifica se um pool contém um dos pares desejados
+        function isTargetStablecoin(symbol) {
+            const normalized = normalizeSymbol(symbol);
+            return TARGET_SYMBOLS.some(target => 
+                normalized === target || normalized.includes(target)
+            );
+        }
+
         function matchesTargetPair(pool) {
-            const tokens = pool.underlyingTokens || [];
-            if (!tokens || tokens.length < 2) return false;
-            
-            const symbols = tokens
-                .map(t => {
-                    if (typeof t === 'string') return normalizeSymbol(t);
-                    if (t && t.symbol) return normalizeSymbol(t.symbol);
-                    return '';
-                })
-                .filter(s => s && s.length > 0 && s.length <= 15);
-            
-            if (symbols.length < 2) return false;
-            
-            // Tenta todas as combinações de 2 tokens
-            for (let i = 0; i < symbols.length; i++) {
-                for (let j = i + 1; j < symbols.length; j++) {
-                    const pair1 = `${symbols[i]}/${symbols[j]}`;
-                    const pair2 = `${symbols[j]}/${symbols[i]}`;
-                    if (TOP_APR_PAIRS.includes(pair1) || TOP_APR_PAIRS.includes(pair2)) {
-                        return true;
-                    }
-                }
+            try {
+                const tokens = pool.underlyingTokens || [];
+                if (!tokens || tokens.length < 2) return false;
+                
+                const symbols = tokens
+                    .map(t => {
+                        if (typeof t === 'string') return normalizeSymbol(t);
+                        if (t && t.symbol) return normalizeSymbol(t.symbol);
+                        return '';
+                    })
+                    .filter(s => s && s.length > 0 && s.length <= 15);
+                
+                if (symbols.length < 2) return false;
+                
+                const hasTargetStable = symbols.some(s => isTargetStablecoin(s));
+                return hasTargetStable;
+            } catch (e) {
+                console.error('Erro em matchesTargetPair:', e);
+                return false;
             }
-            return false;
         }
 
-        // Formata valores monetários
         function formatUSD(value) {
             if (value === null || value === undefined || isNaN(value)) return '$0';
-            if (value >= 1e9) return `$${(value/1e9).toFixed(2)}B`;
-            if (value >= 1e6) return `$${(value/1e6).toFixed(2)}M`;
-            if (value >= 1e3) return `$${(value/1e3).toFixed(1)}K`;
-            return `$${Math.floor(value).toLocaleString('pt-BR')}`;
+            const num = Number(value);
+            if (num >= 1e9) return `$${(num/1e9).toFixed(2)}B`;
+            if (num >= 1e6) return `$${(num/1e6).toFixed(2)}M`;
+            if (num >= 1e3) return `$${(num/1e3).toFixed(1)}K`;
+            return `$${Math.floor(num).toLocaleString('pt-BR')}`;
         }
 
-        // Formata APR com cor
         function formatAPR(apy) {
             const val = (apy || 0).toFixed(2);
             if (apy >= 10) return `<span class="value-positive">${val}%</span>`;
             if (apy >= 5) return `<span>${val}%</span>`;
-            return `<span class="text-secondary">${val}%</span>`;
+            return `<span style="color: var(--text-secondary)">${val}%</span>`;
         }
 
-        // Ícone de risco de Impermanent Loss
         function getILBadge(ilRisk) {
             const map = {
                 'none': {text: 'Sem IL', class: 'risk-low'},
@@ -1071,7 +1030,6 @@
             return `<span class="risk-indicator ${cfg.class}"><span class="semaphore-dot"></span>${cfg.text}</span>`;
         }
 
-        // Badge de rede com cor
         function getChainBadge(chain) {
             if (!chain) return '<span class="network-badge">N/A</span>';
             const colors = {
@@ -1080,17 +1038,15 @@
                 'polygon': '#8247e5',
                 'arbitrum': '#2d374b', 
                 'base': '#0052ff', 
-                'solana': 'linear-gradient(135deg, #9945FF, #14F195)',
+                'solana': '#14F195',
                 'optimism': '#ff0420', 
-                'avalanche': '#e84142',
-                'fantom': '#1969ff',
-                'cronos': '#002d74'
+                'avalanche': '#e84142'
             };
             const chainLower = chain.toLowerCase();
             const color = colors[chainLower] || '#666';
-            const bgStyle = color.includes('gradient') ? color : `rgba(${hexToRgb(color)}, 0.15)`;
-            const textColor = color.includes('gradient') ? '#fff' : (color === '#f0b90b' ? '#000' : color);
-            return `<span class="network-badge" style="background: ${bgStyle}; color: ${textColor}">
+            const bgColor = chainLower === 'bsc' ? 'rgba(240, 185, 11, 0.15)' : `rgba(${hexToRgb(color)}, 0.15)`;
+            const textColor = chainLower === 'bsc' ? '#f0b90b' : '#fff';
+            return `<span class="network-badge" style="background: ${bgColor}; color: ${textColor}">
                 <i class="fas fa-circle" style="font-size: 6px; margin-right: 4px;"></i>${chain}
             </span>`;
         }
@@ -1100,23 +1056,32 @@
             return result ? `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : '100,100,100';
         }
 
-        // Extrai o par de tokens do pool para exibição
         function getPairDisplay(pool) {
-            const tokens = pool.underlyingTokens || [];
-            const symbols = tokens
-                .map(t => {
-                    if (typeof t === 'string') return normalizeSymbol(t);
-                    if (t && t.symbol) return normalizeSymbol(t.symbol);
-                    return '';
-                })
-                .filter(s => s && s.length > 0 && s.length <= 10)
-                .slice(0, 2);
-            return symbols.length >= 2 ? `${symbols[0]} / ${symbols[1]}` : 'N/A';
+            try {
+                const tokens = pool.underlyingTokens || [];
+                const symbols = tokens
+                    .map(t => {
+                        if (typeof t === 'string') return normalizeSymbol(t);
+                        if (t && t.symbol) return normalizeSymbol(t.symbol);
+                        return '';
+                    })
+                    .filter(s => s && s.length > 0 && s.length <= 10)
+                    .slice(0, 2);
+                return symbols.length >= 2 ? `${symbols[0]} / ${symbols[1]}` : 'N/A';
+            } catch (e) {
+                return 'N/A';
+            }
         }
 
-        // ==================== FETCH E RENDERIZAÇÃO TOP APR ====================
         async function fetchTopAprData() {
             const tbody = document.getElementById('topapr-tbody');
+            
+            tbody.innerHTML = `
+                <tr><td colspan="7" class="loading">
+                    <span class="loading-spinner"></span>
+                    Carregando dados da DefiLlama API...
+                </td></tr>
+            `;
             
             try {
                 const response = await fetch('https://yields.llama.fi/pools', {
@@ -1131,40 +1096,17 @@
                 const result = await response.json();
                 const allPools = result.data || [];
                 
-                // Símbolos de stablecoins conhecidas para filtro adicional
-                const stableSymbols = [
-                    'USDT','USDC','DAI','FDUSD','FRAX','PYUSD','TUSD','USDD','LUSD',
-                    'GUSD','SUSD','USDE','RLUSD','EURC','EURS','AGEUR','AEUR','PAR',
-                    'BRZ','BRLA','BRL1','XSGD','GYEN','CADC','XIDR','NZDS','TRYB',
-                    'ZARP','JPYC','USDB','GHO','USD0'
-                ];
+                console.log(`Total de pools recebidas: ${allPools.length}`);
                 
-                // Filtrar pools
                 topAprData = allPools.filter(pool => {
-                    // Verifica se é um dos pares alvo
                     if (!matchesTargetPair(pool)) return false;
-                    
-                    // Filtra por TVL mínimo ($1.000) e APY válido
                     if (!pool.tvlUsd || pool.tvlUsd < 1000) return false;
                     if (pool.apy === null || isNaN(pool.apy) || pool.apy < 0) return false;
-                    
-                    // Verifica se tem pelo menos 1 token estável conhecido (opcional, mas recomendado)
-                    const symbols = (pool.underlyingTokens || [])
-                        .map(t => {
-                            if (typeof t === 'string') return normalizeSymbol(t);
-                            if (t && t.symbol) return normalizeSymbol(t.symbol);
-                            return '';
-                        })
-                        .filter(s => s);
-                    
-                    const hasStable = symbols.some(s => 
-                        stableSymbols.some(stable => s.includes(stable) || stable.includes(s))
-                    );
-                    
-                    return hasStable;
-                }).sort((a, b) => b.apy - a.apy); // Ordena por APY decrescente
+                    return true;
+                }).sort((a, b) => b.apy - a.apy);
                 
-                // Atualiza UI
+                console.log(`Pools filtradas: ${topAprData.length}`);
+                
                 document.getElementById('badge-topapr').textContent = topAprData.length;
                 document.getElementById('topapr-count').textContent = topAprData.length;
                 document.getElementById('topapr-lastupdate').textContent = 
@@ -1198,10 +1140,11 @@
                 return;
             }
             
-            tbody.innerHTML = data.map(pool => {
+            const displayData = data.slice(0, 100);
+            
+            tbody.innerHTML = displayData.map(pool => {
                 const pair = getPairDisplay(pool);
-                const poolUrl = pool.url || `https://defillama.com/yields/pool/${pool.pool}`;
-                const apyClass = pool.apy >= 10 ? 'value-positive' : (pool.apy >= 5 ? '' : 'text-secondary');
+                const poolUrl = pool.url || `https://defillama.com/yields/${pool.pool}`;
                 
                 return `
                     <tr onclick="window.open('${poolUrl}', '_blank')" title="Clique para abrir no protocolo">
@@ -1217,18 +1160,14 @@
             }).join('');
         }
 
-        // Ordenação da tabela Top APR
         function sortTopAprTable(field) {
-            // Alterna direção se clicar na mesma coluna
             if (topAprSort.field === field) {
                 topAprSort.direction = topAprSort.direction === 'asc' ? 'desc' : 'asc';
             } else {
                 topAprSort.field = field;
-                // APR e TVL ordenam descendente por padrão; outros ascendente
                 topAprSort.direction = (field === 'apy' || field === 'tvl') ? 'desc' : 'asc';
             }
             
-            // Atualiza indicadores visuais nos th
             document.querySelectorAll('#tab-topapr th.sortable').forEach(th => {
                 th.classList.remove('sort-asc', 'sort-desc');
                 if (th.dataset.sort === field) {
@@ -1236,19 +1175,14 @@
                 }
             });
             
-            // Função de comparação para ordenação
             const compare = (a, b, f, dir) => {
                 let valA = a[f], valB = b[f];
                 
-                // Tratamento especial para campos de texto
                 if (f === 'pair' || f === 'protocol' || f === 'chain') {
-                    valA = String(valA || '').toLowerCase();
-                    valB = String(valB || '').toLowerCase();
-                    if (f === 'pair') valA = getPairDisplay(a).toLowerCase();
-                    if (f === 'pair') valB = getPairDisplay(b).toLowerCase();
+                    valA = String(f === 'pair' ? getPairDisplay(a) : (valA || '')).toLowerCase();
+                    valB = String(f === 'pair' ? getPairDisplay(b) : (valB || '')).toLowerCase();
                 }
                 
-                // Tratamento para valores nulos
                 if (valA == null) valA = dir === 'asc' ? Infinity : -Infinity;
                 if (valB == null) valB = dir === 'asc' ? Infinity : -Infinity;
                 
@@ -1257,15 +1191,12 @@
                 return 0;
             };
             
-            // Ordena e renderiza
             const sorted = [...topAprData].sort((a, b) => 
                 compare(a, b, topAprSort.field, topAprSort.direction)
             );
             renderTopAprTable(sorted);
         }
 
-        // ==================== AUTO-REFRESH (OPCIONAL) ====================
-        // Atualiza a aba Top APR a cada 5 minutos se estiver ativa
         setInterval(() => {
             const activeTab = document.querySelector('.tab-btn.active')?.dataset?.tab;
             if (activeTab === 'topapr') {
@@ -1277,12 +1208,9 @@
             }
         }, 5 * 60 * 1000);
 
-        // ==================== INICIALIZAÇÃO ====================
         document.addEventListener('DOMContentLoaded', function() {
-            // Inicializa a aba padrão (stablecoins)
             switchTab('stablecoins');
             
-            // Adiciona listeners para filtros de rede e protocolo (mantém compatibilidade)
             document.querySelectorAll('#networkFilters input, #protocolFilters input').forEach(input => {
                 input.addEventListener('change', function() {
                     const activeTab = document.querySelector('.tab-btn.active')?.dataset?.tab;
@@ -1292,7 +1220,6 @@
                 });
             });
             
-            // Listener para busca
             document.getElementById('searchInput')?.addEventListener('input', function() {
                 filterPools();
             });
